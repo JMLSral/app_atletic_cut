@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Athletic Cut Coach v2</title>
+
+    <meta name="theme-color" content="#050608" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Athletic Cut" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          sans-serif;
+      }
+      body {
+        background: #050608;
+        color: #f5f5f5;
+      }
+      .app-header {
+        padding: 16px;
+        text-align: center;
+        background: #111216;
+        border-bottom: 1px solid #333;
+      }
+      .app-header h1 {
+        font-size: 1.6rem;
+        margin-bottom: 4px;
+      }
+      .app-header p {
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+      .tabs {
+        display: flex;
+        margin-top: 8px;
+        justify-content: center;
+        gap: 8px;
+      }
+      .tab-btn {
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid #333743;
+        background: #15161b;
+        color: #ccc;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+      .tab-btn.active {
+        background: #e53935;
+        color: #fff;
+        border-color: #e53935;
+      }
+      .app-main {
+        padding: 12px;
+        max-width: 900px;
+        margin: 0 auto 40px;
+      }
+      .card {
+        background: #15161b;
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+        border: 1px solid #282a33;
+      }
+      .card h2 {
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+        color: #f0f0f0;
+      }
+      select,
+      input {
+        width: 100%;
+        padding: 8px;
+        margin: 4px 0 10px;
+        border-radius: 6px;
+        border: 1px solid #333743;
+        background: #111216;
+        color: #f5f5f5;
+      }
+      label {
+        font-size: 0.9rem;
+        display: block;
+        margin-top: 4px;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: none;
+        background: #e53935;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 4px;
+      }
+      button:hover {
+        background: #ff5252;
+      }
+      button.secondary {
+        background: #263238;
+      }
+      button.secondary:hover {
+        background: #455a64;
+      }
+      .timer {
+        font-size: 2rem;
+        text-align: center;
+        margin: 6px 0;
+      }
+      .timer-controls {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .timer-controls button {
+        flex: 1;
+        background: #263238;
+      }
+      .timer-controls button:hover {
+        background: #455a64;
+      }
+      .exercise-card {
+        border: 1px solid #282a33;
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 6px;
+        background: #111216;
+      }
+      .exercise-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+        gap: 6px;
+      }
+      .exercise-header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exercise-header-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+      }
+      .exercise-inputs {
+        display: flex;
+        gap: 6px;
+        margin-top: 4px;
+      }
+      .exercise-inputs input {
+        flex: 1;
+      }
+      .status-msg {
+        font-size: 0.8rem;
+        margin-top: 4px;
+        color: #9ccc65;
+      }
+
+      /* Dashboard */
+      .hidden {
+        display: none;
+      }
+      .view-toggle {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+      .view-toggle button {
+        flex: 1;
+        font-size: 0.8rem;
+      }
+      .view-toggle button.active {
+        background: #e53935;
+        border-color: #e53935;
+      }
+
+      /* RINGS – grid estilo Apple Fitness */
+      .rings {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 18px;
+        align-items: flex-start;
+        margin-top: 6px;
+      }
+      .ring-card {
+        min-width: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .ring-label {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+        color: #ddd;
+      }
+      .ring {
+        --percent: 0;
+        --color: #e53935;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle at center,
+            #15161b 55%,
+            transparent 56%
+          ),
+          conic-gradient(
+            var(--color) calc(var(--percent) * 360deg),
+            #25262f calc(var(--percent) * 360deg)
+          );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 6px;
+        box-shadow: 0 0 0 3px #050608, 0 0 18px rgba(0, 0, 0, 0.6);
+        transition: background 0.35s ease-out;
+      }
+      .ring-inner {
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #15161b, #111116);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        text-align: center;
+        color: #f5f5f5;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+      }
+      .ring-value {
+        font-size: 0.85rem;
+        color: #cfd8dc;
+      }
+
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+        font-size: 0.8rem;
+      }
+      .history-table th,
+      .history-table td {
+        border: 1px solid #333743;
+        padding: 4px 6px;
+        text-align: center;
+      }
+      .history-table th {
+        background: #22232b;
+      }
+
+      .video-btn {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        border-radius: 999px;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        .rings {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="app-header">
+      <h1>Athletic Cut Coach</h1>
+      <p>Fase 1 · hasta 22 diciembre</p>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="training">Entreno</button>
+        <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- ENTRENAMIENTO -->
+      <section id="trainingTab">
+        <section class="card">
+          <h2>Día de entrenamiento</h2>
+          <select id="daySelect">
+            <option value="1">Día 1 – Espalda + Deltoide posterior</option>
+            <option value="2">Día 2 – Pierna anterior</option>
+            <option value="3">Día 3 – Cardio + Movilidad</option>
+            <option value="4">
+              Día 4 – Pecho + Deltoide lateral + Tríceps
+            </option>
+            <option value="5">Día 5 – Pierna posterior + Glúteo</option>
+            <option value="6">Día 6 – Fullbody metabólico</option>
+            <option value="7">Día 7 – Descanso activo</option>
+          </select>
+        </section>
+
+        <section class="card">
+          <h2>Rutina del día</h2>
+          <div id="exerciseList"></div>
+        </section>
+
+        <section class="card">
+          <h2>Descanso</h2>
+          <div class="timer"><span id="timerDisplay">00:00</span></div>
+          <div class="timer-controls">
+            <button data-time="45" class="secondary">45s</button>
+            <button data-time="60" class="secondary">60s</button>
+            <button data-time="90" class="secondary">90s</button>
+            <button id="stopTimer">Stop</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Cardio del día</h2>
+          <label
+            >Modalidad (ej. caminata, bici)
+            <input type="text" id="cardioType" />
+          </label>
+          <label
+            >Tiempo de esta sesión (min)
+            <input type="number" id="cardioTime" />
+          </label>
+          <label
+            >FC media de esta sesión (bpm)
+            <input type="number" id="cardioHR" />
+          </label>
+          <label
+            >Pasos de esta sesión
+            <input type="number" id="stepsInput" />
+          </label>
+          <button id="saveCardio">Guardar cardio</button>
+          <p id="cardioStatus" class="status-msg"></p>
+          <div id="cardioSessionsList"></div>
+        </section>
+
+        <section class="card">
+          <h2>Seguimiento diario & comidas</h2>
+          <label
+            >Peso (kg)
+            <input type="number" id="weightInput" step="0.1" />
+          </label>
+          <label
+            >Cintura (cm)
+            <input type="number" id="waistInput" />
+          </label>
+
+          <h3 style="margin-top: 8px; font-size: 0.95rem">Comidas del día</h3>
+          <label
+            >Nombre de la comida (ej. Desayuno, Comida, Cena)
+            <input type="text" id="mealNameInput" />
+          </label>
+          <label
+            >Kcal de esta comida
+            <input type="number" id="kcalInput" />
+          </label>
+          <button id="saveDaily">Agregar comida / actualizar día</button>
+          <p id="dailyStatus" class="status-msg"></p>
+          <div id="mealsList"></div>
+        </section>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section id="dashboardTab" class="hidden">
+        <section class="card">
+          <h2>Resumen estilo Apple Fitness</h2>
+          <div class="view-toggle">
+            <button class="secondary active" data-view="day">Día</button>
+            <button class="secondary" data-view="week">Semana</button>
+            <button class="secondary" data-view="month">Mes</button>
+          </div>
+          <div class="rings">
+            <div class="ring-card">
+              <div class="ring-label">Kcal consumidas</div>
+              <div class="ring" id="ringKcal">
+                <div class="ring-inner" id="ringKcalInner">0 kcal</div>
+              </div>
+              <div class="ring-value" id="ringKcalText"></div>
+            </div>
+            <div class="ring-card">
+              <div class="ring-label">Cardio (min)</div>
+              <div class="ring" id="ringCardio">
+                <div class="ring-inner" id="ringCardioInner">0 min</div>
+              </div>
+              <div class="ring-value" id="ringCardioText"></div>
+            </div>
+            <div class="ring-card">
+              <div class="ring-label">Pasos</div>
+              <div class="ring" id="ringSteps">
+                <div class="ring-inner" id="ringStepsInner">0 pasos</div>
+              </div>
+              <div class="ring-value" id="ringStepsText"></div>
+            </div>
+            <div class="ring-card">
+              <div class="ring-label">Peso (kg)</div>
+              <div class="ring" id="ringWeight">
+                <div class="ring-inner" id="ringWeightInner">0 kg</div>
+              </div>
+              <div class="ring-value" id="ringWeightText"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Historial</h2>
+          <table class="history-table" id="historyTable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Peso</th>
+                <th>Cintura</th>
+                <th>Kcal (consumidas)</th>
+                <th>Cardio (min)</th>
+                <th>FC prom</th>
+                <th>Pasos</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      // ------------------ DATOS DE RUTINA ------------------
+      const routineByDay = {
+        1: [
+          {
+            name: 'Remo barra T neutro',
+            sets: '4',
+            reps: '8–10',
+            tempo: '3-1-1-0',
+            rest: '90s',
+          },
+          {
+            name: 'Jalón neutro polea',
+            sets: '4',
+            reps: '10–12',
+            tempo: '2-1-1-0',
+            rest: '75s',
+          },
+          {
+            name: 'Remo mancuerna en banco',
+            sets: '3',
+            reps: '10/10',
+            tempo: '2-1-1-0',
+            rest: '60s',
+          },
+          {
+            name: 'Pull-over cuerda',
+            sets: '3',
+            reps: '15',
+            tempo: '2-1-2-0',
+            rest: '45s',
+          },
+          {
+            name: 'Elevaciones posteriores mancuernas',
+            sets: '3',
+            reps: '15',
+            tempo: '2-0-2-0',
+            rest: '45s',
+          },
+          {
+            name: 'Facepull polea alta',
+            sets: '3',
+            reps: '15',
+            tempo: '2-1-1-0',
+            rest: '45s',
+          },
+        ],
+        2: [
+          {
+            name: 'Sentadilla goblet o Smith',
+            sets: '4',
+            reps: '10',
+            tempo: '3-1-1-0',
+            rest: '90s',
+          },
+          {
+            name: 'Prensa pies medios-altos',
+            sets: '4',
+            reps: '12',
+            tempo: '3-1-1-0',
+            rest: '75s',
+          },
+          {
+            name: 'Zancadas estáticas',
+            sets: '3',
+            reps: '12/12',
+            tempo: '2-1-1-0',
+            rest: '60s',
+          },
+          {
+            name: 'Extensión de piernas',
+            sets: '3',
+            reps: '15',
+            tempo: '2-1-2-0',
+            rest: '45s',
+          },
+          {
+            name: 'Sentadilla sumo ligera',
+            sets: '3',
+            reps: '15',
+            tempo: '2-0-2-0',
+            rest: '45s',
+          },
+        ],
+        3: [],
+        4: [
+          {
+            name: 'Press inclinado mancuernas',
+            sets: '4',
+            reps: '10',
+            tempo: '2-1-1-0',
+            rest: '90s',
+          },
+          {
+            name: 'Press plano máquina convergente',
+            sets: '4',
+            reps: '10',
+            tempo: '3-1-1-0',
+            rest: '75s',
+          },
+          {
+            name: 'Peck Deck',
+            sets: '3',
+            reps: '12–15',
+            tempo: '2-1-2-0',
+            rest: '45s',
+          },
+          {
+            name: 'Elevaciones laterales mancuernas',
+            sets: '4',
+            reps: '15',
+            tempo: '2-1-1-0',
+            rest: '45s',
+          },
+          {
+            name: 'Press militar sentado mancuernas',
+            sets: '3',
+            reps: '10',
+            tempo: '2-1-1-0',
+            rest: '60s',
+          },
+          {
+            name: 'Tríceps cuerda',
+            sets: '3',
+            reps: '15',
+            tempo: '2-1-1-0',
+            rest: '45s',
+          },
+        ],
+        5: [
+          {
+            name: 'Peso muerto rumano mancuernas',
+            sets: '4',
+            reps: '8',
+            tempo: '3-1-1-0',
+            rest: '90s',
+          },
+          {
+            name: 'Press femoral / curl sentado',
+            sets: '4',
+            reps: '12',
+            tempo: '2-1-2-0',
+            rest: '75s',
+          },
+          {
+            name: 'Sentadilla sumo con mancuerna',
+            sets: '3',
+            reps: '12',
+            tempo: '3-1-1-0',
+            rest: '60s',
+          },
+          {
+            name: 'Prensa inclinada (máquina de empuje)',
+            sets: '4',
+            reps: '10-12',
+            tempo: '3–1–1–0',
+            rest: '90s',
+          },
+          {
+            name: 'Buenos días barra ligera',
+            sets: '3',
+            reps: '12',
+            tempo: '3-1-1-0',
+            rest: '60s',
+          },
+        ],
+        6: [
+          {
+            name: 'Sentadilla goblet',
+            sets: '3',
+            reps: '12',
+            tempo: '3-1-1-0',
+            rest: '60s',
+          },
+          {
+            name: 'Press militar sentado',
+            sets: '3',
+            reps: '12',
+            tempo: '2-1-1-0',
+            rest: '60s',
+          },
+          {
+            name: 'Remo barra T',
+            sets: '3',
+            reps: '10',
+            tempo: '2-1-1-0',
+            rest: '75s',
+          },
+          {
+            name: 'Curl + extensión tríceps (superset)',
+            sets: '3',
+            reps: '12/12',
+            tempo: '—',
+            rest: '45s',
+          },
+          {
+            name: 'Sentadilla sumo ligera',
+            sets: '3',
+            reps: '15',
+            tempo: '2-1-2-0',
+            rest: '45s',
+          },
+        ],
+        7: [],
+      };
+
+      // Mapa ejercicio -> enlace de video (pueden ser YouTube/TikTok normales)
+      const exerciseVideos = {
+        'Remo barra T neutro': 'https://www.youtube.com/watch?v=m3R5fgxMZLQ',
+        'Jalón neutro polea': 'https://www.youtube.com/shorts/InXmIKVNwCU',
+        'Remo mancuerna en banco': 'https://www.youtube.com/shorts/u7W1mDPAwVk',
+        'Pull-over cuerda': 'https://www.youtube.com/shorts/dX5DHCZ-7p8',
+        'Elevaciones posteriores mancuernas':
+          'https://www.youtube.com/shorts/AkNlVr1JqsI',
+        'Facepull polea alta': 'https://www.youtube.com/shorts/IeOqdw9WI90',
+        'Sentadilla goblet o Smith':
+          'https://www.youtube.com/watch?v=4r9o_rqFZX4',
+        'Prensa pies medios-altos':
+          'https://www.youtube.com/shorts/CZrG20G5B1g',
+        'Zancadas estáticas': 'https://www.youtube.com/shorts/47oIkuhJcO8',
+        'Extensión de piernas': 'https://www.youtube.com/shorts/FtXooCm3wdQ',
+        'Sentadilla sumo ligera': 'https://www.youtube.com/shorts/EAc5IyMjmh8',
+        'Press inclinado mancuernas':
+          'https://www.youtube.com/shorts/DfgI6sGn9iQ',
+        'Press plano máquina convergente':
+          'https://www.youtube.com/shorts/YC91F8zHZn4',
+        'Peck Deck': 'https://www.youtube.com/shorts/HL88KYqhzQI',
+        'Elevaciones laterales mancuernas':
+          'https://www.youtube.com/shorts/Vh_Kjw3O-DQ',
+        'Press militar sentado mancuernas':
+          'https://www.youtube.com/shorts/R0f2Of6Sl2A',
+        'Tríceps cuerda': 'https://www.youtube.com/shorts/vqq2NowgTrk',
+        'Peso muerto rumano mancuernas':
+          'https://www.youtube.com/shorts/3u9M3nh0C0g',
+        'Press femoral / curl sentado':
+          'https://www.youtube.com/watch?v=JZtH3nYax5s',
+        'Sentadilla sumo con mancuerna':
+          'https://www.youtube.com/shorts/iQVIUv1s4K4',
+        'Prensa inclinada (máquina de empuje)':
+          'https://www.youtube.com/watch?v=xvCynwyNoP4',
+        'Buenos días barra ligera':
+          'https://www.youtube.com/shorts/XT3vntDTSgs',
+        'Sentadilla goblet': 'https://www.youtube.com/shorts/2KbVt1Gl0VM',
+        'Press militar sentado': 'https://www.youtube.com/shorts/UEzs_TIAOnk',
+        'Remo barra T': 'https://www.youtube.com/watch?v=m3R5fgxMZLQ',
+        'Curl + extensión tríceps (superset)':
+          'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      };
+
+      // ------------------ PESTAÑAS ------------------
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const trainingTab = document.getElementById('trainingTab');
+      const dashboardTab = document.getElementById('dashboardTab');
+
+      tabButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          const tab = btn.dataset.tab;
+          if (tab === 'training') {
+            trainingTab.classList.remove('hidden');
+            dashboardTab.classList.add('hidden');
+          } else {
+            trainingTab.classList.add('hidden');
+            dashboardTab.classList.remove('hidden');
+            updateDashboard();
+          }
+        });
+      });
+
+      // ------------------ ENTRENOS & VIDEOS ------------------
+      const daySelect = document.getElementById('daySelect');
+      const exerciseList = document.getElementById('exerciseList');
+
+      function loadDayExercises(day) {
+        exerciseList.innerHTML = '';
+        const exercises = routineByDay[day] || [];
+
+        if (!exercises.length) {
+          const p = document.createElement('p');
+          p.textContent =
+            day === 3
+              ? 'Día de cardio oxidativo + movilidad + hipopresivos en ayuno.'
+              : day === 7
+              ? 'Descanso activo: caminata suave + hipopresivos en ayuno.'
+              : 'Sin ejercicios de fuerza definidos para este día.';
+          exerciseList.appendChild(p);
+          return;
+        }
+
+        const savedKey = `day_${day}_log`;
+        const savedData = JSON.parse(localStorage.getItem(savedKey) || '{}');
+
+        exercises.forEach((ex, index) => {
+          const card = document.createElement('div');
+          card.className = 'exercise-card';
+
+          const header = document.createElement('div');
+          header.className = 'exercise-header';
+
+          const left = document.createElement('div');
+          left.className = 'exercise-header-left';
+          left.innerHTML = `<span>${ex.name}</span><span>${ex.sets} x ${ex.reps}</span>`;
+
+          const right = document.createElement('div');
+          right.className = 'exercise-header-right';
+          const tempoSpan = document.createElement('span');
+          tempoSpan.style.fontSize = '0.75rem';
+          tempoSpan.style.color = '#ccc';
+          tempoSpan.textContent = `Tempo: ${ex.tempo} · Descanso: ${ex.rest}`;
+          const videoBtn = document.createElement('button');
+          videoBtn.textContent = '🎥 Video';
+          videoBtn.className = 'video-btn secondary';
+          videoBtn.addEventListener('click', () => openVideo(ex.name));
+
+          right.appendChild(tempoSpan);
+          right.appendChild(videoBtn);
+
+          header.appendChild(left);
+          header.appendChild(right);
+          card.appendChild(header);
+
+          const inputs = document.createElement('div');
+          inputs.className = 'exercise-inputs';
+
+          const weightInput = document.createElement('input');
+          weightInput.type = 'text';
+          weightInput.placeholder = 'Peso usado';
+          weightInput.value = savedData[index]?.weight || '';
+
+          const notesInput = document.createElement('input');
+          notesInput.type = 'text';
+          notesInput.placeholder = 'Notas';
+          notesInput.value = savedData[index]?.notes || '';
+
+          weightInput.addEventListener('change', () => saveExerciseLog(day));
+          notesInput.addEventListener('change', () => saveExerciseLog(day));
+
+          inputs.appendChild(weightInput);
+          inputs.appendChild(notesInput);
+          card.appendChild(inputs);
+
+          exerciseList.appendChild(card);
+        });
+      }
+
+      function saveExerciseLog(day) {
+        const cards = exerciseList.querySelectorAll('.exercise-card');
+        const data = [];
+        cards.forEach((card) => {
+          const inputs = card.querySelectorAll('input');
+          data.push({
+            weight: inputs[0].value,
+            notes: inputs[1].value,
+          });
+        });
+        localStorage.setItem(`day_${day}_log`, JSON.stringify(data));
+      }
+
+      daySelect.addEventListener('change', (e) => {
+        const day = parseInt(e.target.value, 10);
+        loadDayExercises(day);
+      });
+      loadDayExercises(parseInt(daySelect.value, 10));
+
+      // abrir video en pestaña nueva
+      function openVideo(exName) {
+        const url = exerciseVideos[exName];
+        if (!url) {
+          alert('No hay video configurado aún para este ejercicio.');
+          return;
+        }
+        window.open(url, '_blank');
+      }
+
+      // ------------------ TIMER ------------------
+      let timerInterval = null;
+      let remainingSeconds = 0;
+      const timerDisplay = document.getElementById('timerDisplay');
+
+      function updateTimerDisplay() {
+        const m = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
+        const s = String(remainingSeconds % 60).padStart(2, '0');
+        timerDisplay.textContent = `${m}:${s}`;
+      }
+      function startTimer(seconds) {
+        clearInterval(timerInterval);
+        remainingSeconds = seconds;
+        updateTimerDisplay();
+        timerInterval = setInterval(() => {
+          remainingSeconds -= 1;
+          if (remainingSeconds <= 0) {
+            clearInterval(timerInterval);
+            remainingSeconds = 0;
+            updateTimerDisplay();
+            if (navigator.vibrate) navigator.vibrate(200);
+          } else {
+            updateTimerDisplay();
+          }
+        }, 1000);
+      }
+      document
+        .querySelectorAll('.timer-controls button[data-time]')
+        .forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const secs = parseInt(btn.dataset.time, 10);
+            startTimer(secs);
+          });
+        });
+      document.getElementById('stopTimer').addEventListener('click', () => {
+        clearInterval(timerInterval);
+        remainingSeconds = 0;
+        updateTimerDisplay();
+      });
+
+      // ------------------ CARDIO + COMIDAS ------------------
+      const cardioType = document.getElementById('cardioType');
+      const cardioTime = document.getElementById('cardioTime');
+      const cardioHR = document.getElementById('cardioHR');
+      const stepsInput = document.getElementById('stepsInput');
+      const saveCardioBtn = document.getElementById('saveCardio');
+      const cardioStatus = document.getElementById('cardioStatus');
+      const cardioSessionsList = document.getElementById('cardioSessionsList');
+
+      const weightInput = document.getElementById('weightInput');
+      const waistInput = document.getElementById('waistInput');
+      const mealNameInput = document.getElementById('mealNameInput');
+      const kcalInput = document.getElementById('kcalInput');
+      const saveDailyBtn = document.getElementById('saveDaily');
+      const dailyStatus = document.getElementById('dailyStatus');
+      const mealsList = document.getElementById('mealsList');
+
+      function todayKey() {
+        return new Date().toISOString().slice(0, 10);
+      }
+
+      // cardio: acumula sesiones
+      saveCardioBtn.addEventListener('click', () => {
+        const key = todayKey();
+        const existing = JSON.parse(
+          localStorage.getItem(`cardio_${key}`) || '{}'
+        );
+
+        const newTime = parseFloat(cardioTime.value || '0');
+        const newHR = parseFloat(cardioHR.value || '0');
+        const newSteps = parseInt(stepsInput.value || '0', 10);
+        const newType =
+          cardioType.value || `Sesión ${(existing.sessions || []).length + 1}`;
+
+        const totalTimeBefore = existing.time || 0;
+        const totalTimeAfter = totalTimeBefore + newTime;
+
+        let hrAvg = existing.hr || 0;
+        if (totalTimeAfter > 0) {
+          hrAvg =
+            ((existing.hr || 0) * totalTimeBefore + newHR * newTime) /
+            totalTimeAfter;
+        }
+
+        const sessions = existing.sessions || [];
+        sessions.push({
+          type: newType,
+          time: newTime,
+          hr: newHR,
+          steps: newSteps,
+        });
+
+        const payload = {
+          type: newType,
+          time: totalTimeAfter,
+          hr: hrAvg,
+          steps: (existing.steps || 0) + (newSteps || 0),
+          sessions,
+        };
+
+        localStorage.setItem(`cardio_${key}`, JSON.stringify(payload));
+        cardioStatus.textContent = 'Cardio acumulado ✅';
+        setTimeout(() => (cardioStatus.textContent = ''), 2000);
+
+        cardioType.value = '';
+        cardioTime.value = '';
+        cardioHR.value = '';
+        stepsInput.value = '';
+
+        renderCardioSessionsToday();
+      });
+
+      // comidas: acumula comidas y kcal del día
+      saveDailyBtn.addEventListener('click', () => {
+        const key = todayKey();
+        const existingDaily = JSON.parse(
+          localStorage.getItem(`daily_${key}`) || '{}'
+        );
+        const existingMeals = JSON.parse(
+          localStorage.getItem(`meals_${key}`) || '[]'
+        );
+
+        const addKcal = parseFloat(kcalInput.value || '0');
+        const mealName =
+          mealNameInput.value || `Comida ${existingMeals.length + 1}`;
+
+        const newMeals = [...existingMeals, { name: mealName, kcal: addKcal }];
+
+        const payloadDaily = {
+          weight: parseFloat(weightInput.value || existingDaily.weight || '0'),
+          waist: parseFloat(waistInput.value || existingDaily.waist || '0'),
+          kcal: (existingDaily.kcal || 0) + (addKcal || 0),
+        };
+
+        localStorage.setItem(`daily_${key}`, JSON.stringify(payloadDaily));
+        localStorage.setItem(`meals_${key}`, JSON.stringify(newMeals));
+
+        dailyStatus.textContent = 'Comida agregada / día actualizado ✅';
+        setTimeout(() => (dailyStatus.textContent = ''), 2000);
+
+        kcalInput.value = '';
+        mealNameInput.value = '';
+
+        renderMealsToday();
+      });
+
+      // mostrar detalle de sesiones de cardio de hoy
+      function renderCardioSessionsToday() {
+        const key = todayKey();
+        const data = JSON.parse(localStorage.getItem(`cardio_${key}`) || '{}');
+        const sessions = data.sessions || [];
+
+        if (!sessions.length) {
+          cardioSessionsList.innerHTML =
+            "<p style='font-size:0.8rem;color:#aaa;'>Sin sesiones registradas hoy.</p>";
+          return;
+        }
+
+        let html =
+          "<table class='history-table'><thead><tr><th>#</th><th>Tipo</th><th>Min</th><th>FC</th><th>Pasos</th></tr></thead><tbody>";
+        sessions.forEach((s, i) => {
+          html += `<tr>
+      <td>${i + 1}</td>
+      <td>${s.type || ''}</td>
+      <td>${s.time || 0}</td>
+      <td>${s.hr || 0}</td>
+      <td>${s.steps || 0}</td>
+    </tr>`;
+        });
+        html += '</tbody></table>';
+        cardioSessionsList.innerHTML = html;
+      }
+
+      // mostrar detalle de comidas de hoy
+      function renderMealsToday() {
+        const key = todayKey();
+        const meals = JSON.parse(localStorage.getItem(`meals_${key}`) || '[]');
+
+        if (!meals.length) {
+          mealsList.innerHTML =
+            "<p style='font-size:0.8rem;color:#aaa;'>Sin comidas registradas todavía.</p>";
+          return;
+        }
+
+        let html =
+          "<table class='history-table'><thead><tr><th>#</th><th>Comida</th><th>Kcal</th></tr></thead><tbody>";
+        meals.forEach((m, i) => {
+          html += `<tr>
+      <td>${i + 1}</td>
+      <td>${m.name || `Comida ${i + 1}`}</td>
+      <td>${m.kcal || 0}</td>
+    </tr>`;
+        });
+        html += '</tbody></table>';
+        mealsList.innerHTML = html;
+      }
+
+      // ------------------ DASHBOARD ------------------
+      const ringKcal = document.getElementById('ringKcal');
+      const ringCardio = document.getElementById('ringCardio');
+      const ringSteps = document.getElementById('ringSteps');
+      const ringWeight = document.getElementById('ringWeight');
+      const ringKcalInner = document.getElementById('ringKcalInner');
+      const ringCardioInner = document.getElementById('ringCardioInner');
+      const ringStepsInner = document.getElementById('ringStepsInner');
+      const ringWeightInner = document.getElementById('ringWeightInner');
+      const ringKcalText = document.getElementById('ringKcalText');
+      const ringCardioText = document.getElementById('ringCardioText');
+      const ringStepsText = document.getElementById('ringStepsText');
+      const ringWeightText = document.getElementById('ringWeightText');
+
+      const historyTableBody = document.querySelector('#historyTable tbody');
+      const viewButtons = document.querySelectorAll('.view-toggle button');
+
+      // objetivos
+      const TARGET_KCAL = 1600;
+      const TARGET_CARDIO_MIN = 30;
+      const TARGET_STEPS = 8000;
+
+      let currentView = 'day';
+
+      viewButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          viewButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentView = btn.dataset.view;
+          updateDashboard();
+        });
+      });
+
+      function getLastNDates(n) {
+        const dates = [];
+        const today = new Date();
+        for (let i = 0; i < n; i++) {
+          const d = new Date(today);
+          d.setDate(today.getDate() - i);
+          dates.push(d.toISOString().slice(0, 10));
+        }
+        return dates.reverse();
+      }
+
+      function getDataRange(view) {
+        let days = 1;
+        if (view === 'week') days = 7;
+        if (view === 'month') days = 30;
+        const dates = getLastNDates(days);
+        const rows = [];
+
+        dates.forEach((date) => {
+          const daily = JSON.parse(
+            localStorage.getItem(`daily_${date}`) || '{}'
+          );
+          const cardio = JSON.parse(
+            localStorage.getItem(`cardio_${date}`) || '{}'
+          );
+          if (
+            daily.weight ||
+            daily.waist ||
+            daily.kcal ||
+            cardio.time ||
+            cardio.hr ||
+            cardio.steps
+          ) {
+            rows.push({
+              date,
+              weight: daily.weight || 0,
+              waist: daily.waist || 0,
+              kcal: daily.kcal || 0,
+              cardioTime: cardio.time || 0,
+              hr: cardio.hr || 0,
+              steps: cardio.steps || 0,
+            });
+          }
+        });
+        return rows;
+      }
+
+      function updateDashboard() {
+        const data = getDataRange(currentView);
+
+        if (!data.length) {
+          setRing(
+            ringKcal,
+            ringKcalInner,
+            ringKcalText,
+            0,
+            TARGET_KCAL,
+            '#e53935',
+            'kcal'
+          );
+          setRing(
+            ringCardio,
+            ringCardioInner,
+            ringCardioText,
+            0,
+            TARGET_CARDIO_MIN,
+            '#42a5f5',
+            'min'
+          );
+          setRing(
+            ringSteps,
+            ringStepsInner,
+            ringStepsText,
+            0,
+            TARGET_STEPS,
+            '#66bb6a',
+            'pasos'
+          );
+          setRing(
+            ringWeight,
+            ringWeightInner,
+            ringWeightText,
+            0,
+            1,
+            '#f5f5f5',
+            'kg'
+          );
+          historyTableBody.innerHTML =
+            "<tr><td colspan='7'>Sin datos aún. Registra tu día en la pestaña Entreno.</td></tr>";
+          return;
+        }
+
+        let ref;
+        if (currentView === 'day') {
+          ref = data[data.length - 1];
+        } else {
+          const sum = data.reduce(
+            (acc, row) => {
+              acc.weight += row.weight || 0;
+              acc.waist += row.waist || 0;
+              acc.kcal += row.kcal || 0;
+              acc.cardioTime += row.cardioTime || 0;
+              acc.hr += row.hr || 0;
+              acc.steps += row.steps || 0;
+              return acc;
+            },
+            { weight: 0, waist: 0, kcal: 0, cardioTime: 0, hr: 0, steps: 0 }
+          );
+          const len = data.length || 1;
+          ref = {
+            date: data[0].date + ' → ' + data[data.length - 1].date,
+            weight: sum.weight / len,
+            waist: sum.waist / len,
+            kcal: sum.kcal / len,
+            cardioTime: sum.cardioTime / len,
+            hr: sum.hr / len,
+            steps: sum.steps / len,
+          };
+        }
+
+        setRing(
+          ringKcal,
+          ringKcalInner,
+          ringKcalText,
+          ref.kcal || 0,
+          TARGET_KCAL,
+          '#e53935',
+          'kcal'
+        );
+        setRing(
+          ringCardio,
+          ringCardioInner,
+          ringCardioText,
+          ref.cardioTime || 0,
+          TARGET_CARDIO_MIN,
+          '#42a5f5',
+          'min'
+        );
+        setRing(
+          ringSteps,
+          ringStepsInner,
+          ringStepsText,
+          ref.steps || 0,
+          TARGET_STEPS,
+          '#66bb6a',
+          'pasos'
+        );
+        setRing(
+          ringWeight,
+          ringWeightInner,
+          ringWeightText,
+          ref.weight || 0,
+          ref.weight || 1,
+          '#f5f5f5',
+          'kg'
+        );
+
+        historyTableBody.innerHTML = '';
+        data.forEach((row) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+      <td>${row.date}</td>
+      <td>${row.weight || ''}</td>
+      <td>${row.waist || ''}</td>
+      <td>${row.kcal || ''}</td>
+      <td>${row.cardioTime || ''}</td>
+      <td>${row.hr || ''}</td>
+      <td>${row.steps || ''}</td>
+    `;
+          historyTableBody.appendChild(tr);
+        });
+      }
+
+      function setRing(ringEl, innerEl, textEl, value, target, color, unit) {
+        const percent = target > 0 ? Math.min(value / target, 1) : 0;
+        ringEl.style.setProperty('--percent', percent.toString());
+        ringEl.style.setProperty('--color', color);
+        innerEl.textContent = `${Math.round(value)} ${unit}`;
+        if (unit === 'kg') {
+          textEl.textContent = 'Promedio / día';
+        } else {
+          const pctText = Math.round(percent * 100);
+          textEl.textContent = `${pctText}% del objetivo`;
+        }
+      }
+
+      // inicial
+      renderCardioSessionsToday();
+      renderMealsToday();
+      updateDashboard();
+    </script>
+  </body>
+</html>
