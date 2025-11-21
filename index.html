@@ -2,8 +2,11 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Athletic Cut Coach – Frecuencia 2</title>
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
+    />
+    <title>Athletic Cut – UL + Dashboard</title>
     <meta name="theme-color" content="#050608" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -14,7 +17,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
       }
       body {
@@ -37,8 +40,8 @@
       }
       .tabs {
         display: flex;
-        gap: 6px;
         flex-wrap: wrap;
+        gap: 6px;
         justify-content: center;
         margin-top: 8px;
       }
@@ -118,7 +121,7 @@
         margin-top: 4px;
       }
 
-      /* RINGS */
+      /* RINGS DASHBOARD */
       .rings {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -241,15 +244,10 @@
         flex: 1;
         font-size: 0.85rem;
       }
-      .btns-right {
-        display: flex;
-        gap: 6px;
-        align-items: center;
-      }
-      .video-btn {
-        font-size: 0.7rem;
-        padding: 4px 8px;
-        border-radius: 999px;
+      .tempo-note {
+        font-size: 0.8rem;
+        color: #cfd8dc;
+        margin-top: 4px;
       }
 
       /* Timers */
@@ -286,13 +284,17 @@
         .rings {
           grid-template-columns: 1fr;
         }
+        .exercise-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
     </style>
   </head>
   <body>
     <header>
       <h1>Athletic Cut Coach</h1>
-      <p>Frecuencia 2 · cardio diario · hasta 22 dic</p>
+      <p>Upper/Lower 8 semanas · Cardio diario · Hipopro · Sin crunch</p>
       <div class="tabs">
         <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
         <button class="tab-btn" data-tab="comidas">Comidas</button>
@@ -368,25 +370,26 @@
       <section id="comidas" class="hidden">
         <section class="card">
           <h2>Registro de comidas</h2>
-          <div class="sub">Objetivo diario por defecto: 1600 kcal</div>
-          <label
-            >Nombre de la comida<input
+          <p class="sub">Objetivo diario por defecto: 1600 kcal.</p>
+          <label>
+            Nombre de la comida
+            <input
               id="mealNameInput"
               placeholder="Desayuno / Comida / Cena / Snack"
-          /></label>
-          <label
-            >Kcal de esta comida<input
-              id="kcalInput"
-              type="number"
-              min="0"
-              step="1"
-          /></label>
-          <label
-            >Peso (kg)<input id="weightInput" type="number" step="0.1"
-          /></label>
-          <label
-            >Cintura (cm)<input id="waistInput" type="number" step="0.5"
-          /></label>
+            />
+          </label>
+          <label>
+            Kcal de esta comida
+            <input id="kcalInput" type="number" min="0" step="1" />
+          </label>
+          <label>
+            Peso (kg)
+            <input id="weightInput" type="number" step="0.1" />
+          </label>
+          <label>
+            Cintura (cm)
+            <input id="waistInput" type="number" step="0.5" />
+          </label>
           <button id="saveDaily">Agregar comida / actualizar día</button>
           <p id="dailyStatus" class="small"></p>
           <div id="mealsList"></div>
@@ -396,75 +399,42 @@
       <!-- HIPO -->
       <section id="hipo" class="hidden">
         <section class="card">
-          <h2>Hipopresivos – Rutina guiada (B)</h2>
-          <div class="sub">
-            Días recomendados: 3 y 7 (también 5–10 min otros días si te sienta
-            bien).
+          <h2>Hipopresivos – Rutina guiada</h2>
+          <p class="sub">
+            Días recomendados: 3 y 7 (y cuando quieras en ayuno). Sin crunch,
+            orientado a vientre plano.
+          </p>
+
+          <div class="hypo-step">
+            <div class="hypo-head">
+              <strong>1) Standing – Basic</strong>
+              <span class="small">3 rondas · 40s trabajo / 20s transición</span>
+            </div>
+            <p class="small">
+              Postura erguida, pies al ancho de cadera, brazos ligeramente
+              activos.
+            </p>
           </div>
 
           <div class="hypo-step">
             <div class="hypo-head">
-              <strong>1) Standing – Basic</strong
-              ><span class="exercise-meta"
-                >3 rondas · 40s trabajo / 20s transición</span
-              >
+              <strong>2) Seated – Open elbows</strong>
+              <span class="small">3 rondas · 40s / 20s</span>
             </div>
-            <div style="margin-top: 6px">
-              <button
-                class="video-btn secondary"
-                onclick="openDemo('Hypopressive standing basic')"
-              >
-                🔎 YouTube
-              </button>
-              <button
-                class="video-btn secondary"
-                onclick="openImages('Hypopressive standing basic')"
-              >
-                🖼️ Imágenes
-              </button>
-            </div>
+            <p class="small">
+              Sentado al borde, columna larga, codos abiertos en línea con
+              hombros.
+            </p>
           </div>
 
           <div class="hypo-step">
             <div class="hypo-head">
-              <strong>2) Seated – Open elbows</strong
-              ><span class="exercise-meta">3 rondas · 40s / 20s</span>
+              <strong>3) Quadruped – Neutral spine</strong>
+              <span class="small">3 rondas · 40s / 20s</span>
             </div>
-            <div style="margin-top: 6px">
-              <button
-                class="video-btn secondary"
-                onclick="openDemo('Hypopressive seated open elbows')"
-              >
-                🔎 YouTube
-              </button>
-              <button
-                class="video-btn secondary"
-                onclick="openImages('Hypopressive seated open elbows')"
-              >
-                🖼️ Imágenes
-              </button>
-            </div>
-          </div>
-
-          <div class="hypo-step">
-            <div class="hypo-head">
-              <strong>3) Quadruped – Neutral spine</strong
-              ><span class="exercise-meta">3 rondas · 40s / 20s</span>
-            </div>
-            <div style="margin-top: 6px">
-              <button
-                class="video-btn secondary"
-                onclick="openDemo('Hypopressive quadruped neutral spine')"
-              >
-                🔎 YouTube
-              </button>
-              <button
-                class="video-btn secondary"
-                onclick="openImages('Hypopressive quadruped neutral spine')"
-              >
-                🖼️ Imágenes
-              </button>
-            </div>
+            <p class="small">
+              Apoyo de manos y rodillas, columna neutra, cuello relajado.
+            </p>
           </div>
 
           <div class="timer"><span id="hypoTimer">00:00</span></div>
@@ -475,9 +445,9 @@
             <button class="secondary" id="stopHypo">Detener</button>
           </div>
           <p class="small">
-            Guía: inspira 4s → apnea → recupera 4s dentro de cada bloque de 40s
-            (ajústalo a tu comodidad). Secuencia 3 posturas × 3 rondas, con 20s
-            de transición.
+            Dentro de cada bloque de 40s: inspira 4s → apnea → suelta y repite
+            según tolerancia. El temporizador recorre 3 posturas × 3 rondas con
+            20s de transición.
           </p>
           <p id="hypoStatus" class="small"></p>
         </section>
@@ -486,38 +456,32 @@
       <!-- PESAS -->
       <section id="pesas" class="hidden">
         <section class="card">
-          <h2>Selección de día</h2>
-          <select id="daySelect">
-            <option value="1">Día 1 – Torso A (espalda + posterior)</option>
-            <option value="2">Día 2 – Pierna A (cuádriceps + glúteo)</option>
-            <option value="3">
-              Día 3 – Torso B (pecho + lateral + tríceps)
-            </option>
-            <option value="4">Día 4 – Pierna B (femoral + glúteo)</option>
-            <option value="5">Día 5 – Torso C (espalda + brazos)</option>
-            <option value="6">Día 6 – Fullbody atlético</option>
-            <option value="7">Día 7 – Descanso activo</option>
-          </select>
-          <p class="small">
-            Al escribir un peso en una serie, el descanso del ejercicio se
-            inicia automáticamente.
+          <h2>Pesas – Upper/Lower 8 semanas</h2>
+          <p class="sub">
+            Selecciona el día. Al escribir un peso en una serie, se guarda y
+            arranca automáticamente el descanso sugerido.
           </p>
-
-          <div class="small" style="margin: 6px 0 0">
-            Modo media:
-            <button
-              class="secondary"
-              onclick="setMediaMode('search'); alert('Modo búsqueda activado');"
-            >
-              Búsqueda
-            </button>
-            <button
-              class="secondary"
-              onclick="setMediaMode('gif'); alert('Modo GIF activado'); loadDayExercises(parseInt(daySelect.value,10));"
-            >
-              GIF
-            </button>
-          </div>
+          <label>
+            Día de rutina
+            <select id="daySelect">
+              <option value="1">Día 1 – Upper A (pecho prioridad)</option>
+              <option value="2">Día 2 – Lower A (quad prioridad)</option>
+              <option value="3">Día 3 – Upper B (estética torso)</option>
+              <option value="4">Día 4 – Lower B (femoral + glúteo)</option>
+              <option value="5">
+                Día 5 – Extra (usa pestañas Cardio + Hipo)
+              </option>
+              <option value="6">Día 6 – Libre / movilidad</option>
+              <option value="7">Día 7 – Descanso activo</option>
+            </select>
+          </label>
+          <p class="tempo-note">
+            Tempo A–B–C–D =
+            <strong>A:</strong> bajar · <strong>B:</strong> pausa abajo ·
+            <strong>C:</strong> subir · <strong>D:</strong> pausa arriba.
+            Ejemplo <code>3–1–1–0</code> = 3s bajando, 1s abajo, 1s subiendo,
+            0s arriba.
+          </p>
         </section>
 
         <section class="card">
@@ -534,6 +498,10 @@
             <button data-time="90" class="secondary">90s</button>
             <button id="stopTimer">Stop</button>
           </div>
+          <p class="small">
+            El temporizador también arranca cuando registras el peso de una
+            serie (usa el descanso del ejercicio).
+          </p>
         </section>
       </section>
 
@@ -541,27 +509,23 @@
       <section id="cardio" class="hidden">
         <section class="card">
           <h2>Registro de cardio</h2>
-          <div class="sub" id="fatZoneInfo"></div>
-          <label
-            >Modalidad (walk incline / bike / row)<input id="cardioType"
-          /></label>
-          <label
-            >Tiempo de esta sesión (min)<input
-              id="cardioTime"
-              type="number"
-              min="0"
-              step="1"
-          /></label>
-          <label
-            >FC media (bpm)<input id="cardioHR" type="number" min="0" step="1"
-          /></label>
-          <label
-            >Pasos de esta sesión<input
-              id="stepsInput"
-              type="number"
-              min="0"
-              step="1"
-          /></label>
+          <p class="sub" id="fatZoneInfo"></p>
+          <label>
+            Modalidad (walk incline / bike / row / eliptica)
+            <input id="cardioType" />
+          </label>
+          <label>
+            Tiempo de esta sesión (min)
+            <input id="cardioTime" type="number" min="0" step="1" />
+          </label>
+          <label>
+            FC media (bpm)
+            <input id="cardioHR" type="number" min="0" step="1" />
+          </label>
+          <label>
+            Pasos de esta sesión
+            <input id="stepsInput" type="number" min="0" step="1" />
+          </label>
           <button id="saveCardio">Guardar cardio</button>
           <p id="cardioStatus" class="small"></p>
           <div id="cardioSessionsList"></div>
@@ -570,12 +534,12 @@
     </main>
 
     <script>
-      /* =================== PARÁMETROS & UTILS =================== */
+      /* =============== PARÁMETROS GENERALES =============== */
       const AGE = 27;
-      const HR_MAX = Math.round(208 - 0.7 * AGE); // Tanaka
-      const HR_FAT_LOW = Math.round(HR_MAX * 0.6); // 60%
-      const HR_FAT_HIGH = Math.round(HR_MAX * 0.75); // 75%
-      const TARGET_FAT_MIN = 30; // minutos objetivo en zona ox.
+      const HR_MAX = Math.round(208 - 0.7 * AGE);
+      const HR_FAT_LOW = Math.round(HR_MAX * 0.6);
+      const HR_FAT_HIGH = Math.round(HR_MAX * 0.75);
+      const TARGET_FAT_MIN = 30;
 
       const TARGET_KCAL = 1600;
       const TARGET_CARDIO_MIN = 30;
@@ -589,340 +553,262 @@
         return hr >= HR_FAT_LOW && hr <= HR_FAT_HIGH;
       }
 
-      // Abrir búsquedas rápidas
-      function openDemo(exName) {
-        const q = encodeURIComponent(`${exName} proper form gym`);
-        window.open(
-          `https://www.youtube.com/results?search_query=${q}`,
-          '_blank'
-        );
-      }
-      function openImages(exName) {
-        const q = encodeURIComponent(`${exName} exercise form`);
-        window.open(`https://www.google.com/search?tbm=isch&q=${q}`, '_blank');
-      }
-
-      // Preferencia: media (search/gif)
-      const MEDIA_MODE_KEY = 'media_mode';
-      function getMediaMode() {
-        return localStorage.getItem(MEDIA_MODE_KEY) || 'search';
-      }
-      function setMediaMode(m) {
-        localStorage.setItem(MEDIA_MODE_KEY, m);
-      }
-
-      /* =================== TABS =================== */
-      const tabBtns = document.querySelectorAll('.tab-btn');
+      /* =============== TABS =============== */
+      const tabBtns = document.querySelectorAll(".tab-btn");
       const sections = {
-        dashboard: document.getElementById('dashboard'),
-        comidas: document.getElementById('comidas'),
-        hipo: document.getElementById('hipo'),
-        pesas: document.getElementById('pesas'),
-        cardio: document.getElementById('cardio'),
+        dashboard: document.getElementById("dashboard"),
+        comidas: document.getElementById("comidas"),
+        hipo: document.getElementById("hipo"),
+        pesas: document.getElementById("pesas"),
+        cardio: document.getElementById("cardio"),
       };
+
       tabBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          tabBtns.forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
+        btn.addEventListener("click", () => {
+          tabBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
           const tab = btn.dataset.tab;
           Object.keys(sections).forEach((k) => {
-            sections[k].classList.toggle('hidden', k !== tab);
+            sections[k].classList.toggle("hidden", k !== tab);
           });
-          if (tab === 'dashboard') updateDashboard();
+          if (tab === "dashboard") updateDashboard();
+          if (tab === "cardio") renderCardioSessionsToday();
+          if (tab === "comidas") renderMealsToday();
         });
       });
 
-      /* =================== RUTINA FRECUENCIA 2 =================== */
+      /* =============== RUTINA UPPER/LOWER =============== */
+      // name, sets, reps, tempo, rest (texto tipo "90s")
       const routineByDay = {
         1: [
+          // Upper A
           {
-            name: 'Chest Supported Row',
-            sets: '4',
-            reps: '8–10',
-            tempo: '3-1-1-0',
-            rest: '90s',
+            name: "Press inclinado mancuernas",
+            sets: "4",
+            reps: "8–10",
+            tempo: "3-1-1-0",
+            rest: "120s",
           },
           {
-            name: 'Lat Pulldown (neutral grip)',
-            sets: '4',
-            reps: '10–12',
-            tempo: '2-1-1-0',
-            rest: '75s',
+            name: "Press plano máquina convergente",
+            sets: "3",
+            reps: "10–12",
+            tempo: "3-0-2-1",
+            rest: "120s",
           },
           {
-            name: 'Seated Cable Row (close grip)',
-            sets: '3',
-            reps: '10–12',
-            tempo: '2-1-1-0',
-            rest: '60s',
+            name: "Press declinado DB / máquina",
+            sets: "3",
+            reps: "8–10",
+            tempo: "2-0-2-0",
+            rest: "120s",
           },
           {
-            name: 'Straight Arm Pulldown (rope)',
-            sets: '3',
-            reps: '15',
-            tempo: '2-1-2-0',
-            rest: '45s',
+            name: "Aperturas en polea (alto–bajo)",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
           },
           {
-            name: 'Rear Delt Fly (dumbbells)',
-            sets: '3',
-            reps: '15',
-            tempo: '2-0-2-0',
-            rest: '45s',
+            name: "Laterales en polea",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-2-0",
+            rest: "75s",
           },
           {
-            name: 'Face Pull (cable)',
-            sets: '3',
-            reps: '15',
-            tempo: '2-1-1-0',
-            rest: '45s',
+            name: "Posterior en polea",
+            sets: "2",
+            reps: "12–15",
+            tempo: "2-0-3-1",
+            rest: "75s",
+          },
+          {
+            name: "Remo sentado neutro",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-2-1",
+            rest: "120s",
+          },
+          {
+            name: "Jalón neutro",
+            sets: "2",
+            reps: "10–12",
+            tempo: "2-1-2-0",
+            rest: "120s",
+          },
+          {
+            name: "Curl EZ",
+            sets: "2",
+            reps: "10–12",
+            tempo: "2-0-2-1",
+            rest: "75s",
+          },
+          {
+            name: "Tríceps cuerda",
+            sets: "2",
+            reps: "12–15",
+            tempo: "2-0-2-1",
+            rest: "75s",
           },
         ],
         2: [
+          // Lower A
           {
-            name: 'Goblet Squat',
-            sets: '4',
-            reps: '8–10',
-            tempo: '3-1-1-0',
-            rest: '90s',
+            name: "Prensa",
+            sets: "4",
+            reps: "10–12",
+            tempo: "3-1-2-0",
+            rest: "150s",
           },
           {
-            name: 'Leg Press (medium stance)',
-            sets: '4',
-            reps: '10–12',
-            tempo: '3-1-1-0',
-            rest: '90s',
+            name: "Sentadilla goblet",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-1-1-0",
+            rest: "120s",
           },
           {
-            name: 'Static Lunge (dumbbells)',
-            sets: '3',
-            reps: '10/10',
-            tempo: '2-1-1-0',
-            rest: '75s',
+            name: "Extensión de cuádriceps",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
           },
           {
-            name: 'Leg Extension',
-            sets: '3',
-            reps: '15',
-            tempo: '2-1-2-0',
-            rest: '60s',
+            name: "Curl femoral sentado",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-2-1",
+            rest: "120s",
           },
           {
-            name: 'Standing Calf Raise',
-            sets: '4',
-            reps: '12–15',
-            tempo: '2-1-2-0',
-            rest: '45s',
+            name: "Peso muerto rumano mancuernas",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-1-2-0",
+            rest: "150s",
+          },
+          {
+            name: "Hip thrust en máquina",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-1-2",
+            rest: "120s",
+          },
+          {
+            name: "Gemelos sentado",
+            sets: "3–4",
+            reps: "12–15",
+            tempo: "2-2-2-0",
+            rest: "75s",
           },
         ],
         3: [
+          // Upper B
           {
-            name: 'Incline Dumbbell Press',
-            sets: '4',
-            reps: '8–10',
-            tempo: '2-1-1-0',
-            rest: '90s',
+            name: "Press inclinado máquina",
+            sets: "4",
+            reps: "8–10",
+            tempo: "3-0-2-1",
+            rest: "150s",
           },
           {
-            name: 'Chest Press Machine (converging)',
-            sets: '4',
-            reps: '10–12',
-            tempo: '3-1-1-0',
-            rest: '75s',
+            name: "Press plano DB",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-0-2-0",
+            rest: "120s",
           },
           {
-            name: 'Pec Deck Machine',
-            sets: '3',
-            reps: '12–15',
-            tempo: '2-1-2-0',
-            rest: '60s',
+            name: "Aperturas máquina / cable",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
           },
           {
-            name: 'Lateral Raise (dumbbells)',
-            sets: '4',
-            reps: '15',
-            tempo: '2-1-1-0',
-            rest: '45s',
+            name: "Laterales DB sentado",
+            sets: "3",
+            reps: "15–20",
+            tempo: "2-1-2-0",
+            rest: "75s",
           },
           {
-            name: 'Seated Dumbbell Shoulder Press',
-            sets: '3',
-            reps: '10–12',
-            tempo: '2-1-1-0',
-            rest: '75s',
+            name: "Remo DB una mano",
+            sets: "3",
+            reps: "8–10",
+            tempo: "2-1-2-1",
+            rest: "120s",
           },
           {
-            name: 'Triceps Rope Pushdown',
-            sets: '3',
-            reps: '12–15',
-            tempo: '2-1-1-0',
-            rest: '60s',
+            name: "Pull-ins polea",
+            sets: "2",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
+          },
+          {
+            name: "Fondos asistidos",
+            sets: "2",
+            reps: "10–12",
+            tempo: "2-0-2-1",
+            rest: "90s",
+          },
+          {
+            name: "Curl inclinado",
+            sets: "2",
+            reps: "10–12",
+            tempo: "3-1-2-0",
+            rest: "90s",
           },
         ],
         4: [
+          // Lower B
           {
-            name: 'Romanian Deadlift (dumbbells)',
-            sets: '4',
-            reps: '8–10',
-            tempo: '3-1-1-0',
-            rest: '90s',
+            name: "Peso muerto rumano mancuernas",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-1-2-0",
+            rest: "150s",
           },
           {
-            name: 'Seated Leg Curl',
-            sets: '4',
-            reps: '10–12',
-            tempo: '2-1-2-0',
-            rest: '75s',
+            name: "Prensa pies arriba",
+            sets: "3",
+            reps: "10–12",
+            tempo: "3-1-2-0",
+            rest: "150s",
           },
           {
-            name: 'Leg Press (high feet)',
-            sets: '3',
-            reps: '10–12',
-            tempo: '3-1-1-0',
-            rest: '90s',
+            name: "Zancadas caminando",
+            sets: "3",
+            reps: "10–12 por pierna",
+            tempo: "2-0-2-0",
+            rest: "90s",
           },
           {
-            name: 'Good Morning (light barbell)',
-            sets: '3',
-            reps: '12',
-            tempo: '3-1-1-0',
-            rest: '60s',
+            name: "Curl femoral",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-2-1",
+            rest: "120s",
           },
           {
-            name: 'Seated Calf Raise',
-            sets: '4',
-            reps: '12–15',
-            tempo: '2-1-2-0',
-            rest: '45s',
-          },
-        ],
-        5: [
-          {
-            name: 'Pull-Up / Assisted Pull-Up (neutral)',
-            sets: '4',
-            reps: '6–8',
-            tempo: '2-1-1-0',
-            rest: '90s',
-          },
-          {
-            name: 'One Arm Dumbbell Row',
-            sets: '3',
-            reps: '10/10',
-            tempo: '2-1-1-0',
-            rest: '75s',
-          },
-          {
-            name: 'Wide Grip Lat Pulldown',
-            sets: '3',
-            reps: '10–12',
-            tempo: '2-1-1-0',
-            rest: '75s',
-          },
-          {
-            name: 'EZ Bar Curl',
-            sets: '3',
-            reps: '8–10',
-            tempo: '2-1-1-0',
-            rest: '60s',
-          },
-          {
-            name: 'Incline Dumbbell Curl',
-            sets: '3',
-            reps: '10–12',
-            tempo: '2-1-1-0',
-            rest: '60s',
-          },
-          {
-            name: 'Overhead Triceps Extension (rope)',
-            sets: '3',
-            reps: '12–15',
-            tempo: '2-1-1-0',
-            rest: '60s',
+            name: "Gemelos (de pie o sentado)",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-2-2-0",
+            rest: "75s",
           },
         ],
-        6: [
-          {
-            name: 'Front Squat (Smith or Goblet)',
-            sets: '3',
-            reps: '8–10',
-            tempo: '3-1-1-0',
-            rest: '90s',
-          },
-          {
-            name: 'Dumbbell Bench Press',
-            sets: '3',
-            reps: '10–12',
-            tempo: '2-1-1-0',
-            rest: '75s',
-          },
-          {
-            name: 'T-Bar Row',
-            sets: '3',
-            reps: '10–12',
-            tempo: '2-1-1-0',
-            rest: '75s',
-          },
-          {
-            name: 'Dumbbell Push Press (light)',
-            sets: '3',
-            reps: '8–10',
-            tempo: '1-0-1-0',
-            rest: '90s',
-          },
-          {
-            name: 'Walking Lunge (bodyweight or light)',
-            sets: '2',
-            reps: '12/12',
-            tempo: '2-1-1-0',
-            rest: '60s',
-          },
-        ],
+        5: [], // Día extra
+        6: [],
         7: [],
       };
 
-      // Si algún día añades GIFs, pon los nombres aquí y súbelos en /gifs/
-      const exerciseGifs = {
-        'Chest Supported Row': 'gifs/chest_supported_row.gif',
-        'Lat Pulldown (neutral grip)': 'gifs/lat_pulldown_neutral.gif',
-        'Seated Cable Row (close grip)': 'gifs/seated_cable_row_close.gif',
-        'Straight Arm Pulldown (rope)': 'gifs/straight_arm_pulldown_rope.gif',
-        'Rear Delt Fly (dumbbells)': 'gifs/rear_delt_fly_db.gif',
-        'Face Pull (cable)': 'gifs/face_pull_cable.gif',
-        'Goblet Squat': 'gifs/goblet_squat.gif',
-        'Leg Press (medium stance)': 'gifs/leg_press_medium.gif',
-        'Static Lunge (dumbbells)': 'gifs/static_lunge_db.gif',
-        'Leg Extension': 'gifs/leg_extension.gif',
-        'Standing Calf Raise': 'gifs/standing_calf_raise.gif',
-        'Incline Dumbbell Press': 'gifs/incline_db_press.gif',
-        'Chest Press Machine (converging)':
-          'gifs/chest_press_machine_converging.gif',
-        'Pec Deck Machine': 'gifs/pec_deck_machine.gif',
-        'Lateral Raise (dumbbells)': 'gifs/lateral_raise_db.gif',
-        'Seated Dumbbell Shoulder Press': 'gifs/seated_db_shoulder_press.gif',
-        'Triceps Rope Pushdown': 'gifs/triceps_rope_pushdown.gif',
-        'Romanian Deadlift (dumbbells)': 'gifs/romanian_deadlift_db.gif',
-        'Seated Leg Curl': 'gifs/seated_leg_curl.gif',
-        'Leg Press (high feet)': 'gifs/leg_press_high.gif',
-        'Good Morning (light barbell)': 'gifs/good_morning_bar.gif',
-        'Seated Calf Raise': 'gifs/seated_calf_raise.gif',
-        'Pull-Up / Assisted Pull-Up (neutral)':
-          'gifs/pullup_neutral_assisted.gif',
-        'One Arm Dumbbell Row': 'gifs/one_arm_db_row.gif',
-        'Wide Grip Lat Pulldown': 'gifs/lat_pulldown_wide.gif',
-        'EZ Bar Curl': 'gifs/ez_bar_curl.gif',
-        'Incline Dumbbell Curl': 'gifs/incline_db_curl.gif',
-        'Overhead Triceps Extension (rope)':
-          'gifs/overhead_triceps_extension_rope.gif',
-        'Front Squat (Smith or Goblet)': 'gifs/front_squat_smith_goblet.gif',
-        'Dumbbell Bench Press': 'gifs/db_bench_press.gif',
-        'T-Bar Row': 'gifs/t_bar_row.gif',
-        'Dumbbell Push Press (light)': 'gifs/db_push_press_light.gif',
-        'Walking Lunge (bodyweight or light)': 'gifs/walking_lunge_bw.gif',
-      };
-
-      /* =================== GYM RENDER =================== */
-      const daySelect = document.getElementById('daySelect');
-      const exerciseList = document.getElementById('exerciseList');
+      const daySelect = document.getElementById("daySelect");
+      const exerciseList = document.getElementById("exerciseList");
 
       function getSetsCount(setsText) {
         if (!setsText) return 3;
@@ -936,67 +822,48 @@
       }
 
       function loadDayExercises(day) {
-        exerciseList.innerHTML = '';
+        exerciseList.innerHTML = "";
         const exercises = routineByDay[day] || [];
         if (!exercises.length) {
-          const p = document.createElement('p');
-          p.innerHTML =
-            day === 7
-              ? 'Descanso activo: caminata suave (30–45 min), movilidad y <strong>hipopresivos en ayunas 10–15 min</strong>.'
-              : 'Día centrado en cardio oxidativo + movilidad.';
+          const p = document.createElement("p");
+          p.className = "small";
+          if (day === 5) {
+            p.innerHTML =
+              "Día extra: utiliza <strong>Cardio</strong> e <strong>Hipo</strong> según te sientas. También puedes hacer movilidad ligera.";
+          } else if (day === 7) {
+            p.innerHTML =
+              "Descanso activo: caminata suave 30–40 min + hipopresivos en ayuno si te sientan bien.";
+          } else {
+            p.textContent = "Día libre / movilidad / recuperación.";
+          }
           exerciseList.appendChild(p);
           return;
         }
+
         const savedKey = `day_${day}_log`;
-        const savedData = JSON.parse(localStorage.getItem(savedKey) || '{}');
-        const mediaMode = getMediaMode();
+        const savedData = JSON.parse(localStorage.getItem(savedKey) || "{}");
 
         exercises.forEach((ex, index) => {
-          const card = document.createElement('div');
-          card.className = 'exercise-card';
-          const head = document.createElement('div');
-          head.className = 'exercise-header';
-          const left = document.createElement('div');
-          left.className = 'exercise-header-left';
-          left.innerHTML = `<strong>${ex.name}</strong><span class="exercise-meta">${ex.sets} x ${ex.reps} · Tempo ${ex.tempo} · Descanso ${ex.rest}</span>`;
-          head.appendChild(left);
+          const card = document.createElement("div");
+          card.className = "exercise-card";
 
-          // Botones de búsqueda + opcional GIF
-          const right = document.createElement('div');
-          right.className = 'btns-right';
-          const ytBtn = document.createElement('button');
-          ytBtn.className = 'video-btn secondary';
-          ytBtn.textContent = '🔎 YouTube';
-          ytBtn.addEventListener('click', () => openDemo(ex.name));
-          const imgBtn = document.createElement('button');
-          imgBtn.className = 'video-btn secondary';
-          imgBtn.textContent = '🖼️ Imágenes';
-          imgBtn.addEventListener('click', () => openImages(ex.name));
-          right.appendChild(ytBtn);
-          right.appendChild(imgBtn);
-          head.appendChild(right);
-          card.appendChild(head);
+          const header = document.createElement("div");
+          header.className = "exercise-header";
 
-          if (mediaMode === 'gif') {
-            const gif = exerciseGifs[ex.name];
-            if (gif) {
-              const img = document.createElement('img');
-              img.src = gif;
-              img.alt = ex.name;
-              img.loading = 'lazy';
-              img.style.width = '100%';
-              img.style.maxWidth = '260px';
-              img.style.borderRadius = '10px';
-              img.style.border = '1px solid #22252f';
-              img.style.marginTop = '6px';
-              card.appendChild(img);
-            }
-          }
+          const left = document.createElement("div");
+          left.className = "exercise-header-left";
+          left.innerHTML = `<span><strong>${ex.name}</strong></span>
+            <span class="exercise-meta">${ex.sets} x ${
+            ex.reps
+          } · Tempo ${ex.tempo} · Descanso ${ex.rest}</span>`;
 
-          const inputsWrap = document.createElement('div');
-          inputsWrap.className = 'exercise-inputs';
-          const setsRow = document.createElement('div');
-          setsRow.className = 'sets-row';
+          header.appendChild(left);
+          card.appendChild(header);
+
+          const inputsWrap = document.createElement("div");
+          inputsWrap.className = "exercise-inputs";
+          const setsRow = document.createElement("div");
+          setsRow.className = "sets-row";
 
           const setsCount = getSetsCount(ex.sets);
           const savedEntry = savedData[index] || {};
@@ -1004,25 +871,25 @@
           const restSeconds = parseRestSeconds(ex.rest);
 
           for (let s = 0; s < setsCount; s++) {
-            const setInput = document.createElement('input');
-            setInput.type = 'number';
-            setInput.min = '0';
-            setInput.step = '0.5';
+            const setInput = document.createElement("input");
+            setInput.type = "number";
+            setInput.min = "0";
+            setInput.step = "0.5";
             setInput.placeholder = `S${s + 1} kg`;
-            setInput.className = 'set-weight';
+            setInput.className = "set-weight";
             setInput.value =
-              savedWeights[s] !== undefined ? savedWeights[s] : 0; // inicia en 0
-            setInput.addEventListener('change', () => {
+              savedWeights[s] !== undefined ? savedWeights[s] : 0;
+            setInput.addEventListener("change", () => {
               saveExerciseLog(day);
               if (restSeconds > 0) startTimer(restSeconds);
             });
             setsRow.appendChild(setInput);
           }
 
-          const notes = document.createElement('input');
-          notes.placeholder = 'Notas (RPE, fallo, técnica)';
-          notes.value = savedEntry.notes || '';
-          notes.addEventListener('change', () => saveExerciseLog(day));
+          const notes = document.createElement("input");
+          notes.placeholder = "Notas (RPE, fallo, técnica)";
+          notes.value = savedEntry.notes || "";
+          notes.addEventListener("change", () => saveExerciseLog(day));
 
           inputsWrap.appendChild(setsRow);
           inputsWrap.appendChild(notes);
@@ -1032,29 +899,31 @@
       }
 
       function saveExerciseLog(day) {
-        const cards = exerciseList.querySelectorAll('.exercise-card');
+        const cards = exerciseList.querySelectorAll(".exercise-card");
         const data = [];
         cards.forEach((card) => {
-          const setInputs = card.querySelectorAll('.set-weight');
-          const notes = card.querySelector('input[placeholder^="Notas"]');
+          const setInputs = card.querySelectorAll(".set-weight");
+          const notes = card.querySelector(
+            'input[placeholder^="Notas (RPE"]'
+          );
           const weights = Array.from(setInputs).map((i) => i.value);
-          data.push({ weights, notes: notes ? notes.value : '' });
+          data.push({ weights, notes: notes ? notes.value : "" });
         });
         localStorage.setItem(`day_${day}_log`, JSON.stringify(data));
       }
 
-      daySelect.addEventListener('change', (e) =>
-        loadDayExercises(parseInt(e.target.value, 10))
-      );
+      daySelect.addEventListener("change", (e) => {
+        loadDayExercises(parseInt(e.target.value, 10));
+      });
       loadDayExercises(parseInt(daySelect.value, 10));
 
-      /* =================== TIMER PERSISTENTE (PESAS) =================== */
+      /* =============== TIMER PESAS (persistente) =============== */
       let timerInterval = null,
         remainingSeconds = 0;
-      const timerDisplay = document.getElementById('timerDisplay');
-      const TIMER_STORAGE_KEY = 'rest_timer_v1';
-
+      const timerDisplay = document.getElementById("timerDisplay");
+      const TIMER_STORAGE_KEY = "rest_timer_v1";
       let audioCtx = null;
+
       function initAudio() {
         if (audioCtx) return;
         const AC = window.AudioContext || window.webkitAudioContext || null;
@@ -1063,9 +932,9 @@
       }
       function playBeep() {
         if (!audioCtx) return;
-        const osc = audioCtx.createOscillator(),
-          gain = audioCtx.createGain();
-        osc.type = 'sine';
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
         osc.frequency.value = 880;
         osc.connect(gain);
         gain.connect(audioCtx.destination);
@@ -1077,8 +946,8 @@
         osc.stop(now + 0.5);
       }
       function updateTimerDisplay() {
-        const m = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
-        const s = String(remainingSeconds % 60).padStart(2, '0');
+        const m = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
+        const s = String(remainingSeconds % 60).padStart(2, "0");
         timerDisplay.textContent = `${m}:${s}`;
       }
       function tickTimer() {
@@ -1127,14 +996,16 @@
         remainingSeconds = 0;
         updateTimerDisplay();
       }
+
       document
-        .querySelectorAll('.timer-controls button[data-time]')
+        .querySelectorAll(".timer-controls button[data-time]")
         .forEach((btn) => {
-          btn.addEventListener('click', () =>
-            startTimer(parseInt(btn.dataset.time, 10))
-          );
+          btn.addEventListener("click", () => {
+            startTimer(parseInt(btn.dataset.time, 10));
+          });
         });
-      document.getElementById('stopTimer').addEventListener('click', stopTimer);
+      document.getElementById("stopTimer").addEventListener("click", stopTimer);
+
       (function restoreTimer() {
         const raw = localStorage.getItem(TIMER_STORAGE_KEY);
         if (!raw) {
@@ -1154,11 +1025,11 @@
         timerInterval = setInterval(tickTimer, 1000);
       })();
 
-      /* =================== HIPO – Rutina guiada (B) =================== */
-      const hypoTimerEl = document.getElementById('hypoTimer');
-      const startHypo = document.getElementById('startHypo');
-      const stopHypo = document.getElementById('stopHypo');
-      const hypoStatus = document.getElementById('hypoStatus');
+      /* =============== HIPO – Rutina guiada =============== */
+      const hypoTimerEl = document.getElementById("hypoTimer");
+      const startHypo = document.getElementById("startHypo");
+      const stopHypo = document.getElementById("stopHypo");
+      const hypoStatus = document.getElementById("hypoStatus");
 
       let hypoInt = null,
         hypoRemaining = 0,
@@ -1167,33 +1038,34 @@
       const HYPO_WORK = 40,
         HYPO_REST = 20;
       const hypoSequence = [
-        { name: 'Standing – Basic' },
-        { name: 'Seated – Open elbows' },
-        { name: 'Quadruped – Neutral spine' },
+        { name: "Standing – Basic" },
+        { name: "Seated – Open elbows" },
+        { name: "Quadruped – Neutral spine" },
       ];
       let fullProgram = [];
+
       function buildHypoProgram() {
         fullProgram = [];
         for (let round = 1; round <= 3; round++) {
           for (let i = 0; i < hypoSequence.length; i++) {
             fullProgram.push({
-              type: 'work',
+              type: "work",
               seconds: HYPO_WORK,
               label: `${hypoSequence[i].name} · Ronda ${round}/3`,
             });
             if (!(round === 3 && i === hypoSequence.length - 1)) {
               fullProgram.push({
-                type: 'rest',
+                type: "rest",
                 seconds: HYPO_REST,
-                label: 'Transición / recuperación',
+                label: "Transición / recuperación",
               });
             }
           }
         }
       }
       function formatTime(s) {
-        const m = String(Math.floor(s / 60)).padStart(2, '0');
-        const ss = String(s % 60).padStart(2, '0');
+        const m = String(Math.floor(s / 60)).padStart(2, "0");
+        const ss = String(s % 60).padStart(2, "0");
         return `${m}:${ss}`;
       }
       function renderHypo() {
@@ -1201,7 +1073,7 @@
         const step = fullProgram[hypoIndex];
         if (step) {
           hypoStatus.textContent = `${
-            step.type === 'work' ? 'Trabajo: ' : 'Descanso: '
+            step.type === "work" ? "Trabajo: " : "Descanso: "
           }${step.label}`;
         }
       }
@@ -1214,7 +1086,7 @@
           if (hypoIndex >= fullProgram.length) {
             clearInterval(hypoInt);
             hypoActive = false;
-            hypoStatus.textContent = 'Rutina finalizada ✅';
+            hypoStatus.textContent = "Rutina finalizada ✅";
             return;
           }
           const next = fullProgram[hypoIndex];
@@ -1224,7 +1096,7 @@
           renderHypo();
         }
       }
-      startHypo.addEventListener('click', () => {
+      startHypo.addEventListener("click", () => {
         if (hypoActive) return;
         initAudio();
         buildHypoProgram();
@@ -1235,35 +1107,35 @@
         clearInterval(hypoInt);
         hypoInt = setInterval(tickHypo, 1000);
       });
-      stopHypo.addEventListener('click', () => {
+      stopHypo.addEventListener("click", () => {
         clearInterval(hypoInt);
         hypoActive = false;
-        hypoStatus.textContent = 'Rutina detenida.';
+        hypoStatus.textContent = "Rutina detenida.";
       });
 
-      /* =================== CARDIO =================== */
-      const fatZoneInfo = document.getElementById('fatZoneInfo');
+      /* =============== CARDIO =============== */
+      const fatZoneInfo = document.getElementById("fatZoneInfo");
       if (fatZoneInfo)
         fatZoneInfo.textContent = `Zona de oxidación estimada: ${HR_FAT_LOW}-${HR_FAT_HIGH} bpm (60–75% FC máx).`;
 
-      const cardioType = document.getElementById('cardioType');
-      const cardioTime = document.getElementById('cardioTime');
-      const cardioHR = document.getElementById('cardioHR');
-      const stepsInput = document.getElementById('stepsInput');
-      const saveCardioBtn = document.getElementById('saveCardio');
-      const cardioStatus = document.getElementById('cardioStatus');
-      const cardioSessionsList = document.getElementById('cardioSessionsList');
+      const cardioType = document.getElementById("cardioType");
+      const cardioTime = document.getElementById("cardioTime");
+      const cardioHR = document.getElementById("cardioHR");
+      const stepsInput = document.getElementById("stepsInput");
+      const saveCardioBtn = document.getElementById("saveCardio");
+      const cardioStatus = document.getElementById("cardioStatus");
+      const cardioSessionsList = document.getElementById("cardioSessionsList");
 
-      saveCardioBtn.addEventListener('click', () => {
+      saveCardioBtn.addEventListener("click", () => {
         const key = todayKey();
         const existing = JSON.parse(
-          localStorage.getItem(`cardio_${key}`) || '{}'
+          localStorage.getItem(`cardio_${key}`) || "{}"
         );
-        const newTime = parseFloat(cardioTime.value || '0');
-        const newHR = parseFloat(cardioHR.value || '0');
-        const newSteps = parseInt(stepsInput.value || '0', 10);
+        const newTime = parseFloat(cardioTime.value || "0");
+        const newHR = parseFloat(cardioHR.value || "0");
+        const newSteps = parseInt(stepsInput.value || "0", 10);
         const newType =
-          cardioType.value || `Session ${(existing.sessions || []).length + 1}`;
+          cardioType.value || `Sesión ${(existing.sessions || []).length + 1}`;
 
         const totalBefore = existing.time || 0;
         const totalAfter = totalBefore + newTime;
@@ -1294,20 +1166,20 @@
           sessions,
         };
         localStorage.setItem(`cardio_${key}`, JSON.stringify(payload));
-        cardioStatus.textContent = 'Cardio acumulado ✅';
-        setTimeout(() => (cardioStatus.textContent = ''), 2000);
+        cardioStatus.textContent = "Cardio acumulado ✅";
+        setTimeout(() => (cardioStatus.textContent = ""), 2000);
 
-        cardioType.value = '';
-        cardioTime.value = '';
-        cardioHR.value = '';
-        stepsInput.value = '';
+        cardioType.value = "";
+        cardioTime.value = "";
+        cardioHR.value = "";
+        stepsInput.value = "";
         renderCardioSessionsToday();
         updateDashboard();
       });
 
       function renderCardioSessionsToday() {
         const key = todayKey();
-        const data = JSON.parse(localStorage.getItem(`cardio_${key}`) || '{}');
+        const data = JSON.parse(localStorage.getItem(`cardio_${key}`) || "{}");
         const sessions = data.sessions || [];
         if (!sessions.length) {
           cardioSessionsList.innerHTML =
@@ -1318,34 +1190,37 @@
           "<table class='history-table'><thead><tr><th>#</th><th>Tipo</th><th>Min</th><th>FC</th><th>Pasos</th><th>Zona ox. (min)</th></tr></thead><tbody>";
         sessions.forEach((s, i) => {
           const z =
-            typeof s.timeInFatZone === 'number'
+            typeof s.timeInFatZone === "number"
               ? s.timeInFatZone
               : isInFatZone(s.hr)
               ? s.time
               : 0;
-          html += `<tr><td>${i + 1}</td><td>${s.type || ''}</td><td>${
-            s.time || 0
-          }</td><td>${s.hr || 0}</td><td>${s.steps || 0}</td><td>${
-            z || 0
-          }</td></tr>`;
+          html += `<tr>
+            <td>${i + 1}</td>
+            <td>${s.type || ""}</td>
+            <td>${s.time || 0}</td>
+            <td>${s.hr || 0}</td>
+            <td>${s.steps || 0}</td>
+            <td>${z || 0}</td>
+          </tr>`;
         });
-        html += '</tbody></table>';
+        html += "</tbody></table>";
         cardioSessionsList.innerHTML = html;
       }
       renderCardioSessionsToday();
 
-      /* =================== COMIDAS =================== */
-      const mealNameInput = document.getElementById('mealNameInput');
-      const kcalInput = document.getElementById('kcalInput');
-      const weightInput = document.getElementById('weightInput');
-      const waistInput = document.getElementById('waistInput');
-      const saveDailyBtn = document.getElementById('saveDaily');
-      const dailyStatus = document.getElementById('dailyStatus');
-      const mealsList = document.getElementById('mealsList');
+      /* =============== COMIDAS =============== */
+      const mealNameInput = document.getElementById("mealNameInput");
+      const kcalInput = document.getElementById("kcalInput");
+      const weightInput = document.getElementById("weightInput");
+      const waistInput = document.getElementById("waistInput");
+      const saveDailyBtn = document.getElementById("saveDaily");
+      const dailyStatus = document.getElementById("dailyStatus");
+      const mealsList = document.getElementById("mealsList");
 
       function renderMealsToday() {
         const key = todayKey();
-        const meals = JSON.parse(localStorage.getItem(`meals_${key}`) || '[]');
+        const meals = JSON.parse(localStorage.getItem(`meals_${key}`) || "[]");
         if (!meals.length) {
           mealsList.innerHTML =
             "<p class='small'>Sin comidas registradas todavía.</p>";
@@ -1354,70 +1229,72 @@
         let html =
           "<table class='history-table'><thead><tr><th>#</th><th>Comida</th><th>Kcal</th></tr></thead><tbody>";
         meals.forEach((m, i) => {
-          html += `<tr><td>${i + 1}</td><td>${
-            m.name || `Comida ${i + 1}`
-          }</td><td>${m.kcal || 0}</td></tr>`;
+          html += `<tr>
+            <td>${i + 1}</td>
+            <td>${m.name || `Comida ${i + 1}`}</td>
+            <td>${m.kcal || 0}</td>
+          </tr>`;
         });
-        html += '</tbody></table>';
+        html += "</tbody></table>";
         mealsList.innerHTML = html;
       }
 
-      saveDailyBtn.addEventListener('click', () => {
+      saveDailyBtn.addEventListener("click", () => {
         const key = todayKey();
         const existingDaily = JSON.parse(
-          localStorage.getItem(`daily_${key}`) || '{}'
+          localStorage.getItem(`daily_${key}`) || "{}"
         );
         const existingMeals = JSON.parse(
-          localStorage.getItem(`meals_${key}`) || '[]'
+          localStorage.getItem(`meals_${key}`) || "[]"
         );
 
-        const addKcal = parseFloat(kcalInput.value || '0');
+        const addKcal = parseFloat(kcalInput.value || "0");
         const mealName =
-          mealNameInput.value || `Meal ${existingMeals.length + 1}`;
+          mealNameInput.value || `Comida ${existingMeals.length + 1}`;
 
         const newMeals = [...existingMeals, { name: mealName, kcal: addKcal }];
         const payloadDaily = {
-          weight: parseFloat(weightInput.value || existingDaily.weight || '0'),
-          waist: parseFloat(waistInput.value || existingDaily.waist || '0'),
+          weight: parseFloat(weightInput.value || existingDaily.weight || "0"),
+          waist: parseFloat(waistInput.value || existingDaily.waist || "0"),
           kcal: (existingDaily.kcal || 0) + (addKcal || 0),
         };
 
         localStorage.setItem(`daily_${key}`, JSON.stringify(payloadDaily));
         localStorage.setItem(`meals_${key}`, JSON.stringify(newMeals));
 
-        dailyStatus.textContent = 'Comida agregada / día actualizado ✅';
-        setTimeout(() => (dailyStatus.textContent = ''), 2000);
+        dailyStatus.textContent = "Comida agregada / día actualizado ✅";
+        setTimeout(() => (dailyStatus.textContent = ""), 2000);
 
-        mealNameInput.value = '';
-        kcalInput.value = '';
+        mealNameInput.value = "";
+        kcalInput.value = "";
         renderMealsToday();
         updateDashboard();
       });
 
       renderMealsToday();
 
-      /* =================== DASHBOARD =================== */
-      const ringKcal = document.getElementById('ringKcal');
-      const ringCardio = document.getElementById('ringCardio');
-      const ringSteps = document.getElementById('ringSteps');
-      const ringWeight = document.getElementById('ringWeight');
-      const ringKcalInner = document.getElementById('ringKcalInner');
-      const ringCardioInner = document.getElementById('ringCardioInner');
-      const ringStepsInner = document.getElementById('ringStepsInner');
-      const ringWeightInner = document.getElementById('ringWeightInner');
-      const ringKcalText = document.getElementById('ringKcalText');
-      const ringCardioText = document.getElementById('ringCardioText');
-      const ringStepsText = document.getElementById('ringStepsText');
-      const ringWeightText = document.getElementById('ringWeightText');
-      const ringFatZoneText = document.getElementById('ringFatZoneText');
-      const historyTableBody = document.querySelector('#historyTable tbody');
-      const viewButtons = document.querySelectorAll('.view-toggle button');
+      /* =============== DASHBOARD =============== */
+      const ringKcal = document.getElementById("ringKcal");
+      const ringCardio = document.getElementById("ringCardio");
+      const ringSteps = document.getElementById("ringSteps");
+      const ringWeight = document.getElementById("ringWeight");
+      const ringKcalInner = document.getElementById("ringKcalInner");
+      const ringCardioInner = document.getElementById("ringCardioInner");
+      const ringStepsInner = document.getElementById("ringStepsInner");
+      const ringWeightInner = document.getElementById("ringWeightInner");
+      const ringKcalText = document.getElementById("ringKcalText");
+      const ringCardioText = document.getElementById("ringCardioText");
+      const ringStepsText = document.getElementById("ringStepsText");
+      const ringWeightText = document.getElementById("ringWeightText");
+      const ringFatZoneText = document.getElementById("ringFatZoneText");
+      const historyTableBody = document.querySelector("#historyTable tbody");
+      const viewButtons = document.querySelectorAll(".view-toggle button");
 
-      let currentView = 'day';
+      let currentView = "day";
       viewButtons.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          viewButtons.forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
+        btn.addEventListener("click", () => {
+          viewButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
           currentView = btn.dataset.view;
           updateDashboard();
         });
@@ -1435,16 +1312,16 @@
       }
       function getDataRange(view) {
         let days = 1;
-        if (view === 'week') days = 7;
-        if (view === 'month') days = 30;
+        if (view === "week") days = 7;
+        if (view === "month") days = 30;
         const dates = getLastNDates(days);
         const rows = [];
         dates.forEach((date) => {
           const daily = JSON.parse(
-            localStorage.getItem(`daily_${date}`) || '{}'
+            localStorage.getItem(`daily_${date}`) || "{}"
           );
           const cardio = JSON.parse(
-            localStorage.getItem(`cardio_${date}`) || '{}'
+            localStorage.getItem(`cardio_${date}`) || "{}"
           );
           if (
             daily.weight ||
@@ -1471,11 +1348,11 @@
       }
       function setRing(ringEl, innerEl, textEl, value, target, color, unit) {
         const percent = target > 0 ? Math.min(value / target, 1) : 0;
-        ringEl.style.setProperty('--percent', percent.toString());
-        ringEl.style.setProperty('--color', color);
+        ringEl.style.setProperty("--percent", percent.toString());
+        ringEl.style.setProperty("--color", color);
         innerEl.textContent = `${Math.round(value)} ${unit}`;
-        if (unit === 'kg') {
-          textEl.textContent = 'Promedio / día';
+        if (unit === "kg") {
+          textEl.textContent = "Promedio / día";
         } else {
           textEl.textContent = `${Math.round(percent * 100)}% del objetivo`;
         }
@@ -1489,8 +1366,8 @@
             ringKcalText,
             0,
             TARGET_KCAL,
-            '#e53935',
-            'kcal'
+            "#e53935",
+            "kcal"
           );
           setRing(
             ringCardio,
@@ -1498,18 +1375,18 @@
             ringCardioText,
             0,
             TARGET_CARDIO_MIN,
-            '#42a5f5',
-            'min'
+            "#42a5f5",
+            "min"
           );
-          ringFatZoneText.textContent = '0 min en zona ox. (0% objetivo)';
+          ringFatZoneText.textContent = "0 min en zona ox. (0% objetivo)";
           setRing(
             ringSteps,
             ringStepsInner,
             ringStepsText,
             0,
             TARGET_STEPS,
-            '#66bb6a',
-            'pasos'
+            "#66bb6a",
+            "pasos"
           );
           setRing(
             ringWeight,
@@ -1517,15 +1394,15 @@
             ringWeightText,
             0,
             1,
-            '#f5f5f5',
-            'kg'
+            "#f5f5f5",
+            "kg"
           );
           historyTableBody.innerHTML =
             "<tr><td colspan='8'>Sin datos aún. Registra tu día en las pestañas.</td></tr>";
           return;
         }
         let ref;
-        if (currentView === 'day') {
+        if (currentView === "day") {
           ref = data[data.length - 1];
         } else {
           const sum = data.reduce(
@@ -1550,7 +1427,7 @@
           );
           const len = data.length || 1;
           ref = {
-            date: data[0].date + ' → ' + data[data.length - 1].date,
+            date: data[0].date + " → " + data[data.length - 1].date,
             weight: sum.weight / len,
             waist: sum.waist / len,
             kcal: sum.kcal / len,
@@ -1566,8 +1443,8 @@
           ringKcalText,
           ref.kcal || 0,
           TARGET_KCAL,
-          '#e53935',
-          'kcal'
+          "#e53935",
+          "kcal"
         );
         setRing(
           ringCardio,
@@ -1575,11 +1452,13 @@
           ringCardioText,
           ref.cardioTime || 0,
           TARGET_CARDIO_MIN,
-          '#42a5f5',
-          'min'
+          "#42a5f5",
+          "min"
         );
         const fatMin = ref.fatZoneMin || 0;
-        const pctFat = Math.round(Math.min(fatMin / TARGET_FAT_MIN, 1) * 100);
+        const pctFat = Math.round(
+          Math.min(fatMin / TARGET_FAT_MIN, 1) * 100
+        );
         ringFatZoneText.textContent = `${Math.round(
           fatMin
         )} min en zona ox. (${pctFat}% objetivo)`;
@@ -1589,8 +1468,8 @@
           ringStepsText,
           ref.steps || 0,
           TARGET_STEPS,
-          '#66bb6a',
-          'pasos'
+          "#66bb6a",
+          "pasos"
         );
         setRing(
           ringWeight,
@@ -1598,18 +1477,23 @@
           ringWeightText,
           ref.weight || 0,
           ref.weight || 1,
-          '#f5f5f5',
-          'kg'
+          "#f5f5f5",
+          "kg"
         );
 
-        historyTableBody.innerHTML = '';
+        historyTableBody.innerHTML = "";
         data.forEach((row) => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${row.date}</td><td>${row.weight || ''}</td><td>${
-            row.waist || ''
-          }</td><td>${row.kcal || ''}</td><td>${row.cardioTime || ''}</td><td>${
-            row.hr || ''
-          }</td><td>${row.steps || ''}</td><td>${row.fatZoneMin || ''}</td>`;
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.date}</td>
+            <td>${row.weight || ""}</td>
+            <td>${row.waist || ""}</td>
+            <td>${row.kcal || ""}</td>
+            <td>${row.cardioTime || ""}</td>
+            <td>${row.hr || ""}</td>
+            <td>${row.steps || ""}</td>
+            <td>${row.fatZoneMin || ""}</td>
+          `;
           historyTableBody.appendChild(tr);
         });
       }
