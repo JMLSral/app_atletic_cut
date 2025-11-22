@@ -17,27 +17,32 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
           sans-serif;
       }
+
       body {
         background: #050608;
         color: #f5f5f5;
       }
+
       header {
         padding: 14px;
         text-align: center;
         background: #111216;
         border-bottom: 1px solid #333;
       }
+
       header h1 {
         font-size: 1.35rem;
         margin-bottom: 4px;
       }
+
       header p {
         font-size: 0.85rem;
         color: #a9a9a9;
       }
+
       .tabs {
         display: flex;
         flex-wrap: wrap;
@@ -45,6 +50,7 @@
         justify-content: center;
         margin-top: 8px;
       }
+
       .tab-btn {
         padding: 6px 10px;
         border-radius: 999px;
@@ -54,16 +60,19 @@
         font-size: 0.85rem;
         cursor: pointer;
       }
+
       .tab-btn.active {
         background: #e53935;
         color: #fff;
         border-color: #e53935;
       }
+
       main {
         padding: 12px;
         max-width: 1000px;
         margin: 0 auto 40px;
       }
+
       .card {
         background: #15161b;
         border: 1px solid #282a33;
@@ -71,17 +80,24 @@
         padding: 12px 14px;
         margin-bottom: 12px;
       }
+
       .card h2 {
         font-size: 1.05rem;
         margin-bottom: 6px;
       }
+
       .sub {
         font-size: 0.85rem;
         color: #aeb4ba;
         margin-bottom: 6px;
       }
+
+      /* IMPORTANTE: no aplicamos a todos los input, sólo a los de texto/números */
       select,
-      input,
+      input[type='text'],
+      input[type='number'],
+      input[type='email'],
+      input[type='password'],
       textarea {
         width: 100%;
         padding: 8px;
@@ -91,9 +107,11 @@
         background: #111216;
         color: #f5f5f5;
       }
+
       textarea {
         min-height: 80px;
       }
+
       button {
         padding: 8px 12px;
         border-radius: 10px;
@@ -103,18 +121,23 @@
         font-weight: 700;
         cursor: pointer;
       }
+
       button:hover {
         background: #ff5252;
       }
+
       button.secondary {
         background: #263238;
       }
+
       button.secondary:hover {
         background: #455a64;
       }
+
       .hidden {
         display: none;
       }
+
       .small {
         font-size: 0.8rem;
         color: #a9a9a9;
@@ -129,6 +152,7 @@
         align-items: flex-start;
         margin-top: 6px;
       }
+
       .ring-card {
         display: flex;
         flex-direction: column;
@@ -136,11 +160,13 @@
         min-width: 0;
         text-align: center;
       }
+
       .ring-label {
         font-size: 0.9rem;
         color: #ddd;
         margin-bottom: 6px;
       }
+
       .ring {
         --percent: 0;
         --color: #e53935;
@@ -163,6 +189,7 @@
         box-shadow: 0 0 0 3px #050608, 0 0 18px rgba(0, 0, 0, 0.6);
         transition: background 0.35s ease-out;
       }
+
       .ring-inner {
         width: 74px;
         height: 74px;
@@ -175,35 +202,42 @@
         color: #f5f5f5;
         box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
       }
+
       .ring-value {
         font-size: 0.85rem;
         color: #cfd8dc;
       }
+
       .ring-value.small {
         font-size: 0.75rem;
         color: #9fa8b0;
         margin-top: -2px;
       }
+
       .history-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 8px;
         font-size: 0.8rem;
       }
+
       .history-table th,
       .history-table td {
         border: 1px solid #333743;
         padding: 4px 6px;
         text-align: center;
       }
+
       .history-table th {
         background: #22232b;
       }
+
       .view-toggle {
         display: flex;
         gap: 6px;
         margin-bottom: 8px;
       }
+
       .view-toggle button {
         flex: 1;
         font-size: 0.8rem;
@@ -217,33 +251,40 @@
         background: #111216;
         margin-bottom: 8px;
       }
+
       .exercise-header {
         display: flex;
         justify-content: space-between;
         gap: 8px;
       }
+
       .exercise-header-left {
         display: flex;
         flex-direction: column;
       }
+
       .exercise-meta {
         font-size: 0.75rem;
         color: #bfc5cc;
       }
+
       .exercise-inputs {
         display: flex;
         flex-direction: column;
         gap: 6px;
         margin-top: 6px;
       }
+
       .sets-row {
         display: flex;
         gap: 6px;
       }
+
       .sets-row input {
         flex: 1;
         font-size: 0.85rem;
       }
+
       .tempo-note {
         font-size: 0.8rem;
         color: #cfd8dc;
@@ -256,11 +297,13 @@
         text-align: center;
         margin: 6px 0;
       }
+
       .timer-controls {
         display: flex;
         gap: 6px;
         flex-wrap: wrap;
       }
+
       .timer-controls button {
         flex: 1;
         background: #263238;
@@ -274,6 +317,7 @@
         margin-bottom: 8px;
         background: #0f1116;
       }
+
       .hypo-head {
         display: flex;
         justify-content: space-between;
@@ -286,29 +330,89 @@
         gap: 6px;
         margin: 8px 0;
       }
+
       .food-tabs button {
         flex: 1;
         font-size: 0.8rem;
       }
 
-      /* SUPER LIST */
-      .super-group-title {
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin: 6px 0 4px;
+      /* ================= SUPER LIST ================ */
+      .super-group {
+        margin-bottom: 10px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        background: #101117;
+        border: 1px solid #262835;
       }
+
+      .super-group-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: #9fa8b0;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+
+      .super-items {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
       .super-item-row {
         display: flex;
         align-items: center;
         gap: 8px;
-        margin-bottom: 4px;
-        font-size: 0.85rem;
-        padding: 2px 0;
-      }
-      .super-item-row input[type="checkbox"] {
-        flex-shrink: 0;
+        padding: 6px 8px;
+        border-radius: 10px;
+        background: #15161b;
+        border: 1px solid #333743;
+        font-size: 0.8rem;
+        color: #cfd8dc;
+        transition: background 0.18s ease, border-color 0.18s ease,
+          color 0.18s ease, opacity 0.18s ease, transform 0.08s ease;
       }
 
+      .super-item-row:hover {
+        transform: translateY(-1px);
+        border-color: #424656;
+      }
+
+      .super-item-row.checked {
+        background: #263238;
+        border-color: #e53935;
+        opacity: 0.95;
+      }
+
+      .super-item-row input[type='checkbox'] {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin: 0;
+        accent-color: #e53935;
+        cursor: pointer;
+      }
+
+      .super-item-label {
+        flex: 1;
+      }
+
+      .super-item-row input[type='checkbox']:checked + .super-item-label {
+        text-decoration: line-through;
+        color: #9fa8b0;
+      }
+
+      /* 2 columnas en escritorio */
+      @media (min-width: 720px) {
+        .super-items {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 6px 10px;
+        }
+      }
+
+      /* RESPONSIVE */
       @media (max-width: 600px) {
         .rings {
           grid-template-columns: 1fr;
@@ -479,18 +583,18 @@
           <ul class="small" style="margin-top: 4px; padding-left: 16px">
             <li>
               <strong>Comida 1 (11:30)</strong> – 180 g claras + 2 huevos
-              enteros + 200 g papas + 1 fruta + 10 g nuez/almendra
-              <br />≈ 650–700 kcal · 45 g P · 75–80 g C · 20 g G
+              enteros + 200 g papas + 1 fruta + 10 g nuez/almendra <br />≈
+              650–700 kcal · 45 g P · 75–80 g C · 20 g G
             </li>
             <li style="margin-top: 6px">
               <strong>Comida 2 (3–4 pm, pre/post)</strong> – 250 g pollo + 250 g
-              arroz cocido + 1 taza verdura + 1 fruta (opcional)
-              <br />≈ 800–850 kcal · 55–60 g P · 110–120 g C · 8–10 g G
+              arroz cocido + 1 taza verdura + 1 fruta (opcional) <br />≈ 800–850
+              kcal · 55–60 g P · 110–120 g C · 8–10 g G
             </li>
             <li style="margin-top: 6px">
               <strong>Comida 3 (9–10 pm)</strong> – 150 g pollo o 2 latas atún +
-              150 g arroz o 2 tostadas + ½ aguacate + 1 taza verdura
-              <br />≈ 650–700 kcal · 40–50 g P · 45–60 g C · 18–22 g G
+              150 g arroz o 2 tostadas + ½ aguacate + 1 taza verdura <br />≈
+              650–700 kcal · 40–50 g P · 45–60 g C · 18–22 g G
             </li>
           </ul>
           <p class="small" style="margin-top: 6px">
@@ -511,8 +615,8 @@
               (~650 kcal)
             </li>
             <li style="margin-top: 6px">
-              <strong>Comida 2 (3–4 pm)</strong> – igual que Menú A:
-              <br />250 g pollo + 250 g arroz + 1 taza verdura (~800–850 kcal)
+              <strong>Comida 2 (3–4 pm)</strong> – igual que Menú A: <br />250 g
+              pollo + 250 g arroz + 1 taza verdura (~800–850 kcal)
             </li>
             <li style="margin-top: 6px">
               <strong>Comida 3 (9–10 pm)</strong><br />
@@ -533,8 +637,8 @@
             Sem 1–4: 2300–2400 kcal, cardio 20–30 min, pasos 6–8k.<br />
             Sem 5–8: 2100–2300 kcal (bajas algo de papas/arroz cena), pasos
             8–10k.<br />
-            Sem 9–10: 2000–2200 kcal (si te estancas), pasos 9–12k, cardio
-            30–35 min.
+            Sem 9–10: 2000–2200 kcal (si te estancas), pasos 9–12k, cardio 30–35
+            min.
           </p>
           <p class="small" style="margin-top: 4px">
             <strong>Emergencia (8–10 días sin bajar):</strong> +2000 pasos, -100
@@ -641,8 +745,8 @@
             Tempo A–B–C–D =
             <strong>A:</strong> bajar · <strong>B:</strong> pausa abajo ·
             <strong>C:</strong> subir · <strong>D:</strong> pausa arriba.
-            Ejemplo <code>3–1–1–0</code> = 3s bajando, 1s abajo, 1s subiendo,
-            0s arriba.
+            Ejemplo <code>3–1–1–0</code> = 3s bajando, 1s abajo, 1s subiendo, 0s
+            arriba.
           </p>
         </section>
 
@@ -715,9 +819,8 @@
               y recuperación en déficit.
             </li>
             <li style="margin-top: 6px">
-              <strong>Intensidad:</strong> moderada, FC 125–145 bpm. Debes
-              poder decir una frase corta, pero no tener una conversación
-              larga.
+              <strong>Intensidad:</strong> moderada, FC 125–145 bpm. Debes poder
+              decir una frase corta, pero no tener una conversación larga.
             </li>
           </ul>
 
@@ -727,8 +830,8 @@
           <ul class="small" style="padding-left: 16px; margin-top: 4px">
             <li>
               <strong>Caminadora:</strong> inclinación 8–12%, 4.0–5.5 km/h, FC
-              esperada 125–145 bpm.
-              <br />Quema más kcal, protege rodilla, activa glúteo.
+              esperada 125–145 bpm. <br />Quema más kcal, protege rodilla,
+              activa glúteo.
             </li>
             <li style="margin-top: 6px">
               <strong>Elíptica:</strong> resistencia 6–10, cadencia 60–70 rpm,
@@ -736,8 +839,8 @@
             </li>
             <li style="margin-top: 6px">
               <strong>Bicicleta estática:</strong> resistencia 6–8, cadencia
-              70–80 rpm, 20–30 min, FC 125–140 bpm.
-              <br />Más fácil, quema un poco menos → ideal días muy cargados.
+              70–80 rpm, 20–30 min, FC 125–140 bpm. <br />Más fácil, quema un
+              poco menos → ideal días muy cargados.
             </li>
           </ul>
 
@@ -778,49 +881,49 @@
       }
 
       /* =============== TABS =============== */
-      const tabBtns = document.querySelectorAll(".tab-btn");
+      const tabBtns = document.querySelectorAll('.tab-btn');
       const sections = {
-        dashboard: document.getElementById("dashboard"),
-        comidas: document.getElementById("comidas"),
-        hipo: document.getElementById("hipo"),
-        pesas: document.getElementById("pesas"),
-        cardio: document.getElementById("cardio"),
+        dashboard: document.getElementById('dashboard'),
+        comidas: document.getElementById('comidas'),
+        hipo: document.getElementById('hipo'),
+        pesas: document.getElementById('pesas'),
+        cardio: document.getElementById('cardio'),
       };
 
       tabBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          tabBtns.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
+        btn.addEventListener('click', () => {
+          tabBtns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
           const tab = btn.dataset.tab;
           Object.keys(sections).forEach((k) => {
-            sections[k].classList.toggle("hidden", k !== tab);
+            sections[k].classList.toggle('hidden', k !== tab);
           });
-          if (tab === "dashboard") updateDashboard();
-          if (tab === "cardio") renderCardioSessionsToday();
-          if (tab === "comidas") {
+          if (tab === 'dashboard') updateDashboard();
+          if (tab === 'cardio') renderCardioSessionsToday();
+          if (tab === 'comidas') {
             renderMealsToday();
             renderSuperList();
           }
-          if (tab === "pesas") renderStrengthHistory();
+          if (tab === 'pesas') renderStrengthHistory();
         });
       });
 
       /* =============== SUBTABS COMIDAS =============== */
-      const foodTabBtns = document.querySelectorAll("#foodTabs button");
+      const foodTabBtns = document.querySelectorAll('#foodTabs button');
       const foodViews = {
-        registro: document.getElementById("food-registro"),
-        menus: document.getElementById("food-menus"),
-        super: document.getElementById("food-super"),
+        registro: document.getElementById('food-registro'),
+        menus: document.getElementById('food-menus'),
+        super: document.getElementById('food-super'),
       };
       foodTabBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          foodTabBtns.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
+        btn.addEventListener('click', () => {
+          foodTabBtns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
           const v = btn.dataset.food;
           Object.keys(foodViews).forEach((k) => {
-            foodViews[k].classList.toggle("hidden", k !== v);
+            foodViews[k].classList.toggle('hidden', k !== v);
           });
-          if (v === "super") renderSuperList();
+          if (v === 'super') renderSuperList();
         });
       });
 
@@ -828,220 +931,220 @@
       const routineByDay = {
         1: [
           {
-            name: "Press inclinado mancuernas",
-            sets: "4",
-            reps: "8–10",
-            tempo: "3-1-1-0",
-            rest: "120s",
+            name: 'Press inclinado mancuernas',
+            sets: '4',
+            reps: '8–10',
+            tempo: '3-1-1-0',
+            rest: '120s',
           },
           {
-            name: "Press plano máquina convergente",
-            sets: "3",
-            reps: "10–12",
-            tempo: "3-0-2-1",
-            rest: "120s",
+            name: 'Press plano máquina convergente',
+            sets: '3',
+            reps: '10–12',
+            tempo: '3-0-2-1',
+            rest: '120s',
           },
           {
-            name: "Press declinado DB / máquina",
-            sets: "3",
-            reps: "8–10",
-            tempo: "2-0-2-0",
-            rest: "120s",
+            name: 'Press declinado DB / máquina',
+            sets: '3',
+            reps: '8–10',
+            tempo: '2-0-2-0',
+            rest: '120s',
           },
           {
-            name: "Aperturas en polea (alto–bajo)",
-            sets: "3",
-            reps: "12–15",
-            tempo: "2-1-3-1",
-            rest: "90s",
+            name: 'Aperturas en polea (alto–bajo)',
+            sets: '3',
+            reps: '12–15',
+            tempo: '2-1-3-1',
+            rest: '90s',
           },
           {
-            name: "Laterales en polea",
-            sets: "3",
-            reps: "12–15",
-            tempo: "2-1-2-0",
-            rest: "75s",
+            name: 'Laterales en polea',
+            sets: '3',
+            reps: '12–15',
+            tempo: '2-1-2-0',
+            rest: '75s',
           },
           {
-            name: "Posterior en polea",
-            sets: "2",
-            reps: "12–15",
-            tempo: "2-0-3-1",
-            rest: "75s",
+            name: 'Posterior en polea',
+            sets: '2',
+            reps: '12–15',
+            tempo: '2-0-3-1',
+            rest: '75s',
           },
           {
-            name: "Remo sentado neutro",
-            sets: "3",
-            reps: "10–12",
-            tempo: "2-1-2-1",
-            rest: "120s",
+            name: 'Remo sentado neutro',
+            sets: '3',
+            reps: '10–12',
+            tempo: '2-1-2-1',
+            rest: '120s',
           },
           {
-            name: "Jalón neutro",
-            sets: "2",
-            reps: "10–12",
-            tempo: "2-1-2-0",
-            rest: "120s",
+            name: 'Jalón neutro',
+            sets: '2',
+            reps: '10–12',
+            tempo: '2-1-2-0',
+            rest: '120s',
           },
           {
-            name: "Curl EZ",
-            sets: "2",
-            reps: "10–12",
-            tempo: "2-0-2-1",
-            rest: "75s",
+            name: 'Curl EZ',
+            sets: '2',
+            reps: '10–12',
+            tempo: '2-0-2-1',
+            rest: '75s',
           },
           {
-            name: "Tríceps cuerda",
-            sets: "2",
-            reps: "12–15",
-            tempo: "2-0-2-1",
-            rest: "75s",
+            name: 'Tríceps cuerda',
+            sets: '2',
+            reps: '12–15',
+            tempo: '2-0-2-1',
+            rest: '75s',
           },
         ],
         2: [
           {
-            name: "Prensa",
-            sets: "4",
-            reps: "10–12",
-            tempo: "3-1-2-0",
-            rest: "150s",
+            name: 'Prensa',
+            sets: '4',
+            reps: '10–12',
+            tempo: '3-1-2-0',
+            rest: '150s',
           },
           {
-            name: "Sentadilla goblet",
-            sets: "3",
-            reps: "8–10",
-            tempo: "3-1-1-0",
-            rest: "120s",
+            name: 'Sentadilla goblet',
+            sets: '3',
+            reps: '8–10',
+            tempo: '3-1-1-0',
+            rest: '120s',
           },
           {
-            name: "Extensión de cuádriceps",
-            sets: "3",
-            reps: "12–15",
-            tempo: "2-1-3-1",
-            rest: "90s",
+            name: 'Extensión de cuádriceps',
+            sets: '3',
+            reps: '12–15',
+            tempo: '2-1-3-1',
+            rest: '90s',
           },
           {
-            name: "Curl femoral sentado",
-            sets: "3",
-            reps: "10–12",
-            tempo: "2-1-2-1",
-            rest: "120s",
+            name: 'Curl femoral sentado',
+            sets: '3',
+            reps: '10–12',
+            tempo: '2-1-2-1',
+            rest: '120s',
           },
           {
-            name: "Peso muerto rumano mancuernas",
-            sets: "3",
-            reps: "8–10",
-            tempo: "3-1-2-0",
-            rest: "150s",
+            name: 'Peso muerto rumano mancuernas',
+            sets: '3',
+            reps: '8–10',
+            tempo: '3-1-2-0',
+            rest: '150s',
           },
           {
-            name: "Hip thrust en máquina",
-            sets: "3",
-            reps: "10–12",
-            tempo: "2-1-1-2",
-            rest: "120s",
+            name: 'Hip thrust en máquina',
+            sets: '3',
+            reps: '10–12',
+            tempo: '2-1-1-2',
+            rest: '120s',
           },
           {
-            name: "Gemelos sentado",
-            sets: "3–4",
-            reps: "12–15",
-            tempo: "2-2-2-0",
-            rest: "75s",
+            name: 'Gemelos sentado',
+            sets: '3–4',
+            reps: '12–15',
+            tempo: '2-2-2-0',
+            rest: '75s',
           },
         ],
         3: [
           {
-            name: "Press inclinado máquina",
-            sets: "4",
-            reps: "8–10",
-            tempo: "3-0-2-1",
-            rest: "150s",
+            name: 'Press inclinado máquina',
+            sets: '4',
+            reps: '8–10',
+            tempo: '3-0-2-1',
+            rest: '150s',
           },
           {
-            name: "Press plano DB",
-            sets: "3",
-            reps: "8–10",
-            tempo: "3-0-2-0",
-            rest: "120s",
+            name: 'Press plano DB',
+            sets: '3',
+            reps: '8–10',
+            tempo: '3-0-2-0',
+            rest: '120s',
           },
           {
-            name: "Aperturas máquina / cable",
-            sets: "3",
-            reps: "12–15",
-            tempo: "2-1-3-1",
-            rest: "90s",
+            name: 'Aperturas máquina / cable',
+            sets: '3',
+            reps: '12–15',
+            tempo: '2-1-3-1',
+            rest: '90s',
           },
           {
-            name: "Laterales DB sentado",
-            sets: "3",
-            reps: "15–20",
-            tempo: "2-1-2-0",
-            rest: "75s",
+            name: 'Laterales DB sentado',
+            sets: '3',
+            reps: '15–20',
+            tempo: '2-1-2-0',
+            rest: '75s',
           },
           {
-            name: "Remo DB una mano",
-            sets: "3",
-            reps: "8–10",
-            tempo: "2-1-2-1",
-            rest: "120s",
+            name: 'Remo DB una mano',
+            sets: '3',
+            reps: '8–10',
+            tempo: '2-1-2-1',
+            rest: '120s',
           },
           {
-            name: "Pull-ins polea",
-            sets: "2",
-            reps: "12–15",
-            tempo: "2-1-3-1",
-            rest: "90s",
+            name: 'Pull-ins polea',
+            sets: '2',
+            reps: '12–15',
+            tempo: '2-1-3-1',
+            rest: '90s',
           },
           {
-            name: "Fondos asistidos",
-            sets: "2",
-            reps: "10–12",
-            tempo: "2-0-2-1",
-            rest: "90s",
+            name: 'Fondos asistidos',
+            sets: '2',
+            reps: '10–12',
+            tempo: '2-0-2-1',
+            rest: '90s',
           },
           {
-            name: "Curl inclinado",
-            sets: "2",
-            reps: "10–12",
-            tempo: "3-1-2-0",
-            rest: "90s",
+            name: 'Curl inclinado',
+            sets: '2',
+            reps: '10–12',
+            tempo: '3-1-2-0',
+            rest: '90s',
           },
         ],
         4: [
           {
-            name: "Peso muerto rumano mancuernas",
-            sets: "3",
-            reps: "8–10",
-            tempo: "3-1-2-0",
-            rest: "150s",
+            name: 'Peso muerto rumano mancuernas',
+            sets: '3',
+            reps: '8–10',
+            tempo: '3-1-2-0',
+            rest: '150s',
           },
           {
-            name: "Prensa pies arriba",
-            sets: "3",
-            reps: "10–12",
-            tempo: "3-1-2-0",
-            rest: "150s",
+            name: 'Prensa pies arriba',
+            sets: '3',
+            reps: '10–12',
+            tempo: '3-1-2-0',
+            rest: '150s',
           },
           {
-            name: "Zancadas caminando",
-            sets: "3",
-            reps: "10–12 por pierna",
-            tempo: "2-0-2-0",
-            rest: "90s",
+            name: 'Zancadas caminando',
+            sets: '3',
+            reps: '10–12 por pierna',
+            tempo: '2-0-2-0',
+            rest: '90s',
           },
           {
-            name: "Curl femoral",
-            sets: "3",
-            reps: "10–12",
-            tempo: "2-1-2-1",
-            rest: "120s",
+            name: 'Curl femoral',
+            sets: '3',
+            reps: '10–12',
+            tempo: '2-1-2-1',
+            rest: '120s',
           },
           {
-            name: "Gemelos (de pie o sentado)",
-            sets: "3",
-            reps: "12–15",
-            tempo: "2-2-2-0",
-            rest: "75s",
+            name: 'Gemelos (de pie o sentado)',
+            sets: '3',
+            reps: '12–15',
+            tempo: '2-2-2-0',
+            rest: '75s',
           },
         ],
         5: [],
@@ -1049,8 +1152,8 @@
         7: [],
       };
 
-      const daySelect = document.getElementById("daySelect");
-      const exerciseList = document.getElementById("exerciseList");
+      const daySelect = document.getElementById('daySelect');
+      const exerciseList = document.getElementById('exerciseList');
 
       function getSetsCount(setsText) {
         if (!setsText) return 3;
@@ -1064,48 +1167,46 @@
       }
 
       function loadDayExercises(day) {
-        exerciseList.innerHTML = "";
+        exerciseList.innerHTML = '';
         const exercises = routineByDay[day] || [];
         if (!exercises.length) {
-          const p = document.createElement("p");
-          p.className = "small";
+          const p = document.createElement('p');
+          p.className = 'small';
           if (day === 5) {
             p.innerHTML =
-              "Día extra: utiliza <strong>Cardio</strong> e <strong>Hipo</strong> según te sientas. También puedes hacer movilidad ligera.";
+              'Día extra: utiliza <strong>Cardio</strong> e <strong>Hipo</strong> según te sientas. También puedes hacer movilidad ligera.';
           } else if (day === 7) {
             p.innerHTML =
-              "Descanso activo: caminata suave 30–40 min + hipopresivos en ayuno si te sientan bien.";
+              'Descanso activo: caminata suave 30–40 min + hipopresivos en ayuno si te sientan bien.';
           } else {
-            p.textContent = "Día libre / movilidad / recuperación.";
+            p.textContent = 'Día libre / movilidad / recuperación.';
           }
           exerciseList.appendChild(p);
           return;
         }
 
         const savedKey = `day_${day}_log`;
-        const savedData = JSON.parse(localStorage.getItem(savedKey) || "{}");
+        const savedData = JSON.parse(localStorage.getItem(savedKey) || '{}');
 
         exercises.forEach((ex, index) => {
-          const card = document.createElement("div");
-          card.className = "exercise-card";
+          const card = document.createElement('div');
+          card.className = 'exercise-card';
 
-          const header = document.createElement("div");
-          header.className = "exercise-header";
+          const header = document.createElement('div');
+          header.className = 'exercise-header';
 
-          const left = document.createElement("div");
-          left.className = "exercise-header-left";
+          const left = document.createElement('div');
+          left.className = 'exercise-header-left';
           left.innerHTML = `<span><strong>${ex.name}</strong></span>
-            <span class="exercise-meta">${ex.sets} x ${
-            ex.reps
-          } · Tempo ${ex.tempo} · Descanso ${ex.rest}</span>`;
+            <span class="exercise-meta">${ex.sets} x ${ex.reps} · Tempo ${ex.tempo} · Descanso ${ex.rest}</span>`;
 
           header.appendChild(left);
           card.appendChild(header);
 
-          const inputsWrap = document.createElement("div");
-          inputsWrap.className = "exercise-inputs";
-          const setsRow = document.createElement("div");
-          setsRow.className = "sets-row";
+          const inputsWrap = document.createElement('div');
+          inputsWrap.className = 'exercise-inputs';
+          const setsRow = document.createElement('div');
+          setsRow.className = 'sets-row';
 
           const setsCount = getSetsCount(ex.sets);
           const savedEntry = savedData[index] || {};
@@ -1113,29 +1214,29 @@
           const restSeconds = parseRestSeconds(ex.rest);
 
           for (let s = 0; s < setsCount; s++) {
-            const setInput = document.createElement("input");
-            setInput.type = "number";
-            setInput.min = "0";
-            setInput.step = "0.5";
+            const setInput = document.createElement('input');
+            setInput.type = 'number';
+            setInput.min = '0';
+            setInput.step = '0.5';
             setInput.placeholder = `S${s + 1} kg`;
-            setInput.className = "set-weight";
+            setInput.className = 'set-weight';
             setInput.value =
               savedWeights[s] !== undefined ? savedWeights[s] : 0;
-            setInput.addEventListener("change", () => {
+            setInput.addEventListener('change', () => {
               saveExerciseLog(day);
               const weights = Array.from(
-                card.querySelectorAll(".set-weight")
-              ).map((i) => parseFloat(i.value || "0"));
+                card.querySelectorAll('.set-weight')
+              ).map((i) => parseFloat(i.value || '0'));
               updateStrengthHistory(day, ex.name, weights);
               if (restSeconds > 0) startTimer(restSeconds);
             });
             setsRow.appendChild(setInput);
           }
 
-          const notes = document.createElement("input");
-          notes.placeholder = "Notas (RPE, fallo, técnica)";
-          notes.value = savedEntry.notes || "";
-          notes.addEventListener("change", () => {
+          const notes = document.createElement('input');
+          notes.placeholder = 'Notas (RPE, fallo, técnica)';
+          notes.value = savedEntry.notes || '';
+          notes.addEventListener('change', () => {
             saveExerciseLog(day);
           });
 
@@ -1147,32 +1248,30 @@
       }
 
       function saveExerciseLog(day) {
-        const cards = exerciseList.querySelectorAll(".exercise-card");
+        const cards = exerciseList.querySelectorAll('.exercise-card');
         const data = [];
         cards.forEach((card) => {
-          const setInputs = card.querySelectorAll(".set-weight");
-          const notes = card.querySelector(
-            'input[placeholder^="Notas (RPE"]'
-          );
+          const setInputs = card.querySelectorAll('.set-weight');
+          const notes = card.querySelector('input[placeholder^="Notas (RPE"]');
           const weights = Array.from(setInputs).map((i) => i.value);
-          data.push({ weights, notes: notes ? notes.value : "" });
+          data.push({ weights, notes: notes ? notes.value : '' });
         });
         localStorage.setItem(`day_${day}_log`, JSON.stringify(data));
       }
 
-      daySelect.addEventListener("change", (e) => {
+      daySelect.addEventListener('change', (e) => {
         loadDayExercises(parseInt(e.target.value, 10));
       });
       loadDayExercises(parseInt(daySelect.value, 10));
 
       /* =============== HISTORIAL DE FUERZA =============== */
-      const STRENGTH_PREFIX = "strength_history_";
-      const strengthHistoryEl = document.getElementById("strengthHistory");
+      const STRENGTH_PREFIX = 'strength_history_';
+      const strengthHistoryEl = document.getElementById('strengthHistory');
 
       function updateStrengthHistory(day, exerciseName, weights) {
         const today = todayKey();
         const key = STRENGTH_PREFIX + today;
-        const data = JSON.parse(localStorage.getItem(key) || "[]");
+        const data = JSON.parse(localStorage.getItem(key) || '[]');
         const numeric = weights.filter((w) => !isNaN(w) && w > 0);
         const maxWeight = numeric.length ? Math.max(...numeric) : 0;
 
@@ -1203,7 +1302,7 @@
         const rows = [];
         dates.forEach((date) => {
           const arr = JSON.parse(
-            localStorage.getItem(STRENGTH_PREFIX + date) || "[]"
+            localStorage.getItem(STRENGTH_PREFIX + date) || '[]'
           );
           arr.forEach((e) => {
             rows.push({
@@ -1231,15 +1330,15 @@
             <td>${r.maxWeight}</td>
           </tr>`;
         });
-        html += "</tbody></table>";
+        html += '</tbody></table>';
         strengthHistoryEl.innerHTML = html;
       }
 
       /* =============== TIMER PESAS (persistente) =============== */
       let timerInterval = null,
         remainingSeconds = 0;
-      const timerDisplay = document.getElementById("timerDisplay");
-      const TIMER_STORAGE_KEY = "rest_timer_v1";
+      const timerDisplay = document.getElementById('timerDisplay');
+      const TIMER_STORAGE_KEY = 'rest_timer_v1';
       let audioCtx = null;
 
       function initAudio() {
@@ -1252,7 +1351,7 @@
         if (!audioCtx) return;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = "sine";
+        osc.type = 'sine';
         osc.frequency.value = 880;
         osc.connect(gain);
         gain.connect(audioCtx.destination);
@@ -1264,8 +1363,8 @@
         osc.stop(now + 0.5);
       }
       function updateTimerDisplay() {
-        const m = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
-        const s = String(remainingSeconds % 60).padStart(2, "0");
+        const m = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
+        const s = String(remainingSeconds % 60).padStart(2, '0');
         timerDisplay.textContent = `${m}:${s}`;
       }
       function tickTimer() {
@@ -1316,13 +1415,13 @@
       }
 
       document
-        .querySelectorAll(".timer-controls button[data-time]")
+        .querySelectorAll('.timer-controls button[data-time]')
         .forEach((btn) => {
-          btn.addEventListener("click", () => {
+          btn.addEventListener('click', () => {
             startTimer(parseInt(btn.dataset.time, 10));
           });
         });
-      document.getElementById("stopTimer").addEventListener("click", stopTimer);
+      document.getElementById('stopTimer').addEventListener('click', stopTimer);
 
       (function restoreTimer() {
         const raw = localStorage.getItem(TIMER_STORAGE_KEY);
@@ -1344,10 +1443,10 @@
       })();
 
       /* =============== HIPO – Rutina guiada =============== */
-      const hypoTimerEl = document.getElementById("hypoTimer");
-      const startHypo = document.getElementById("startHypo");
-      const stopHypo = document.getElementById("stopHypo");
-      const hypoStatus = document.getElementById("hypoStatus");
+      const hypoTimerEl = document.getElementById('hypoTimer');
+      const startHypo = document.getElementById('startHypo');
+      const stopHypo = document.getElementById('stopHypo');
+      const hypoStatus = document.getElementById('hypoStatus');
 
       let hypoInt = null,
         hypoRemaining = 0,
@@ -1356,9 +1455,9 @@
       const HYPO_WORK = 40,
         HYPO_REST = 20;
       const hypoSequence = [
-        { name: "Standing – Basic" },
-        { name: "Seated – Open elbows" },
-        { name: "Quadruped – Neutral spine" },
+        { name: 'Standing – Basic' },
+        { name: 'Seated – Open elbows' },
+        { name: 'Quadruped – Neutral spine' },
       ];
       let fullProgram = [];
 
@@ -1367,23 +1466,23 @@
         for (let round = 1; round <= 3; round++) {
           for (let i = 0; i < hypoSequence.length; i++) {
             fullProgram.push({
-              type: "work",
+              type: 'work',
               seconds: HYPO_WORK,
               label: `${hypoSequence[i].name} · Ronda ${round}/3`,
             });
             if (!(round === 3 && i === hypoSequence.length - 1)) {
               fullProgram.push({
-                type: "rest",
+                type: 'rest',
                 seconds: HYPO_REST,
-                label: "Transición / recuperación",
+                label: 'Transición / recuperación',
               });
             }
           }
         }
       }
       function formatTime(s) {
-        const m = String(Math.floor(s / 60)).padStart(2, "0");
-        const ss = String(s % 60).padStart(2, "0");
+        const m = String(Math.floor(s / 60)).padStart(2, '0');
+        const ss = String(s % 60).padStart(2, '0');
         return `${m}:${ss}`;
       }
       function renderHypo() {
@@ -1391,7 +1490,7 @@
         const step = fullProgram[hypoIndex];
         if (step) {
           hypoStatus.textContent = `${
-            step.type === "work" ? "Trabajo: " : "Descanso: "
+            step.type === 'work' ? 'Trabajo: ' : 'Descanso: '
           }${step.label}`;
         }
       }
@@ -1404,7 +1503,7 @@
           if (hypoIndex >= fullProgram.length) {
             clearInterval(hypoInt);
             hypoActive = false;
-            hypoStatus.textContent = "Rutina finalizada ✅";
+            hypoStatus.textContent = 'Rutina finalizada ✅';
             return;
           }
           const next = fullProgram[hypoIndex];
@@ -1414,7 +1513,7 @@
           renderHypo();
         }
       }
-      startHypo.addEventListener("click", () => {
+      startHypo.addEventListener('click', () => {
         if (hypoActive) return;
         initAudio();
         buildHypoProgram();
@@ -1425,33 +1524,33 @@
         clearInterval(hypoInt);
         hypoInt = setInterval(tickHypo, 1000);
       });
-      stopHypo.addEventListener("click", () => {
+      stopHypo.addEventListener('click', () => {
         clearInterval(hypoInt);
         hypoActive = false;
-        hypoStatus.textContent = "Rutina detenida.";
+        hypoStatus.textContent = 'Rutina detenida.';
       });
 
       /* =============== CARDIO =============== */
-      const fatZoneInfo = document.getElementById("fatZoneInfo");
+      const fatZoneInfo = document.getElementById('fatZoneInfo');
       if (fatZoneInfo)
         fatZoneInfo.textContent = `Zona de oxidación estimada: ${HR_FAT_LOW}-${HR_FAT_HIGH} bpm (60–75% FC máx).`;
 
-      const cardioType = document.getElementById("cardioType");
-      const cardioTime = document.getElementById("cardioTime");
-      const cardioHR = document.getElementById("cardioHR");
-      const stepsInput = document.getElementById("stepsInput");
-      const saveCardioBtn = document.getElementById("saveCardio");
-      const cardioStatus = document.getElementById("cardioStatus");
-      const cardioSessionsList = document.getElementById("cardioSessionsList");
+      const cardioType = document.getElementById('cardioType');
+      const cardioTime = document.getElementById('cardioTime');
+      const cardioHR = document.getElementById('cardioHR');
+      const stepsInput = document.getElementById('stepsInput');
+      const saveCardioBtn = document.getElementById('saveCardio');
+      const cardioStatus = document.getElementById('cardioStatus');
+      const cardioSessionsList = document.getElementById('cardioSessionsList');
 
-      saveCardioBtn.addEventListener("click", () => {
+      saveCardioBtn.addEventListener('click', () => {
         const key = todayKey();
         const existing = JSON.parse(
-          localStorage.getItem(`cardio_${key}`) || "{}"
+          localStorage.getItem(`cardio_${key}`) || '{}'
         );
-        const newTime = parseFloat(cardioTime.value || "0");
-        const newHR = parseFloat(cardioHR.value || "0");
-        const newSteps = parseInt(stepsInput.value || "0", 10);
+        const newTime = parseFloat(cardioTime.value || '0');
+        const newHR = parseFloat(cardioHR.value || '0');
+        const newSteps = parseInt(stepsInput.value || '0', 10);
         const newType =
           cardioType.value || `Sesión ${(existing.sessions || []).length + 1}`;
 
@@ -1484,20 +1583,20 @@
           sessions,
         };
         localStorage.setItem(`cardio_${key}`, JSON.stringify(payload));
-        cardioStatus.textContent = "Cardio acumulado ✅";
-        setTimeout(() => (cardioStatus.textContent = ""), 2000);
+        cardioStatus.textContent = 'Cardio acumulado ✅';
+        setTimeout(() => (cardioStatus.textContent = ''), 2000);
 
-        cardioType.value = "";
-        cardioTime.value = "";
-        cardioHR.value = "";
-        stepsInput.value = "";
+        cardioType.value = '';
+        cardioTime.value = '';
+        cardioHR.value = '';
+        stepsInput.value = '';
         renderCardioSessionsToday();
         updateDashboard();
       });
 
       function renderCardioSessionsToday() {
         const key = todayKey();
-        const data = JSON.parse(localStorage.getItem(`cardio_${key}`) || "{}");
+        const data = JSON.parse(localStorage.getItem(`cardio_${key}`) || '{}');
         const sessions = data.sessions || [];
         if (!sessions.length) {
           cardioSessionsList.innerHTML =
@@ -1508,85 +1607,85 @@
           "<table class='history-table'><thead><tr><th>#</th><th>Tipo</th><th>Min</th><th>FC</th><th>Pasos</th><th>Zona ox. (min)</th></tr></thead><tbody>";
         sessions.forEach((s, i) => {
           const z =
-            typeof s.timeInFatZone === "number"
+            typeof s.timeInFatZone === 'number'
               ? s.timeInFatZone
               : isInFatZone(s.hr)
               ? s.time
               : 0;
           html += `<tr>
             <td>${i + 1}</td>
-            <td>${s.type || ""}</td>
+            <td>${s.type || ''}</td>
             <td>${s.time || 0}</td>
             <td>${s.hr || 0}</td>
             <td>${s.steps || 0}</td>
             <td>${z || 0}</td>
           </tr>`;
         });
-        html += "</tbody></table>";
+        html += '</tbody></table>';
         cardioSessionsList.innerHTML = html;
       }
       renderCardioSessionsToday();
 
       /* =============== COMIDAS: PRODUCTOS + REGISTRO =============== */
       const foodProducts = {
-        "Claras líquidas": { kcalPer100: 50 },
-        "Huevo entero": { kcalPer100: 143 },
-        "Pechuga de pollo": { kcalPer100: 165 },
-        "Atún en agua (lata escurrida)": { kcalPer100: 120 },
-        "Arroz cocido": { kcalPer100: 130 },
-        "Papas cocidas / airfryer": { kcalPer100: 80 },
-        "Tostadas horneadas": { kcalPer100: 400 },
-        "Yogurt griego natural": { kcalPer100: 65 },
-        "Granola simple": { kcalPer100: 400 },
-        "Fruta (promedio)": { kcalPer100: 60 },
-        "Verduras mixtas": { kcalPer100: 30 },
-        "Aguacate": { kcalPer100: 160 },
-        "Aceite de oliva": { kcalPer100: 900 },
-        "Almendras / nueces": { kcalPer100: 600 },
+        'Claras líquidas': { kcalPer100: 50 },
+        'Huevo entero': { kcalPer100: 143 },
+        'Pechuga de pollo': { kcalPer100: 165 },
+        'Atún en agua (lata escurrida)': { kcalPer100: 120 },
+        'Arroz cocido': { kcalPer100: 130 },
+        'Papas cocidas / airfryer': { kcalPer100: 80 },
+        'Tostadas horneadas': { kcalPer100: 400 },
+        'Yogurt griego natural': { kcalPer100: 65 },
+        'Granola simple': { kcalPer100: 400 },
+        'Fruta (promedio)': { kcalPer100: 60 },
+        'Verduras mixtas': { kcalPer100: 30 },
+        Aguacate: { kcalPer100: 160 },
+        'Aceite de oliva': { kcalPer100: 900 },
+        'Almendras / nueces': { kcalPer100: 600 },
       };
 
-      const productSelect = document.getElementById("productSelect");
-      const productGrams = document.getElementById("productGrams");
-      const addProductToMealBtn = document.getElementById("addProductToMeal");
-      const productCalcInfo = document.getElementById("productCalcInfo");
+      const productSelect = document.getElementById('productSelect');
+      const productGrams = document.getElementById('productGrams');
+      const addProductToMealBtn = document.getElementById('addProductToMeal');
+      const productCalcInfo = document.getElementById('productCalcInfo');
 
       Object.keys(foodProducts).forEach((name) => {
-        const option = document.createElement("option");
+        const option = document.createElement('option');
         option.value = name;
         option.textContent = name;
         productSelect.appendChild(option);
       });
 
-      const mealNameInput = document.getElementById("mealNameInput");
-      const kcalInput = document.getElementById("kcalInput");
-      const weightInput = document.getElementById("weightInput");
-      const waistInput = document.getElementById("waistInput");
-      const saveDailyBtn = document.getElementById("saveDaily");
-      const dailyStatus = document.getElementById("dailyStatus");
-      const mealsList = document.getElementById("mealsList");
+      const mealNameInput = document.getElementById('mealNameInput');
+      const kcalInput = document.getElementById('kcalInput');
+      const weightInput = document.getElementById('weightInput');
+      const waistInput = document.getElementById('waistInput');
+      const saveDailyBtn = document.getElementById('saveDaily');
+      const dailyStatus = document.getElementById('dailyStatus');
+      const mealsList = document.getElementById('mealsList');
 
-      addProductToMealBtn.addEventListener("click", () => {
+      addProductToMealBtn.addEventListener('click', () => {
         const name = productSelect.value;
-        const grams = parseFloat(productGrams.value || "0");
+        const grams = parseFloat(productGrams.value || '0');
         if (!name || !grams || grams <= 0) {
           productCalcInfo.textContent =
-            "Selecciona un producto y pon gramos válidos.";
+            'Selecciona un producto y pon gramos válidos.';
           return;
         }
         const prod = foodProducts[name];
         const kcal = (grams * prod.kcalPer100) / 100;
-        const prev = parseFloat(kcalInput.value || "0");
+        const prev = parseFloat(kcalInput.value || '0');
         const newTotal = Math.round(prev + kcal);
         kcalInput.value = newTotal;
         productCalcInfo.textContent = `+${Math.round(
           kcal
         )} kcal de ${name} (${grams} g). Total comida: ${newTotal} kcal.`;
-        productGrams.value = "";
+        productGrams.value = '';
       });
 
       function renderMealsToday() {
         const key = todayKey();
-        const meals = JSON.parse(localStorage.getItem(`meals_${key}`) || "[]");
+        const meals = JSON.parse(localStorage.getItem(`meals_${key}`) || '[]');
         if (!meals.length) {
           mealsList.innerHTML =
             "<p class='small'>Sin comidas registradas todavía.</p>";
@@ -1601,39 +1700,39 @@
             <td>${m.kcal || 0}</td>
           </tr>`;
         });
-        html += "</tbody></table>";
+        html += '</tbody></table>';
         mealsList.innerHTML = html;
       }
 
-      saveDailyBtn.addEventListener("click", () => {
+      saveDailyBtn.addEventListener('click', () => {
         const key = todayKey();
         const existingDaily = JSON.parse(
-          localStorage.getItem(`daily_${key}`) || "{}"
+          localStorage.getItem(`daily_${key}`) || '{}'
         );
         const existingMeals = JSON.parse(
-          localStorage.getItem(`meals_${key}`) || "[]"
+          localStorage.getItem(`meals_${key}`) || '[]'
         );
 
-        const addKcal = parseFloat(kcalInput.value || "0");
+        const addKcal = parseFloat(kcalInput.value || '0');
         const mealName =
           mealNameInput.value || `Comida ${existingMeals.length + 1}`;
 
         const newMeals = [...existingMeals, { name: mealName, kcal: addKcal }];
         const payloadDaily = {
-          weight: parseFloat(weightInput.value || existingDaily.weight || "0"),
-          waist: parseFloat(waistInput.value || existingDaily.waist || "0"),
+          weight: parseFloat(weightInput.value || existingDaily.weight || '0'),
+          waist: parseFloat(waistInput.value || existingDaily.waist || '0'),
           kcal: (existingDaily.kcal || 0) + (addKcal || 0),
         };
 
         localStorage.setItem(`daily_${key}`, JSON.stringify(payloadDaily));
         localStorage.setItem(`meals_${key}`, JSON.stringify(newMeals));
 
-        dailyStatus.textContent = "Comida agregada / día actualizado ✅";
-        setTimeout(() => (dailyStatus.textContent = ""), 2000);
+        dailyStatus.textContent = 'Comida agregada / día actualizado ✅';
+        setTimeout(() => (dailyStatus.textContent = ''), 2000);
 
-        mealNameInput.value = "";
-        kcalInput.value = "";
-        productCalcInfo.textContent = "";
+        mealNameInput.value = '';
+        kcalInput.value = '';
+        productCalcInfo.textContent = '';
         renderMealsToday();
         updateDashboard();
       });
@@ -1641,73 +1740,73 @@
       renderMealsToday();
 
       /* =============== LISTA DEL SÚPER =============== */
-      const superListEl = document.getElementById("superList");
-      const checkAllSuperBtn = document.getElementById("checkAllSuper");
-      const clearAllSuperBtn = document.getElementById("clearAllSuper");
-      const SUPER_STATE_KEY = "super_list_state_v1";
+      const superListEl = document.getElementById('superList');
+      const checkAllSuperBtn = document.getElementById('checkAllSuper');
+      const clearAllSuperBtn = document.getElementById('clearAllSuper');
+      const SUPER_STATE_KEY = 'super_list_state_v1';
 
       const superItems = [
         // PROTEÍNAS
         {
-          id: "pollo",
-          group: "Proteínas",
-          label: "3.5–4 kg pechuga de pollo",
+          id: 'pollo',
+          group: 'Proteínas',
+          label: '3.5–4 kg pechuga de pollo',
         },
-        { id: "atun", group: "Proteínas", label: "10–12 latas de atún" },
+        { id: 'atun', group: 'Proteínas', label: '10–12 latas de atún' },
         {
-          id: "huevos",
-          group: "Proteínas",
-          label: "30–36 huevos",
+          id: 'huevos',
+          group: 'Proteínas',
+          label: '30–36 huevos',
         },
         {
-          id: "claras",
-          group: "Proteínas",
-          label: "1 L claras líquidas",
+          id: 'claras',
+          group: 'Proteínas',
+          label: '1 L claras líquidas',
         },
         // CARBOHIDRATOS
-        { id: "papas", group: "Carbohidratos", label: "3–4 kg papas" },
-        { id: "arroz", group: "Carbohidratos", label: "2 kg arroz" },
+        { id: 'papas', group: 'Carbohidratos', label: '3–4 kg papas' },
+        { id: 'arroz', group: 'Carbohidratos', label: '2 kg arroz' },
         {
-          id: "tostadas",
-          group: "Carbohidratos",
-          label: "1 caja tostadas horneadas",
+          id: 'tostadas',
+          group: 'Carbohidratos',
+          label: '1 caja tostadas horneadas',
         },
         {
-          id: "cereal",
-          group: "Carbohidratos",
-          label: "1 caja Corn Flakes/Rice Krispies (opcional)",
+          id: 'cereal',
+          group: 'Carbohidratos',
+          label: '1 caja Corn Flakes/Rice Krispies (opcional)',
         },
         {
-          id: "frutas",
-          group: "Carbohidratos",
-          label: "10–12 frutas (manzana, plátano, kiwi)",
+          id: 'frutas',
+          group: 'Carbohidratos',
+          label: '10–12 frutas (manzana, plátano, kiwi)',
         },
         // VERDURAS
-        { id: "brocoli", group: "Verduras", label: "Brócoli" },
-        { id: "calabaza", group: "Verduras", label: "Calabaza" },
-        { id: "zanahoria", group: "Verduras", label: "Zanahoria" },
-        { id: "pepino", group: "Verduras", label: "Pepino" },
+        { id: 'brocoli', group: 'Verduras', label: 'Brócoli' },
+        { id: 'calabaza', group: 'Verduras', label: 'Calabaza' },
+        { id: 'zanahoria', group: 'Verduras', label: 'Zanahoria' },
+        { id: 'pepino', group: 'Verduras', label: 'Pepino' },
         {
-          id: "hojas",
-          group: "Verduras",
-          label: "Lechuga / espinaca",
+          id: 'hojas',
+          group: 'Verduras',
+          label: 'Lechuga / espinaca',
         },
         // GRASAS
         {
-          id: "aguacate",
-          group: "Grasas",
-          label: "4–5 aguacates",
+          id: 'aguacate',
+          group: 'Grasas',
+          label: '4–5 aguacates',
         },
-        { id: "aceite", group: "Grasas", label: "Aceite de oliva" },
+        { id: 'aceite', group: 'Grasas', label: 'Aceite de oliva' },
         {
-          id: "almendras",
-          group: "Grasas",
-          label: "Almendras / nueces (bolsa chica)",
+          id: 'almendras',
+          group: 'Grasas',
+          label: 'Almendras / nueces (bolsa chica)',
         },
       ];
 
       function loadSuperState() {
-        return JSON.parse(localStorage.getItem(SUPER_STATE_KEY) || "{}");
+        return JSON.parse(localStorage.getItem(SUPER_STATE_KEY) || '{}');
       }
       function saveSuperState(state) {
         localStorage.setItem(SUPER_STATE_KEY, JSON.stringify(state));
@@ -1715,39 +1814,57 @@
 
       function renderSuperList() {
         const state = loadSuperState();
-        superListEl.innerHTML = "";
+        superListEl.innerHTML = '';
+
         const groups = {};
         superItems.forEach((item) => {
           if (!groups[item.group]) groups[item.group] = [];
           groups[item.group].push(item);
         });
+
         Object.keys(groups).forEach((groupName) => {
-          const title = document.createElement("div");
-          title.className = "super-group-title";
+          const groupBox = document.createElement('div');
+          groupBox.className = 'super-group';
+
+          const title = document.createElement('div');
+          title.className = 'super-group-title';
           title.textContent = groupName.toUpperCase();
-          superListEl.appendChild(title);
+
+          const itemsContainer = document.createElement('div');
+          itemsContainer.className = 'super-items';
 
           groups[groupName].forEach((item) => {
-            const row = document.createElement("div");
-            row.className = "super-item-row";
-            const cb = document.createElement("input");
-            cb.type = "checkbox";
+            const row = document.createElement('div');
+            row.className = 'super-item-row';
+            if (state[item.id]) row.classList.add('checked');
+
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
             cb.checked = !!state[item.id];
-            cb.addEventListener("change", () => {
+
+            const label = document.createElement('span');
+            label.className = 'super-item-label';
+            label.textContent = item.label;
+
+            cb.addEventListener('change', () => {
               const st = loadSuperState();
               st[item.id] = cb.checked;
               saveSuperState(st);
+              row.classList.toggle('checked', cb.checked);
             });
-            const label = document.createElement("span");
-            label.textContent = item.label;
+
             row.appendChild(cb);
             row.appendChild(label);
-            superListEl.appendChild(row);
+            itemsContainer.appendChild(row);
           });
+
+          groupBox.appendChild(title);
+          groupBox.appendChild(itemsContainer);
+          superListEl.appendChild(groupBox);
         });
       }
 
-      checkAllSuperBtn.addEventListener("click", () => {
+      checkAllSuperBtn.addEventListener('click', () => {
         const state = {};
         superItems.forEach((i) => {
           state[i.id] = true;
@@ -1755,7 +1872,7 @@
         saveSuperState(state);
         renderSuperList();
       });
-      clearAllSuperBtn.addEventListener("click", () => {
+      clearAllSuperBtn.addEventListener('click', () => {
         saveSuperState({});
         renderSuperList();
       });
@@ -1763,27 +1880,27 @@
       renderSuperList();
 
       /* =============== DASHBOARD =============== */
-      const ringKcal = document.getElementById("ringKcal");
-      const ringCardio = document.getElementById("ringCardio");
-      const ringSteps = document.getElementById("ringSteps");
-      const ringWeight = document.getElementById("ringWeight");
-      const ringKcalInner = document.getElementById("ringKcalInner");
-      const ringCardioInner = document.getElementById("ringCardioInner");
-      const ringStepsInner = document.getElementById("ringStepsInner");
-      const ringWeightInner = document.getElementById("ringWeightInner");
-      const ringKcalText = document.getElementById("ringKcalText");
-      const ringCardioText = document.getElementById("ringCardioText");
-      const ringStepsText = document.getElementById("ringStepsText");
-      const ringWeightText = document.getElementById("ringWeightText");
-      const ringFatZoneText = document.getElementById("ringFatZoneText");
-      const historyTableBody = document.querySelector("#historyTable tbody");
-      const viewButtons = document.querySelectorAll(".view-toggle button");
+      const ringKcal = document.getElementById('ringKcal');
+      const ringCardio = document.getElementById('ringCardio');
+      const ringSteps = document.getElementById('ringSteps');
+      const ringWeight = document.getElementById('ringWeight');
+      const ringKcalInner = document.getElementById('ringKcalInner');
+      const ringCardioInner = document.getElementById('ringCardioInner');
+      const ringStepsInner = document.getElementById('ringStepsInner');
+      const ringWeightInner = document.getElementById('ringWeightInner');
+      const ringKcalText = document.getElementById('ringKcalText');
+      const ringCardioText = document.getElementById('ringCardioText');
+      const ringStepsText = document.getElementById('ringStepsText');
+      const ringWeightText = document.getElementById('ringWeightText');
+      const ringFatZoneText = document.getElementById('ringFatZoneText');
+      const historyTableBody = document.querySelector('#historyTable tbody');
+      const viewButtons = document.querySelectorAll('.view-toggle button');
 
-      let currentView = "day";
+      let currentView = 'day';
       viewButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          viewButtons.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
+        btn.addEventListener('click', () => {
+          viewButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
           currentView = btn.dataset.view;
           updateDashboard();
         });
@@ -1801,16 +1918,16 @@
       }
       function getDataRange(view) {
         let days = 1;
-        if (view === "week") days = 7;
-        if (view === "month") days = 30;
+        if (view === 'week') days = 7;
+        if (view === 'month') days = 30;
         const dates = getLastNDates(days);
         const rows = [];
         dates.forEach((date) => {
           const daily = JSON.parse(
-            localStorage.getItem(`daily_${date}`) || "{}"
+            localStorage.getItem(`daily_${date}`) || '{}'
           );
           const cardio = JSON.parse(
-            localStorage.getItem(`cardio_${date}`) || "{}"
+            localStorage.getItem(`cardio_${date}`) || '{}'
           );
           if (
             daily.weight ||
@@ -1837,11 +1954,11 @@
       }
       function setRing(ringEl, innerEl, textEl, value, target, color, unit) {
         const percent = target > 0 ? Math.min(value / target, 1) : 0;
-        ringEl.style.setProperty("--percent", percent.toString());
-        ringEl.style.setProperty("--color", color);
+        ringEl.style.setProperty('--percent', percent.toString());
+        ringEl.style.setProperty('--color', color);
         innerEl.textContent = `${Math.round(value)} ${unit}`;
-        if (unit === "kg") {
-          textEl.textContent = "Promedio / día";
+        if (unit === 'kg') {
+          textEl.textContent = 'Promedio / día';
         } else {
           textEl.textContent = `${Math.round(percent * 100)}% del objetivo`;
         }
@@ -1855,8 +1972,8 @@
             ringKcalText,
             0,
             TARGET_KCAL,
-            "#e53935",
-            "kcal"
+            '#e53935',
+            'kcal'
           );
           setRing(
             ringCardio,
@@ -1864,18 +1981,18 @@
             ringCardioText,
             0,
             TARGET_CARDIO_MIN,
-            "#42a5f5",
-            "min"
+            '#42a5f5',
+            'min'
           );
-          ringFatZoneText.textContent = "0 min en zona ox. (0% objetivo)";
+          ringFatZoneText.textContent = '0 min en zona ox. (0% objetivo)';
           setRing(
             ringSteps,
             ringStepsInner,
             ringStepsText,
             0,
             TARGET_STEPS,
-            "#66bb6a",
-            "pasos"
+            '#66bb6a',
+            'pasos'
           );
           setRing(
             ringWeight,
@@ -1883,15 +2000,15 @@
             ringWeightText,
             0,
             1,
-            "#f5f5f5",
-            "kg"
+            '#f5f5f5',
+            'kg'
           );
           historyTableBody.innerHTML =
             "<tr><td colspan='8'>Sin datos aún. Registra tu día en las pestañas.</td></tr>";
           return;
         }
         let ref;
-        if (currentView === "day") {
+        if (currentView === 'day') {
           ref = data[data.length - 1];
         } else {
           const sum = data.reduce(
@@ -1916,7 +2033,7 @@
           );
           const len = data.length || 1;
           ref = {
-            date: data[0].date + " → " + data[data.length - 1].date,
+            date: data[0].date + ' → ' + data[data.length - 1].date,
             weight: sum.weight / len,
             waist: sum.waist / len,
             kcal: sum.kcal / len,
@@ -1932,8 +2049,8 @@
           ringKcalText,
           ref.kcal || 0,
           TARGET_KCAL,
-          "#e53935",
-          "kcal"
+          '#e53935',
+          'kcal'
         );
         setRing(
           ringCardio,
@@ -1941,13 +2058,11 @@
           ringCardioText,
           ref.cardioTime || 0,
           TARGET_CARDIO_MIN,
-          "#42a5f5",
-          "min"
+          '#42a5f5',
+          'min'
         );
         const fatMin = ref.fatZoneMin || 0;
-        const pctFat = Math.round(
-          Math.min(fatMin / TARGET_FAT_MIN, 1) * 100
-        );
+        const pctFat = Math.round(Math.min(fatMin / TARGET_FAT_MIN, 1) * 100);
         ringFatZoneText.textContent = `${Math.round(
           fatMin
         )} min en zona ox. (${pctFat}% objetivo)`;
@@ -1957,8 +2072,8 @@
           ringStepsText,
           ref.steps || 0,
           TARGET_STEPS,
-          "#66bb6a",
-          "pasos"
+          '#66bb6a',
+          'pasos'
         );
         setRing(
           ringWeight,
@@ -1966,22 +2081,22 @@
           ringWeightText,
           ref.weight || 0,
           ref.weight || 1,
-          "#f5f5f5",
-          "kg"
+          '#f5f5f5',
+          'kg'
         );
 
-        historyTableBody.innerHTML = "";
+        historyTableBody.innerHTML = '';
         data.forEach((row) => {
-          const tr = document.createElement("tr");
+          const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${row.date}</td>
-            <td>${row.weight || ""}</td>
-            <td>${row.waist || ""}</td>
-            <td>${row.kcal || ""}</td>
-            <td>${row.cardioTime || ""}</td>
-            <td>${row.hr || ""}</td>
-            <td>${row.steps || ""}</td>
-            <td>${row.fatZoneMin || ""}</td>
+            <td>${row.weight || ''}</td>
+            <td>${row.waist || ''}</td>
+            <td>${row.kcal || ''}</td>
+            <td>${row.cardioTime || ''}</td>
+            <td>${row.hr || ''}</td>
+            <td>${row.steps || ''}</td>
+            <td>${row.fatZoneMin || ''}</td>
           `;
           historyTableBody.appendChild(tr);
         });
