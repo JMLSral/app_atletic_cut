@@ -1,1174 +1,1993 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
+    />
     <title>Athletic Cut – UL + Menús + Súper</title>
     <meta name="theme-color" content="#050608" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="Athletic Cut" />
+
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+      body {
+        background: #050608;
+        color: #f5f5f5;
+      }
+      header {
+        padding: 14px;
+        text-align: center;
+        background: #111216;
+        border-bottom: 1px solid #333;
+      }
+      header h1 {
+        font-size: 1.35rem;
+        margin-bottom: 4px;
+      }
+      header p {
+        font-size: 0.85rem;
+        color: #a9a9a9;
+      }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: center;
+        margin-top: 8px;
+      }
+      .tab-btn {
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid #333743;
+        background: #15161b;
+        color: #ccc;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+      .tab-btn.active {
+        background: #e53935;
+        color: #fff;
+        border-color: #e53935;
+      }
+      main {
+        padding: 12px;
+        max-width: 1000px;
+        margin: 0 auto 40px;
+      }
+      .card {
+        background: #15161b;
+        border: 1px solid #282a33;
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+      }
+      .card h2 {
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+      }
+      .sub {
+        font-size: 0.85rem;
+        color: #aeb4ba;
+        margin-bottom: 6px;
+      }
+      select,
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 4px 0 10px;
+        border-radius: 8px;
+        border: 1px solid #333743;
+        background: #111216;
+        color: #f5f5f5;
+      }
+      textarea {
+        min-height: 80px;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: none;
+        background: #e53935;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #ff5252;
+      }
+      button.secondary {
+        background: #263238;
+      }
+      button.secondary:hover {
+        background: #455a64;
+      }
+      .hidden {
+        display: none;
+      }
+      .small {
+        font-size: 0.8rem;
+        color: #a9a9a9;
+        margin-top: 4px;
+      }
 
-        body {
-            background: #050608;
-            color: #f5f5f5;
-        }
+      /* RINGS DASHBOARD */
+      .rings {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 18px;
+        align-items: flex-start;
+        margin-top: 6px;
+      }
+      .ring-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 0;
+        text-align: center;
+      }
+      .ring-label {
+        font-size: 0.9rem;
+        color: #ddd;
+        margin-bottom: 6px;
+      }
+      .ring {
+        --percent: 0;
+        --color: #e53935;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle at center,
+            #15161b 55%,
+            transparent 56%
+          ),
+          conic-gradient(
+            var(--color) calc(var(--percent) * 360deg),
+            #25262f calc(var(--percent) * 360deg)
+          );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 6px;
+        box-shadow: 0 0 0 3px #050608, 0 0 18px rgba(0, 0, 0, 0.6);
+        transition: background 0.35s ease-out;
+      }
+      .ring-inner {
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #15161b, #111116);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #f5f5f5;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+      }
+      .ring-value {
+        font-size: 0.85rem;
+        color: #cfd8dc;
+      }
+      .ring-value.small {
+        font-size: 0.75rem;
+        color: #9fa8b0;
+        margin-top: -2px;
+      }
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+        font-size: 0.8rem;
+      }
+      .history-table th,
+      .history-table td {
+        border: 1px solid #333743;
+        padding: 4px 6px;
+        text-align: center;
+      }
+      .history-table th {
+        background: #22232b;
+      }
+      .view-toggle {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+      .view-toggle button {
+        flex: 1;
+        font-size: 0.8rem;
+      }
 
-        header {
-            padding: 14px;
-            text-align: center;
-            background: #111216;
-            border-bottom: 1px solid #333;
-        }
+      /* GYM */
+      .exercise-card {
+        border: 1px solid #282a33;
+        border-radius: 10px;
+        padding: 10px;
+        background: #111216;
+        margin-bottom: 8px;
+      }
+      .exercise-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .exercise-header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exercise-meta {
+        font-size: 0.75rem;
+        color: #bfc5cc;
+      }
+      .exercise-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 6px;
+      }
+      .sets-row {
+        display: flex;
+        gap: 6px;
+      }
+      .sets-row input {
+        flex: 1;
+        font-size: 0.85rem;
+      }
+      .tempo-note {
+        font-size: 0.8rem;
+        color: #cfd8dc;
+        margin-top: 4px;
+      }
 
-        header h1 {
-            font-size: 1.35rem;
-            margin-bottom: 4px;
-        }
+      /* Timers */
+      .timer {
+        font-size: 2rem;
+        text-align: center;
+        margin: 6px 0;
+      }
+      .timer-controls {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .timer-controls button {
+        flex: 1;
+        background: #263238;
+      }
 
-        header p {
-            font-size: 0.85rem;
-            color: #a9a9a9;
-        }
+      /* HYPO */
+      .hypo-step {
+        border: 1px dashed #3a3f4a;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 8px;
+        background: #0f1116;
+      }
+      .hypo-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            justify-content: center;
-            margin-top: 8px;
-        }
+      /* FOOD SUBTABS */
+      .food-tabs {
+        display: flex;
+        gap: 6px;
+        margin: 8px 0;
+      }
+      .food-tabs button {
+        flex: 1;
+        font-size: 0.8rem;
+      }
 
-        .tab-btn {
-            padding: 6px 10px;
-            border-radius: 999px;
-            border: 1px solid #333743;
-            background: #15161b;
-            color: #ccc;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
+      /* SUPER LIST */
+      .super-group-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 6px 0 4px;
+      }
+      .super-item-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+        font-size: 0.85rem;
+        padding: 2px 0;
+      }
+      .super-item-row input[type="checkbox"] {
+        flex-shrink: 0;
+      }
 
-        .tab-btn.active {
-            background: #e53935;
-            color: #fff;
-            border-color: #e53935;
-        }
-
-        main {
-            padding: 12px;
-            max-width: 1000px;
-            margin: 0 auto 40px;
-        }
-
-        .card {
-            background: #15161b;
-            border: 1px solid #282a33;
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin-bottom: 12px;
-        }
-
-        .card h2 {
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-        }
-
-        .sub {
-            font-size: 0.85rem;
-            color: #aeb4ba;
-            margin-bottom: 6px;
-        }
-
-        select,
-        input,
-        textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 4px 0 10px;
-            border-radius: 8px;
-            border: 1px solid #333743;
-            background: #111216;
-            color: #f5f5f5;
-        }
-
-        textarea {
-            min-height: 80px;
-        }
-
-        button {
-            padding: 8px 12px;
-            border-radius: 10px;
-            border: none;
-            background: #e53935;
-            color: #fff;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #ff5252;
-        }
-
-        button.secondary {
-            background: #263238;
-        }
-
-        button.secondary:hover {
-            background: #455a64;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .small {
-            font-size: 0.8rem;
-            color: #a9a9a9;
-            margin-top: 4px;
-        }
-
-        /* RINGS DASHBOARD */
+      @media (max-width: 600px) {
         .rings {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 18px;
-            align-items: flex-start;
-            margin-top: 6px;
+          grid-template-columns: 1fr;
         }
-
-        .ring-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 0;
-            text-align: center;
-        }
-
-        .ring-label {
-            font-size: 0.9rem;
-            color: #ddd;
-            margin-bottom: 6px;
-        }
-
-        .ring {
-            --percent: 0;
-            --color: #e53935;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, #15161b 55%, transparent 56%), conic-gradient(var(--color) calc(var(--percent) * 360deg), #25262f calc(var(--percent) * 360deg));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 6px;
-            box-shadow: 0 0 0 3px #050608, 0 0 18px rgba(0, 0, 0, 0.6);
-            transition: background 0.35s ease-out;
-        }
-
-        .ring-inner {
-            width: 74px;
-            height: 74px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #15161b, #111116);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: #f5f5f5;
-            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
-        }
-
-        .ring-value {
-            font-size: 0.85rem;
-            color: #cfd8dc;
-        }
-
-        .ring-value.small {
-            font-size: 0.75rem;
-            color: #9fa8b0;
-            margin-top: -2px;
-        }
-
-        .history-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 8px;
-            font-size: 0.8rem;
-        }
-
-        .history-table th,
-        .history-table td {
-            border: 1px solid #333743;
-            padding: 4px 6px;
-            text-align: center;
-        }
-
-        .history-table th {
-            background: #22232b;
-        }
-
-        .view-toggle {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-
-        .view-toggle button {
-            flex: 1;
-            font-size: 0.8rem;
-        }
-
-        /* GYM */
-        .exercise-card {
-            border: 1px solid #282a33;
-            border-radius: 10px;
-            padding: 10px;
-            background: #111216;
-            margin-bottom: 8px;
-        }
-
         .exercise-header {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
+          flex-direction: column;
+          align-items: flex-start;
         }
-
-        .exercise-header-left {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .exercise-meta {
-            font-size: 0.75rem;
-            color: #bfc5cc;
-        }
-
-        .exercise-inputs {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 6px;
-        }
-
-        .sets-row {
-            display: flex;
-            gap: 6px;
-        }
-
-        .sets-row input {
-            flex: 1;
-            font-size: 0.85rem;
-        }
-
-        .tempo-note {
-            font-size: 0.8rem;
-            color: #cfd8dc;
-            margin-top: 4px;
-        }
-
-        /* Timers */
-        .timer {
-            font-size: 2rem;
-            text-align: center;
-            margin: 6px 0;
-        }
-
-        .timer-controls {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .timer-controls button {
-            flex: 1;
-            background: #263238;
-        }
-
-        /* HYPO */
-        .hypo-step {
-            border: 1px dashed #3a3f4a;
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 8px;
-            background: #0f1116;
-        }
-
-        .hypo-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* FOOD SUBTABS */
-        .food-tabs {
-            display: flex;
-            gap: 6px;
-            margin: 8px 0;
-        }
-
-        .food-tabs button {
-            flex: 1;
-            font-size: 0.8rem;
-        }
-
-        /* SUPER LIST */
-        .super-group-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin: 6px 0 4px;
-        }
-
-        .super-item-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-            font-size: 0.85rem;
-            padding: 2px 0;
-        }
-
-        .super-item-row input[type="checkbox"] {
-            flex-shrink: 0;
-        }
-
-        @media (max-width: 600px) {
-            .rings {
-                grid-template-columns: 1fr;
-            }
-
-            .exercise-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
+      }
     </style>
-</head>
-
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Athletic Cut Coach</h1>
-        <p>Upper/Lower 8 semanas · Cardio diario · Menús A/B · Sin crunch</p>
-        <div class="tabs"> <button class="tab-btn active" data-tab="dashboard">Dashboard</button> <button class="tab-btn" data-tab="comidas">Comidas</button> <button class="tab-btn" data-tab="hipo">Hipo</button> <button class="tab-btn" data-tab="pesas">Pesas</button> <button class="tab-btn" data-tab="cardio">Cardio</button> </div>
+      <h1>Athletic Cut Coach</h1>
+      <p>Upper/Lower 8 semanas · Cardio diario · Menús A/B · Sin crunch</p>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-btn" data-tab="comidas">Comidas</button>
+        <button class="tab-btn" data-tab="hipo">Hipo</button>
+        <button class="tab-btn" data-tab="pesas">Pesas</button>
+        <button class="tab-btn" data-tab="cardio">Cardio</button>
+      </div>
     </header>
+
     <main>
-        <!-- DASHBOARD -->
-        <section id="dashboard" class="">
-            <section class="card">
-                <h2>Resumen estilo Apple Fitness</h2>
-                <div class="view-toggle"> <button class="secondary active" data-view="day">Día</button> <button class="secondary" data-view="week">Semana</button> <button class="secondary" data-view="month">Mes</button> </div>
-                <div class="rings">
-                    <div class="ring-card">
-                        <div class="ring-label">Kcal consumidas</div>
-                        <div class="ring" id="ringKcal">
-                            <div class="ring-inner" id="ringKcalInner">0 kcal</div>
-                        </div>
-                        <div class="ring-value" id="ringKcalText"></div>
-                    </div>
-                    <div class="ring-card">
-                        <div class="ring-label">Cardio (min)</div>
-                        <div class="ring" id="ringCardio">
-                            <div class="ring-inner" id="ringCardioInner">0 min</div>
-                        </div>
-                        <div class="ring-value" id="ringCardioText"></div>
-                        <div class="ring-value small" id="ringFatZoneText"></div>
-                    </div>
-                    <div class="ring-card">
-                        <div class="ring-label">Pasos</div>
-                        <div class="ring" id="ringSteps">
-                            <div class="ring-inner" id="ringStepsInner">0 pasos</div>
-                        </div>
-                        <div class="ring-value" id="ringStepsText"></div>
-                    </div>
-                    <div class="ring-card">
-                        <div class="ring-label">Peso (kg)</div>
-                        <div class="ring" id="ringWeight">
-                            <div class="ring-inner" id="ringWeightInner">0 kg</div>
-                        </div>
-                        <div class="ring-value" id="ringWeightText"></div>
-                    </div>
-                </div>
-            </section>
-            <section class="card">
-                <h2>Historial</h2>
-                <table class="history-table" id="historyTable">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Peso</th>
-                            <th>Cintura</th>
-                            <th>Kcal</th>
-                            <th>Cardio (min)</th>
-                            <th>FC prom</th>
-                            <th>Pasos</th>
-                            <th>Zona ox. (min)</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </section>
-        </section> <!-- COMIDAS -->
-        <section id="comidas" class="hidden">
-            <section class="card">
-                <h2>Alimentación</h2>
-                <p class="sub"> Menús A/B, registro diario de comidas y lista del súper con check. </p>
-                <div class="food-tabs" id="foodTabs"> <button class="secondary active" data-food="registro"> Registro día </button> <button class="secondary" data-food="menus">Menús A/B</button> <button class="secondary" data-food="super">Lista del súper</button> </div>
-            </section> <!-- SUB: REGISTRO -->
-            <section id="food-registro" class="card">
-                <h2>Registro de comidas</h2>
-                <p class="sub"> Objetivo base: 2300–2400 kcal (ajustable según fase). Puedes sumar productos por gramos y se calculan las kcal. </p> <!-- Helper de productos -->
-                <h3 style="font-size: 0.95rem; margin-top: 4px"> 1) Añadir productos por gramos </h3> <label> Producto <select id="productSelect">
-                        <option value="">Selecciona producto</option>
-                    </select> </label> <label> Cantidad (g) <input id="productGrams" type="number" min="0" step="1" /> </label> <button id="addProductToMeal">Sumar a esta comida</button>
-                <p id="productCalcInfo" class="small"></p>
-                <hr style="border-color: #333; margin: 10px 0" /> <!-- Registro del día -->
-                <h3 style="font-size: 0.95rem; margin-top: 4px"> 2) Guardar comida del día </h3> <label> Nombre de la comida <input id="mealNameInput" placeholder="Desayuno / Comida / Cena / Snack" /> </label> <label> Kcal de esta comida <input id="kcalInput" type="number" min="0" step="1" /> </label> <label> Peso (kg) <input id="weightInput" type="number" step="0.1" /> </label> <label> Cintura (cm) <input id="waistInput" type="number" step="0.5" /> </label> <button id="saveDaily">Agregar comida / actualizar día</button>
-                <p id="dailyStatus" class="small"></p>
-                <div id="mealsList"></div>
-            </section> <!-- SUB: MENUS -->
-            <section id="food-menus" class="card hidden">
-                <h2>Menú A y B (3 comidas)</h2>
-                <p class="sub"> Ambos rondan 2300–2400 kcal. Usa uno como base y ajusta papas/arroz según fase. </p>
-                <h3 style="font-size: 0.95rem; margin-top: 4px">🟦 MENÚ A</h3>
-                <p class="small">3 comidas · 2200–2350 kcal aprox.</p>
-                <ul class="small" style="margin-top: 4px; padding-left: 16px">
-                    <li> <strong>Comida 1 (11:30)</strong> – 180 g claras + 2 huevos enteros + 200 g papas + 1 fruta + 10 g nuez/almendra <br />≈ 650–700 kcal · 45 g P · 75–80 g C · 20 g G </li>
-                    <li style="margin-top: 6px"> <strong>Comida 2 (3–4 pm, pre/post)</strong> – 250 g pollo + 250 g arroz cocido + 1 taza verdura + 1 fruta (opcional) <br />≈ 800–850 kcal · 55–60 g P · 110–120 g C · 8–10 g G </li>
-                    <li style="margin-top: 6px"> <strong>Comida 3 (9–10 pm)</strong> – 150 g pollo o 2 latas atún + 150 g arroz o 2 tostadas + ½ aguacate + 1 taza verdura <br />≈ 650–700 kcal · 40–50 g P · 45–60 g C · 18–22 g G </li>
-                </ul>
-                <p class="small" style="margin-top: 6px"> <strong>Total día A:</strong> 2200–2350 kcal · 140–170 g proteína · 230–260 g carbos · 55–65 g grasas. </p>
-                <hr style="border-color: #333; margin: 10px 0" />
-                <h3 style="font-size: 0.95rem">🟩 MENÚ B</h3>
-                <p class="small">3 comidas · 2250–2400 kcal aprox.</p>
-                <ul class="small" style="margin-top: 4px; padding-left: 16px">
-                    <li> <strong>Comida 1 (11:30)</strong><br /> Opción 1: 150 g claras + 3 huevos + 200 g papas (o 2 tostadas + 150 g papas) + 1 fruta (~700 kcal)<br /> Opción 2: 200 g yogurt griego + 40 g granola + 2 huevos + 1 fruta (~650 kcal) </li>
-                    <li style="margin-top: 6px"> <strong>Comida 2 (3–4 pm)</strong> – igual que Menú A: <br />250 g pollo + 250 g arroz + 1 taza verdura (~800–850 kcal) </li>
-                    <li style="margin-top: 6px"> <strong>Comida 3 (9–10 pm)</strong><br /> Opción 1: 180 g claras + 1 huevo + 150 g arroz + ½ aguacate<br /> Opción 2: 2 latas atún + 3 tostadas + 1 taza verdura + 1 fruta pequeña (~700 kcal) </li>
-                </ul>
-                <p class="small" style="margin-top: 6px"> <strong>Total día B:</strong> 2250–2400 kcal · 160–180 g proteína · 210–240 g carbos · 60–75 g grasas. </p>
-                <hr style="border-color: #333; margin: 10px 0" />
-                <p class="small"> <strong>Protocolo 1–10 semanas (resumen):</strong><br /> Sem 1–4: 2300–2400 kcal, cardio 20–30 min, pasos 6–8k.<br /> Sem 5–8: 2100–2300 kcal (bajas algo de papas/arroz cena), pasos 8–10k.<br /> Sem 9–10: 2000–2200 kcal (si te estancas), pasos 9–12k, cardio 30–35 min. </p>
-                <p class="small" style="margin-top: 4px"> <strong>Emergencia (8–10 días sin bajar):</strong> +2000 pasos, -100 kcal de cena, +1 L agua, menos sodio 48 h, 7–8 h sueño, comidas más limpias, nunca bajes proteína. </p>
-            </section> <!-- SUB: SUPER -->
-            <section id="food-super" class="card hidden">
-                <h2>Lista del súper (7 días)</h2>
-                <p class="sub"> Marca lo que ya tienes o ya metiste al carrito. Se guarda en el navegador. </p>
-                <div style="display: flex; gap: 6px; margin-bottom: 8px"> <button class="secondary" id="checkAllSuper">Marcar todo</button> <button class="secondary" id="clearAllSuper">Limpiar</button> </div>
-                <div id="superList"></div>
-            </section>
-        </section> <!-- HIPO -->
-        <section id="hipo" class="hidden">
-            <section class="card">
-                <h2>Hipopresivos – Rutina guiada</h2>
-                <p class="sub"> Días recomendados: 3 y 7 (y cuando quieras en ayuno). Sin crunch, orientado a vientre plano. </p>
-                <div class="hypo-step">
-                    <div class="hypo-head"> <strong>1) Standing – Basic</strong> <span class="small">3 rondas · 40s trabajo / 20s transición</span> </div>
-                    <p class="small"> Postura erguida, pies al ancho de cadera, brazos activos, mirada al frente. </p>
-                </div>
-                <div class="hypo-step">
-                    <div class="hypo-head"> <strong>2) Seated – Open elbows</strong> <span class="small">3 rondas · 40s / 20s</span> </div>
-                    <p class="small"> Sentado al borde, columna larga, codos abiertos en línea con hombros. </p>
-                </div>
-                <div class="hypo-step">
-                    <div class="hypo-head"> <strong>3) Quadruped – Neutral spine</strong> <span class="small">3 rondas · 40s / 20s</span> </div>
-                    <p class="small"> Apoyo de manos y rodillas, columna neutra, cuello relajado. </p>
-                </div>
-                <div class="timer"><span id="hypoTimer">00:00</span></div>
-                <div class="timer-controls"> <button class="secondary" id="startHypo"> Iniciar rutina guiada </button> <button class="secondary" id="stopHypo">Detener</button> </div>
-                <p class="small"> Dentro de cada bloque de 40s: inspira 4s → apnea → suelta y repite según tolerancia. El temporizador recorre 3 posturas × 3 rondas con 20s de transición. </p>
-                <p id="hypoStatus" class="small"></p>
-            </section>
-        </section> <!-- PESAS -->
-        <section id="pesas" class="hidden">
-            <section class="card">
-                <h2>Pesas – Upper/Lower 8 semanas</h2>
-                <p class="sub"> Selecciona el día. Al escribir un peso en una serie, se guarda y arranca automáticamente el descanso sugerido. </p> <label> Día de rutina <select id="daySelect">
-                        <option value="1">Día 1 – Upper A (pecho prioridad)</option>
-                        <option value="2">Día 2 – Lower A (quad prioridad)</option>
-                        <option value="3">Día 3 – Upper B (estética torso)</option>
-                        <option value="4">Día 4 – Lower B (femoral + glúteo)</option>
-                        <option value="5"> Día 5 – Extra (usa pestañas Cardio + Hipo) </option>
-                        <option value="6">Día 6 – Libre / movilidad</option>
-                        <option value="7">Día 7 – Descanso activo</option>
-                    </select> </label>
-                <p class="tempo-note"> Tempo A–B–C–D = <strong>A:</strong> bajar · <strong>B:</strong> pausa abajo · <strong>C:</strong> subir · <strong>D:</strong> pausa arriba. Ejemplo <code>3–1–1–0</code> = 3s bajando, 1s abajo, 1s subiendo, 0s arriba. </p>
-            </section>
-            <section class="card">
-                <h2>Rutina del día</h2>
-                <div id="exerciseList"></div>
-            </section>
-            <section class="card">
-                <h2>Descanso</h2>
-                <div class="timer"><span id="timerDisplay">00:00</span></div>
-                <div class="timer-controls"> <button data-time="45" class="secondary">45s</button> <button data-time="60" class="secondary">60s</button> <button data-time="90" class="secondary">90s</button> <button id="stopTimer">Stop</button> </div>
-                <p class="small"> El temporizador también arranca cuando registras el peso de una serie (usa el descanso del ejercicio). </p>
-            </section>
-            <section class="card">
-                <h2>Historial de fuerza (simple)</h2>
-                <p class="sub"> Guarda el mejor peso de cada ejercicio por día. Luego lo usaremos para gráficas. </p>
-                <div id="strengthHistory"></div>
-            </section>
-        </section> <!-- CARDIO -->
-        <section id="cardio" class="hidden">
-            <section class="card">
-                <h2>Registro de cardio</h2>
-                <p class="sub" id="fatZoneInfo"></p> <label> Modalidad (walk incline / bike / row / elíptica) <input id="cardioType" /> </label> <label> Tiempo de esta sesión (min) <input id="cardioTime" type="number" min="0" step="1" /> </label> <label> FC media (bpm) <input id="cardioHR" type="number" min="0" step="1" /> </label> <label> Pasos de esta sesión <input id="stepsInput" type="number" min="0" step="1" /> </label> <button id="saveCardio">Guardar cardio</button>
-                <p id="cardioStatus" class="small"></p>
-                <div id="cardioSessionsList"></div>
-            </section>
-            <section class="card">
-                <h2>Plan de cardio recomendado</h2>
-                <p class="sub"> Frecuencia 5 días/semana (4 mínimo, 6 opcional). Duración 20–30 min por sesión. </p>
-                <ul class="small" style="padding-left: 16px">
-                    <li> <strong>Duración:</strong> 20 min si el día de pesas fue pesado, 30 min si te sientes bien. Más de 45 min empieza a afectar fuerza y recuperación en déficit. </li>
-                    <li style="margin-top: 6px"> <strong>Intensidad:</strong> moderada, FC 125–145 bpm. Debes poder decir una frase corta, pero no tener una conversación larga. </li>
-                </ul>
-                <hr style="border-color: #333; margin: 10px 0" />
-                <h3 style="font-size: 0.95rem">Máquinas y ajustes</h3>
-                <ul class="small" style="padding-left: 16px; margin-top: 4px">
-                    <li> <strong>Caminadora:</strong> inclinación 8–12%, 4.0–5.5 km/h, FC esperada 125–145 bpm. <br />Quema más kcal, protege rodilla, activa glúteo. </li>
-                    <li style="margin-top: 6px"> <strong>Elíptica:</strong> resistencia 6–10, cadencia 60–70 rpm, 20–30 min, FC 130–145 bpm. </li>
-                    <li style="margin-top: 6px"> <strong>Bicicleta estática:</strong> resistencia 6–8, cadencia 70–80 rpm, 20–30 min, FC 125–140 bpm. <br />Más fácil, quema un poco menos → ideal días muy cargados. </li>
-                </ul>
-                <hr style="border-color: #333; margin: 10px 0" />
-                <h3 style="font-size: 0.95rem">Distribución semanal sugerida</h3>
-                <ul class="small" style="padding-left: 16px; margin-top: 4px">
-                    <li>Lunes: 20–30 min cardio</li>
-                    <li>Martes: 20–30 min cardio</li>
-                    <li>Miércoles: descanso o caminata suave</li>
-                    <li>Jueves: 20–30 min cardio</li>
-                    <li>Viernes: 20–30 min cardio</li>
-                    <li>Sábado: opcional 20 min extra</li>
-                    <li>Domingo: descanso activo</li>
-                </ul>
-            </section>
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="">
+        <section class="card">
+          <h2>Resumen estilo Apple Fitness</h2>
+          <div class="view-toggle">
+            <button class="secondary active" data-view="day">Día</button>
+            <button class="secondary" data-view="week">Semana</button>
+            <button class="secondary" data-view="month">Mes</button>
+          </div>
+          <div class="rings">
+            <div class="ring-card">
+              <div class="ring-label">Kcal consumidas</div>
+              <div class="ring" id="ringKcal">
+                <div class="ring-inner" id="ringKcalInner">0 kcal</div>
+              </div>
+              <div class="ring-value" id="ringKcalText"></div>
+            </div>
+            <div class="ring-card">
+              <div class="ring-label">Cardio (min)</div>
+              <div class="ring" id="ringCardio">
+                <div class="ring-inner" id="ringCardioInner">0 min</div>
+              </div>
+              <div class="ring-value" id="ringCardioText"></div>
+              <div class="ring-value small" id="ringFatZoneText"></div>
+            </div>
+            <div class="ring-card">
+              <div class="ring-label">Pasos</div>
+              <div class="ring" id="ringSteps">
+                <div class="ring-inner" id="ringStepsInner">0 pasos</div>
+              </div>
+              <div class="ring-value" id="ringStepsText"></div>
+            </div>
+            <div class="ring-card">
+              <div class="ring-label">Peso (kg)</div>
+              <div class="ring" id="ringWeight">
+                <div class="ring-inner" id="ringWeightInner">0 kg</div>
+              </div>
+              <div class="ring-value" id="ringWeightText"></div>
+            </div>
+          </div>
         </section>
+        <section class="card">
+          <h2>Historial</h2>
+          <table class="history-table" id="historyTable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Peso</th>
+                <th>Cintura</th>
+                <th>Kcal</th>
+                <th>Cardio (min)</th>
+                <th>FC prom</th>
+                <th>Pasos</th>
+                <th>Zona ox. (min)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </section>
+
+      <!-- COMIDAS -->
+      <section id="comidas" class="hidden">
+        <section class="card">
+          <h2>Alimentación</h2>
+          <p class="sub">
+            Menús A/B, registro diario de comidas y lista del súper con check.
+          </p>
+          <div class="food-tabs" id="foodTabs">
+            <button class="secondary active" data-food="registro">
+              Registro día
+            </button>
+            <button class="secondary" data-food="menus">Menús A/B</button>
+            <button class="secondary" data-food="super">Lista del súper</button>
+          </div>
+        </section>
+
+        <!-- SUB: REGISTRO -->
+        <section id="food-registro" class="card">
+          <h2>Registro de comidas</h2>
+          <p class="sub">
+            Objetivo base: 2300–2400 kcal (ajustable según fase). Puedes sumar
+            productos por gramos y se calculan las kcal.
+          </p>
+
+          <!-- Helper de productos -->
+          <h3 style="font-size: 0.95rem; margin-top: 4px">
+            1) Añadir productos por gramos
+          </h3>
+          <label>
+            Producto
+            <select id="productSelect">
+              <option value="">Selecciona producto</option>
+            </select>
+          </label>
+          <label>
+            Cantidad (g)
+            <input id="productGrams" type="number" min="0" step="1" />
+          </label>
+          <button id="addProductToMeal">Sumar a esta comida</button>
+          <p id="productCalcInfo" class="small"></p>
+
+          <hr style="border-color: #333; margin: 10px 0" />
+
+          <!-- Registro del día -->
+          <h3 style="font-size: 0.95rem; margin-top: 4px">
+            2) Guardar comida del día
+          </h3>
+          <label>
+            Nombre de la comida
+            <input
+              id="mealNameInput"
+              placeholder="Desayuno / Comida / Cena / Snack"
+            />
+          </label>
+          <label>
+            Kcal de esta comida
+            <input id="kcalInput" type="number" min="0" step="1" />
+          </label>
+          <label>
+            Peso (kg)
+            <input id="weightInput" type="number" step="0.1" />
+          </label>
+          <label>
+            Cintura (cm)
+            <input id="waistInput" type="number" step="0.5" />
+          </label>
+          <button id="saveDaily">Agregar comida / actualizar día</button>
+          <p id="dailyStatus" class="small"></p>
+          <div id="mealsList"></div>
+        </section>
+
+        <!-- SUB: MENUS -->
+        <section id="food-menus" class="card hidden">
+          <h2>Menú A y B (3 comidas)</h2>
+          <p class="sub">
+            Ambos rondan 2300–2400 kcal. Usa uno como base y ajusta papas/arroz
+            según fase.
+          </p>
+
+          <h3 style="font-size: 0.95rem; margin-top: 4px">🟦 MENÚ A</h3>
+          <p class="small">3 comidas · 2200–2350 kcal aprox.</p>
+          <ul class="small" style="margin-top: 4px; padding-left: 16px">
+            <li>
+              <strong>Comida 1 (11:30)</strong> – 180 g claras + 2 huevos
+              enteros + 200 g papas + 1 fruta + 10 g nuez/almendra
+              <br />≈ 650–700 kcal · 45 g P · 75–80 g C · 20 g G
+            </li>
+            <li style="margin-top: 6px">
+              <strong>Comida 2 (3–4 pm, pre/post)</strong> – 250 g pollo + 250 g
+              arroz cocido + 1 taza verdura + 1 fruta (opcional)
+              <br />≈ 800–850 kcal · 55–60 g P · 110–120 g C · 8–10 g G
+            </li>
+            <li style="margin-top: 6px">
+              <strong>Comida 3 (9–10 pm)</strong> – 150 g pollo o 2 latas atún +
+              150 g arroz o 2 tostadas + ½ aguacate + 1 taza verdura
+              <br />≈ 650–700 kcal · 40–50 g P · 45–60 g C · 18–22 g G
+            </li>
+          </ul>
+          <p class="small" style="margin-top: 6px">
+            <strong>Total día A:</strong> 2200–2350 kcal · 140–170 g proteína ·
+            230–260 g carbos · 55–65 g grasas.
+          </p>
+
+          <hr style="border-color: #333; margin: 10px 0" />
+
+          <h3 style="font-size: 0.95rem">🟩 MENÚ B</h3>
+          <p class="small">3 comidas · 2250–2400 kcal aprox.</p>
+          <ul class="small" style="margin-top: 4px; padding-left: 16px">
+            <li>
+              <strong>Comida 1 (11:30)</strong><br />
+              Opción 1: 150 g claras + 3 huevos + 200 g papas (o 2 tostadas +
+              150 g papas) + 1 fruta (~700 kcal)<br />
+              Opción 2: 200 g yogurt griego + 40 g granola + 2 huevos + 1 fruta
+              (~650 kcal)
+            </li>
+            <li style="margin-top: 6px">
+              <strong>Comida 2 (3–4 pm)</strong> – igual que Menú A:
+              <br />250 g pollo + 250 g arroz + 1 taza verdura (~800–850 kcal)
+            </li>
+            <li style="margin-top: 6px">
+              <strong>Comida 3 (9–10 pm)</strong><br />
+              Opción 1: 180 g claras + 1 huevo + 150 g arroz + ½ aguacate<br />
+              Opción 2: 2 latas atún + 3 tostadas + 1 taza verdura + 1 fruta
+              pequeña (~700 kcal)
+            </li>
+          </ul>
+          <p class="small" style="margin-top: 6px">
+            <strong>Total día B:</strong> 2250–2400 kcal · 160–180 g proteína ·
+            210–240 g carbos · 60–75 g grasas.
+          </p>
+
+          <hr style="border-color: #333; margin: 10px 0" />
+
+          <p class="small">
+            <strong>Protocolo 1–10 semanas (resumen):</strong><br />
+            Sem 1–4: 2300–2400 kcal, cardio 20–30 min, pasos 6–8k.<br />
+            Sem 5–8: 2100–2300 kcal (bajas algo de papas/arroz cena), pasos
+            8–10k.<br />
+            Sem 9–10: 2000–2200 kcal (si te estancas), pasos 9–12k, cardio
+            30–35 min.
+          </p>
+          <p class="small" style="margin-top: 4px">
+            <strong>Emergencia (8–10 días sin bajar):</strong> +2000 pasos, -100
+            kcal de cena, +1 L agua, menos sodio 48 h, 7–8 h sueño, comidas más
+            limpias, nunca bajes proteína.
+          </p>
+        </section>
+
+        <!-- SUB: SUPER -->
+        <section id="food-super" class="card hidden">
+          <h2>Lista del súper (7 días)</h2>
+          <p class="sub">
+            Marca lo que ya tienes o ya metiste al carrito. Se guarda en el
+            navegador.
+          </p>
+          <div style="display: flex; gap: 6px; margin-bottom: 8px">
+            <button class="secondary" id="checkAllSuper">Marcar todo</button>
+            <button class="secondary" id="clearAllSuper">Limpiar</button>
+          </div>
+          <div id="superList"></div>
+        </section>
+      </section>
+
+      <!-- HIPO -->
+      <section id="hipo" class="hidden">
+        <section class="card">
+          <h2>Hipopresivos – Rutina guiada</h2>
+          <p class="sub">
+            Días recomendados: 3 y 7 (y cuando quieras en ayuno). Sin crunch,
+            orientado a vientre plano.
+          </p>
+
+          <div class="hypo-step">
+            <div class="hypo-head">
+              <strong>1) Standing – Basic</strong>
+              <span class="small">3 rondas · 40s trabajo / 20s transición</span>
+            </div>
+            <p class="small">
+              Postura erguida, pies al ancho de cadera, brazos activos, mirada
+              al frente.
+            </p>
+          </div>
+
+          <div class="hypo-step">
+            <div class="hypo-head">
+              <strong>2) Seated – Open elbows</strong>
+              <span class="small">3 rondas · 40s / 20s</span>
+            </div>
+            <p class="small">
+              Sentado al borde, columna larga, codos abiertos en línea con
+              hombros.
+            </p>
+          </div>
+
+          <div class="hypo-step">
+            <div class="hypo-head">
+              <strong>3) Quadruped – Neutral spine</strong>
+              <span class="small">3 rondas · 40s / 20s</span>
+            </div>
+            <p class="small">
+              Apoyo de manos y rodillas, columna neutra, cuello relajado.
+            </p>
+          </div>
+
+          <div class="timer"><span id="hypoTimer">00:00</span></div>
+          <div class="timer-controls">
+            <button class="secondary" id="startHypo">
+              Iniciar rutina guiada
+            </button>
+            <button class="secondary" id="stopHypo">Detener</button>
+          </div>
+          <p class="small">
+            Dentro de cada bloque de 40s: inspira 4s → apnea → suelta y repite
+            según tolerancia. El temporizador recorre 3 posturas × 3 rondas con
+            20s de transición.
+          </p>
+          <p id="hypoStatus" class="small"></p>
+        </section>
+      </section>
+
+      <!-- PESAS -->
+      <section id="pesas" class="hidden">
+        <section class="card">
+          <h2>Pesas – Upper/Lower 8 semanas</h2>
+          <p class="sub">
+            Selecciona el día. Al escribir un peso en una serie, se guarda y
+            arranca automáticamente el descanso sugerido.
+          </p>
+          <label>
+            Día de rutina
+            <select id="daySelect">
+              <option value="1">Día 1 – Upper A (pecho prioridad)</option>
+              <option value="2">Día 2 – Lower A (quad prioridad)</option>
+              <option value="3">Día 3 – Upper B (estética torso)</option>
+              <option value="4">Día 4 – Lower B (femoral + glúteo)</option>
+              <option value="5">
+                Día 5 – Extra (usa pestañas Cardio + Hipo)
+              </option>
+              <option value="6">Día 6 – Libre / movilidad</option>
+              <option value="7">Día 7 – Descanso activo</option>
+            </select>
+          </label>
+          <p class="tempo-note">
+            Tempo A–B–C–D =
+            <strong>A:</strong> bajar · <strong>B:</strong> pausa abajo ·
+            <strong>C:</strong> subir · <strong>D:</strong> pausa arriba.
+            Ejemplo <code>3–1–1–0</code> = 3s bajando, 1s abajo, 1s subiendo,
+            0s arriba.
+          </p>
+        </section>
+
+        <section class="card">
+          <h2>Rutina del día</h2>
+          <div id="exerciseList"></div>
+        </section>
+
+        <section class="card">
+          <h2>Descanso</h2>
+          <div class="timer"><span id="timerDisplay">00:00</span></div>
+          <div class="timer-controls">
+            <button data-time="45" class="secondary">45s</button>
+            <button data-time="60" class="secondary">60s</button>
+            <button data-time="90" class="secondary">90s</button>
+            <button id="stopTimer">Stop</button>
+          </div>
+          <p class="small">
+            El temporizador también arranca cuando registras el peso de una
+            serie (usa el descanso del ejercicio).
+          </p>
+        </section>
+
+        <section class="card">
+          <h2>Historial de fuerza (simple)</h2>
+          <p class="sub">
+            Guarda el mejor peso de cada ejercicio por día. Luego lo usaremos
+            para gráficas.
+          </p>
+          <div id="strengthHistory"></div>
+        </section>
+      </section>
+
+      <!-- CARDIO -->
+      <section id="cardio" class="hidden">
+        <section class="card">
+          <h2>Registro de cardio</h2>
+          <p class="sub" id="fatZoneInfo"></p>
+          <label>
+            Modalidad (walk incline / bike / row / elíptica)
+            <input id="cardioType" />
+          </label>
+          <label>
+            Tiempo de esta sesión (min)
+            <input id="cardioTime" type="number" min="0" step="1" />
+          </label>
+          <label>
+            FC media (bpm)
+            <input id="cardioHR" type="number" min="0" step="1" />
+          </label>
+          <label>
+            Pasos de esta sesión
+            <input id="stepsInput" type="number" min="0" step="1" />
+          </label>
+          <button id="saveCardio">Guardar cardio</button>
+          <p id="cardioStatus" class="small"></p>
+          <div id="cardioSessionsList"></div>
+        </section>
+
+        <section class="card">
+          <h2>Plan de cardio recomendado</h2>
+          <p class="sub">
+            Frecuencia 5 días/semana (4 mínimo, 6 opcional). Duración 20–30 min
+            por sesión.
+          </p>
+          <ul class="small" style="padding-left: 16px">
+            <li>
+              <strong>Duración:</strong> 20 min si el día de pesas fue pesado,
+              30 min si te sientes bien. Más de 45 min empieza a afectar fuerza
+              y recuperación en déficit.
+            </li>
+            <li style="margin-top: 6px">
+              <strong>Intensidad:</strong> moderada, FC 125–145 bpm. Debes
+              poder decir una frase corta, pero no tener una conversación
+              larga.
+            </li>
+          </ul>
+
+          <hr style="border-color: #333; margin: 10px 0" />
+
+          <h3 style="font-size: 0.95rem">Máquinas y ajustes</h3>
+          <ul class="small" style="padding-left: 16px; margin-top: 4px">
+            <li>
+              <strong>Caminadora:</strong> inclinación 8–12%, 4.0–5.5 km/h, FC
+              esperada 125–145 bpm.
+              <br />Quema más kcal, protege rodilla, activa glúteo.
+            </li>
+            <li style="margin-top: 6px">
+              <strong>Elíptica:</strong> resistencia 6–10, cadencia 60–70 rpm,
+              20–30 min, FC 130–145 bpm.
+            </li>
+            <li style="margin-top: 6px">
+              <strong>Bicicleta estática:</strong> resistencia 6–8, cadencia
+              70–80 rpm, 20–30 min, FC 125–140 bpm.
+              <br />Más fácil, quema un poco menos → ideal días muy cargados.
+            </li>
+          </ul>
+
+          <hr style="border-color: #333; margin: 10px 0" />
+
+          <h3 style="font-size: 0.95rem">Distribución semanal sugerida</h3>
+          <ul class="small" style="padding-left: 16px; margin-top: 4px">
+            <li>Lunes: 20–30 min cardio</li>
+            <li>Martes: 20–30 min cardio</li>
+            <li>Miércoles: descanso o caminata suave</li>
+            <li>Jueves: 20–30 min cardio</li>
+            <li>Viernes: 20–30 min cardio</li>
+            <li>Sábado: opcional 20 min extra</li>
+            <li>Domingo: descanso activo</li>
+          </ul>
+        </section>
+      </section>
     </main>
+
     <script>
-        /* =============== PARÁMETROS GENERALES =============== */
-        const AGE = 27;
-        const HR_MAX = Math.round(208 - 0.7 * AGE);
-        const HR_FAT_LOW = Math.round(HR_MAX * 0.6);
-        const HR_FAT_HIGH = Math.round(HR_MAX * 0.75);
-        const TARGET_FAT_MIN = 30;
-        const TARGET_KCAL = 2300;
-        const TARGET_CARDIO_MIN = 30;
-        const TARGET_STEPS = 8000;
+      /* =============== PARÁMETROS GENERALES =============== */
+      const AGE = 27;
+      const HR_MAX = Math.round(208 - 0.7 * AGE);
+      const HR_FAT_LOW = Math.round(HR_MAX * 0.6);
+      const HR_FAT_HIGH = Math.round(HR_MAX * 0.75);
+      const TARGET_FAT_MIN = 30;
 
-        function todayKey() {
-            return new Date().toISOString().slice(0, 10);
-        }
+      const TARGET_KCAL = 2300;
+      const TARGET_CARDIO_MIN = 30;
+      const TARGET_STEPS = 8000;
 
-        function isInFatZone(hr) {
-            if (!hr || isNaN(hr)) return false;
-            return hr >= HR_FAT_LOW && hr <= HR_FAT_HIGH;
-        } /* =============== TABS =============== */
-        const tabBtns = document.querySelectorAll(".tab-btn");
-        const sections = {
-            dashboard: document.getElementById("dashboard"),
-            comidas: document.getElementById("comidas"),
-            hipo: document.getElementById("hipo"),
-            pesas: document.getElementById("pesas"),
-            cardio: document.getElementById("cardio"),
-        };
-        tabBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                tabBtns.forEach((b) => b.classList.remove("active"));
-                btn.classList.add("active");
-                const tab = btn.dataset.tab;
-                Object.keys(sections).forEach((k) => {
-                    sections[k].classList.toggle("hidden", k !== tab);
-                });
-                if (tab === "dashboard") updateDashboard();
-                if (tab === "cardio") renderCardioSessionsToday();
-                if (tab === "comidas") {
-                    renderMealsToday();
-                    renderSuperList();
-                }
-                if (tab === "pesas") renderStrengthHistory();
-            });
-        }); /* =============== SUBTABS COMIDAS =============== */
-        const foodTabBtns = document.querySelectorAll("#foodTabs button");
-        const foodViews = {
-            registro: document.getElementById("food-registro"),
-            menus: document.getElementById("food-menus"),
-            super: document.getElementById("food-super"),
-        };
-        foodTabBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                foodTabBtns.forEach((b) => b.classList.remove("active"));
-                btn.classList.add("active");
-                const v = btn.dataset.food;
-                Object.keys(foodViews).forEach((k) => {
-                    foodViews[k].classList.toggle("hidden", k !== v);
-                });
-                if (v === "super") renderSuperList();
-            });
-        }); /* =============== RUTINA UPPER/LOWER =============== */
-        const routineByDay = {
-            1: [{
-                name: "Press inclinado mancuernas",
-                sets: "4",
-                reps: "8–10",
-                tempo: "3-1-1-0",
-                rest: "120s",
-            }, {
-                name: "Press plano máquina convergente",
-                sets: "3",
-                reps: "10–12",
-                tempo: "3-0-2-1",
-                rest: "120s",
-            }, {
-                name: "Press declinado DB / máquina",
-                sets: "3",
-                reps: "8–10",
-                tempo: "2-0-2-0",
-                rest: "120s",
-            }, {
-                name: "Aperturas en polea (alto–bajo)",
-                sets: "3",
-                reps: "12–15",
-                tempo: "2-1-3-1",
-                rest: "90s",
-            }, {
-                name: "Laterales en polea",
-                sets: "3",
-                reps: "12–15",
-                tempo: "2-1-2-0",
-                rest: "75s",
-            }, {
-                name: "Posterior en polea",
-                sets: "2",
-                reps: "12–15",
-                tempo: "2-0-3-1",
-                rest: "75s",
-            }, {
-                name: "Remo sentado neutro",
-                sets: "3",
-                reps: "10–12",
-                tempo: "2-1-2-1",
-                rest: "120s",
-            }, {
-                name: "Jalón neutro",
-                sets: "2",
-                reps: "10–12",
-                tempo: "2-1-2-0",
-                rest: "120s",
-            }, {
-                name: "Curl EZ",
-                sets: "2",
-                reps: "10–12",
-                tempo: "2-0-2-1",
-                rest: "75s",
-            }, {
-                name: "Tríceps cuerda",
-                sets: "2",
-                reps: "12–15",
-                tempo: "2-0-2-1",
-                rest: "75s",
-            }, ],
-            2: [{
-                name: "Prensa",
-                sets: "4",
-                reps: "10–12",
-                tempo: "3-1-2-0",
-                rest: "150s",
-            }, {
-                name: "Sentadilla goblet",
-                sets: "3",
-                reps: "8–10",
-                tempo: "3-1-1-0",
-                rest: "120s",
-            }, {
-                name: "Extensión de cuádriceps",
-                sets: "3",
-                reps: "12–15",
-                tempo: "2-1-3-1",
-                rest: "90s",
-            }, {
-                name: "Curl femoral sentado",
-                sets: "3",
-                reps: "10–12",
-                tempo: "2-1-2-1",
-                rest: "120s",
-            }, {
-                name: "Peso muerto rumano mancuernas",
-                sets: "3",
-                reps: "8–10",
-                tempo: "3-1-2-0",
-                rest: "150s",
-            }, {
-                name: "Hip thrust en máquina",
-                sets: "3",
-                reps: "10–12",
-                tempo: "2-1-1-2",
-                rest: "120s",
-            }, {
-                name: "Gemelos sentado",
-                sets: "3–4",
-                reps: "12–15",
-                tempo: "2-2-2-0",
-                rest: "75s",
-            }, ],
-            3: [{
-                name: "Press inclinado máquina",
-                sets: "4",
-                reps: "8–10",
-                tempo: "3-0-2-1",
-                rest: "150s",
-            }, {
-                name: "Press plano DB",
-                sets: "3",
-                reps: "8–10",
-                tempo: "3-0-2-0",
-                rest: "120s",
-            }, {
-                name: "Aperturas máquina / cable",
-                sets: "3",
-                reps: "12–15",
-                tempo: "2-1-3-1",
-                rest: "90s",
-            }, {
-                name: "Laterales DB sentado",
-                sets: "3",
-                reps: "15–20",
-                tempo: "2-1-2-0",
-                rest: "75s",
-            }, {
-                name: "Remo DB una mano",
-                sets: "3",
-                reps: "8–10",
-                tempo: "2-1-2-1",
-                rest: "120s",
-            }, {
-                name: "Pull-ins polea",
-                sets: "2",
-                reps: "12–15",
-                tempo: "2-1-3-1",
-                rest: "90s",
-            }, {
-                name: "Fondos asistidos",
-                sets: "2",
-                reps: "10–12",
-                tempo: "2-0-2-1",
-                rest: "90s",
-            }, {
-                name: "Curl inclinado",
-                sets: "2",
-                reps: "10–12",
-                tempo: "3-1-2-0",
-                rest: "90s",
-            }, ],
-            4: [{
-                name: "Peso muerto rumano mancuernas",
-                sets: "3",
-                reps: "8–10",
-                tempo: "3-1-2-0",
-                rest: "150s",
-            }, {
-                name: "Prensa pies arriba",
-                sets: "3",
-                reps: "10–12",
-                tempo: "3-1-2-0",
-                rest: "150s",
-            }, {
-                name: "Zancadas caminando",
-                sets: "3",
-                reps: "10–12 por pierna",
-                tempo: "2-0-2-0",
-                rest: "90s",
-            }, {
-                name: "Curl femoral",
-                sets: "3",
-                reps: "10–12",
-                tempo: "2-1-2-1",
-                rest: "120s",
-            }, {
-                name: "Gemelos (de pie o sentado)",
-                sets: "3",
-                reps: "12–15",
-                tempo: "2-2-2-0",
-                rest: "75s",
-            }, ],
-            5: [],
-            6: [],
-            7: [],
-        };
-        const daySelect = document.getElementById("daySelect");
-        const exerciseList = document.getElementById("exerciseList");
+      function todayKey() {
+        return new Date().toISOString().slice(0, 10);
+      }
+      function isInFatZone(hr) {
+        if (!hr || isNaN(hr)) return false;
+        return hr >= HR_FAT_LOW && hr <= HR_FAT_HIGH;
+      }
 
-        function getSetsCount(setsText) {
-            if (!setsText) return 3;
-            const m = String(setsText).match(/\d+/);
-            return m ? parseInt(m[0], 10) : 3;
-        }
+      /* =============== TABS =============== */
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const sections = {
+        dashboard: document.getElementById("dashboard"),
+        comidas: document.getElementById("comidas"),
+        hipo: document.getElementById("hipo"),
+        pesas: document.getElementById("pesas"),
+        cardio: document.getElementById("cardio"),
+      };
 
-        function parseRestSeconds(restText) {
-            if (!restText) return 60;
-            const m = String(restText).match(/\d+/);
-            return m ? parseInt(m[0], 10) : 60;
-        }
-
-        function loadDayExercises(day) {
-            exerciseList.innerHTML = "";
-            const exercises = routineByDay[day] || [];
-            if (!exercises.length) {
-                const p = document.createElement("p");
-                p.className = "small";
-                if (day === 5) {
-                    p.innerHTML = "Día extra: utiliza <strong>Cardio</strong> e <strong>Hipo</strong> según te sientas. También puedes hacer movilidad ligera.";
-                } else if (day === 7) {
-                    p.innerHTML = "Descanso activo: caminata suave 30–40 min + hipopresivos en ayuno si te sientan bien.";
-                } else {
-                    p.textContent = "Día libre / movilidad / recuperación.";
-                }
-                exerciseList.appendChild(p);
-                return;
-            }
-            const savedKey = day_$ {
-                day
-            }
-            _log;
-            const savedData = JSON.parse(localStorage.getItem(savedKey) || "{}");
-            exercises.forEach((ex, index) => {
-                const card = document.createElement("div");
-                card.className = "exercise-card";
-                const header = document.createElement("div");
-                header.className = "exercise-header";
-                const left = document.createElement("div");
-                left.className = "exercise-header-left";
-                left.innerHTML = < span > < strong > $ {
-                    ex.name
-                } < /strong></span > < span class = "exercise-meta" > $ {
-                    ex.sets
-                }
-                x $ {
-                    ex.reps
-                }·
-                Tempo $ {
-                    ex.tempo
-                }·
-                Descanso $ {
-                    ex.rest
-                } < /span>; header.appendChild(left); card.appendChild(header); const inputsWrap = document.createElement("div"); inputsWrap.className = "exercise-inputs"; const setsRow = document.createElement("div"); setsRow.className = "sets-row"; const setsCount = getSetsCount(ex.sets); const savedEntry = savedData[index] || {}; const savedWeights = savedEntry.weights || []; const restSeconds = parseRestSeconds(ex.rest); for (let s = 0; s < setsCount; s++) { const setInput = document.createElement("input"); setInput.type = "number"; setInput.min = "0"; setInput.step = "0.5"; setInput.placeholder = S${s + 1} kg; setInput.className = "set-weight"; setInput.value = savedWeights[s] !== undefined ? savedWeights[s] : 0; setInput.addEventListener("change", () => { saveExerciseLog(day); const weights = Array.from( card.querySelectorAll(".set-weight") ).map((i) => parseFloat(i.value || "0")); updateStrengthHistory(day, ex.name, weights); if (restSeconds > 0) startTimer(restSeconds); }); setsRow.appendChild(setInput); } const notes = document.createElement("input"); notes.placeholder = "Notas (RPE, fallo, técnica)"; notes.value = savedEntry.notes || ""; notes.addEventListener("change", () => { saveExerciseLog(day); }); inputsWrap.appendChild(setsRow); inputsWrap.appendChild(notes); card.appendChild(inputsWrap); exerciseList.appendChild(card); }); } function saveExerciseLog(day) { const cards = exerciseList.querySelectorAll(".exercise-card"); const data = []; cards.forEach((card) => { const setInputs = card.querySelectorAll(".set-weight"); const notes = card.querySelector( 'input[placeholder^="Notas (RPE"]' ); const weights = Array.from(setInputs).map((i) => i.value); data.push({ weights, notes: notes ? notes.value : "" }); }); localStorage.setItem(day_${day}_log, JSON.stringify(data)); } daySelect.addEventListener("change", (e) => { loadDayExercises(parseInt(e.target.value, 10)); }); loadDayExercises(parseInt(daySelect.value, 10)); / * === === === === === HISTORIAL DE FUERZA === === === === === * / const STRENGTH_PREFIX = "strength_history_"; const strengthHistoryEl = document.getElementById("strengthHistory"); function updateStrengthHistory(day, exerciseName, weights) { const today = todayKey(); const key = STRENGTH_PREFIX + today; const data = JSON.parse(localStorage.getItem(key) || "[]"); const numeric = weights.filter((w) => !isNaN(w) && w > 0); const maxWeight = numeric.length ? Math.max(...numeric) : 0; let idx = data.findIndex( (d) => d.day === day && d.name === exerciseName ); if (maxWeight <= 0) { if (idx >= 0) { data.splice(idx, 1); localStorage.setItem(key, JSON.stringify(data)); } return; } const entry = { day, name: exerciseName, maxWeight, }; if (idx >= 0) data[idx] = entry; else data.push(entry); localStorage.setItem(key, JSON.stringify(data)); renderStrengthHistory(); } function renderStrengthHistory() { if (!strengthHistoryEl) return; const dates = getLastNDates(21); const rows = []; dates.forEach((date) => { const arr = JSON.parse( localStorage.getItem(STRENGTH_PREFIX + date) || "[]" ); arr.forEach((e) => { rows.push({ date, day: e.day, name: e.name, maxWeight: e.maxWeight, }); }); }); if (!rows.length) { strengthHistoryEl.innerHTML = "<p class='small'>Sin registros aún. Cuando pongas pesos se irán guardando aquí.</p > "; return; } rows.sort((a, b) => a.date.localeCompare(b.date)); let html = " < table class = 'history-table' > < thead > < tr > < th > # < /th><th>Fecha</th > < th > Día < /th><th>Ejercicio</th > < th > Mejor kg < /th></tr > < /thead><tbody>"; rows.forEach((r, i) => { html += <tr> <td>${i + 1}</td > < td > $ {
-                    r.date
-                } < /td> <td>${r.day}</td > < td > $ {
-                    r.name
-                } < /td> <td>${r.maxWeight}</td > < /tr>; }); html += "</tbody > < /table>"; strengthHistoryEl.innerHTML = html; } / * === === === === === TIMER PESAS(persistente) === === === === === * / let timerInterval = null, remainingSeconds = 0; const timerDisplay = document.getElementById("timerDisplay"); const TIMER_STORAGE_KEY = "rest_timer_v1"; let audioCtx = null; function initAudio() { if (audioCtx) return; const AC = window.AudioContext || window.webkitAudioContext || null; if (!AC) return; audioCtx = new AC(); } function playBeep() { if (!audioCtx) return; const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = "sine"; osc.frequency.value = 880; osc.connect(gain); gain.connect(audioCtx.destination); const now = audioCtx.currentTime; gain.gain.setValueAtTime(0.0001, now); gain.gain.exponentialRampToValueAtTime(0.3, now + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5); osc.start(now); osc.stop(now + 0.5); } function updateTimerDisplay() { const m = String(Math.floor(remainingSeconds /
-                60)).padStart(2, "0");
-            const s = String(remainingSeconds % 60).padStart(2, "0");
-            timerDisplay.textContent = $ {
-                m
-            }: $ {
-                s
-            };
-        }
-
-        function tickTimer() {
-            const raw = localStorage.getItem(TIMER_STORAGE_KEY);
-            if (!raw) {
-                remainingSeconds = 0;
-                updateTimerDisplay();
-                clearInterval(timerInterval);
-                return;
-            }
-            const data = JSON.parse(raw);
-            if (!data.active || !data.endTime) {
-                localStorage.removeItem(TIMER_STORAGE_KEY);
-                remainingSeconds = 0;
-                updateTimerDisplay();
-                clearInterval(timerInterval);
-                return;
-            }
-            const diff = Math.round((data.endTime - Date.now()) / 1000);
-            if (diff <= 0) {
-                remainingSeconds = 0;
-                updateTimerDisplay();
-                localStorage.removeItem(TIMER_STORAGE_KEY);
-                clearInterval(timerInterval);
-                if (navigator.vibrate) navigator.vibrate(200);
-                playBeep();
-            } else {
-                remainingSeconds = diff;
-                updateTimerDisplay();
-            }
-        }
-
-        function startTimer(seconds) {
-            initAudio();
-            const endTime = Date.now() + seconds * 1000;
-            localStorage.setItem(TIMER_STORAGE_KEY, JSON.stringify({
-                active: true,
-                endTime
-            }));
-            clearInterval(timerInterval);
-            tickTimer();
-            timerInterval = setInterval(tickTimer, 1000);
-        }
-
-        function stopTimer() {
-            localStorage.removeItem(TIMER_STORAGE_KEY);
-            clearInterval(timerInterval);
-            remainingSeconds = 0;
-            updateTimerDisplay();
-        }
-        document.querySelectorAll(".timer-controls button[data-time]").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                startTimer(parseInt(btn.dataset.time, 10));
-            });
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          tabBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const tab = btn.dataset.tab;
+          Object.keys(sections).forEach((k) => {
+            sections[k].classList.toggle("hidden", k !== tab);
+          });
+          if (tab === "dashboard") updateDashboard();
+          if (tab === "cardio") renderCardioSessionsToday();
+          if (tab === "comidas") {
+            renderMealsToday();
+            renderSuperList();
+          }
+          if (tab === "pesas") renderStrengthHistory();
         });
-        document.getElementById("stopTimer").addEventListener("click", stopTimer);
-        (function restoreTimer() {
-            const raw = localStorage.getItem(TIMER_STORAGE_KEY);
-            if (!raw) {
-                remainingSeconds = 0;
-                updateTimerDisplay();
-                return;
+      });
+
+      /* =============== SUBTABS COMIDAS =============== */
+      const foodTabBtns = document.querySelectorAll("#foodTabs button");
+      const foodViews = {
+        registro: document.getElementById("food-registro"),
+        menus: document.getElementById("food-menus"),
+        super: document.getElementById("food-super"),
+      };
+      foodTabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          foodTabBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const v = btn.dataset.food;
+          Object.keys(foodViews).forEach((k) => {
+            foodViews[k].classList.toggle("hidden", k !== v);
+          });
+          if (v === "super") renderSuperList();
+        });
+      });
+
+      /* =============== RUTINA UPPER/LOWER =============== */
+      const routineByDay = {
+        1: [
+          {
+            name: "Press inclinado mancuernas",
+            sets: "4",
+            reps: "8–10",
+            tempo: "3-1-1-0",
+            rest: "120s",
+          },
+          {
+            name: "Press plano máquina convergente",
+            sets: "3",
+            reps: "10–12",
+            tempo: "3-0-2-1",
+            rest: "120s",
+          },
+          {
+            name: "Press declinado DB / máquina",
+            sets: "3",
+            reps: "8–10",
+            tempo: "2-0-2-0",
+            rest: "120s",
+          },
+          {
+            name: "Aperturas en polea (alto–bajo)",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
+          },
+          {
+            name: "Laterales en polea",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-2-0",
+            rest: "75s",
+          },
+          {
+            name: "Posterior en polea",
+            sets: "2",
+            reps: "12–15",
+            tempo: "2-0-3-1",
+            rest: "75s",
+          },
+          {
+            name: "Remo sentado neutro",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-2-1",
+            rest: "120s",
+          },
+          {
+            name: "Jalón neutro",
+            sets: "2",
+            reps: "10–12",
+            tempo: "2-1-2-0",
+            rest: "120s",
+          },
+          {
+            name: "Curl EZ",
+            sets: "2",
+            reps: "10–12",
+            tempo: "2-0-2-1",
+            rest: "75s",
+          },
+          {
+            name: "Tríceps cuerda",
+            sets: "2",
+            reps: "12–15",
+            tempo: "2-0-2-1",
+            rest: "75s",
+          },
+        ],
+        2: [
+          {
+            name: "Prensa",
+            sets: "4",
+            reps: "10–12",
+            tempo: "3-1-2-0",
+            rest: "150s",
+          },
+          {
+            name: "Sentadilla goblet",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-1-1-0",
+            rest: "120s",
+          },
+          {
+            name: "Extensión de cuádriceps",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
+          },
+          {
+            name: "Curl femoral sentado",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-2-1",
+            rest: "120s",
+          },
+          {
+            name: "Peso muerto rumano mancuernas",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-1-2-0",
+            rest: "150s",
+          },
+          {
+            name: "Hip thrust en máquina",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-1-2",
+            rest: "120s",
+          },
+          {
+            name: "Gemelos sentado",
+            sets: "3–4",
+            reps: "12–15",
+            tempo: "2-2-2-0",
+            rest: "75s",
+          },
+        ],
+        3: [
+          {
+            name: "Press inclinado máquina",
+            sets: "4",
+            reps: "8–10",
+            tempo: "3-0-2-1",
+            rest: "150s",
+          },
+          {
+            name: "Press plano DB",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-0-2-0",
+            rest: "120s",
+          },
+          {
+            name: "Aperturas máquina / cable",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
+          },
+          {
+            name: "Laterales DB sentado",
+            sets: "3",
+            reps: "15–20",
+            tempo: "2-1-2-0",
+            rest: "75s",
+          },
+          {
+            name: "Remo DB una mano",
+            sets: "3",
+            reps: "8–10",
+            tempo: "2-1-2-1",
+            rest: "120s",
+          },
+          {
+            name: "Pull-ins polea",
+            sets: "2",
+            reps: "12–15",
+            tempo: "2-1-3-1",
+            rest: "90s",
+          },
+          {
+            name: "Fondos asistidos",
+            sets: "2",
+            reps: "10–12",
+            tempo: "2-0-2-1",
+            rest: "90s",
+          },
+          {
+            name: "Curl inclinado",
+            sets: "2",
+            reps: "10–12",
+            tempo: "3-1-2-0",
+            rest: "90s",
+          },
+        ],
+        4: [
+          {
+            name: "Peso muerto rumano mancuernas",
+            sets: "3",
+            reps: "8–10",
+            tempo: "3-1-2-0",
+            rest: "150s",
+          },
+          {
+            name: "Prensa pies arriba",
+            sets: "3",
+            reps: "10–12",
+            tempo: "3-1-2-0",
+            rest: "150s",
+          },
+          {
+            name: "Zancadas caminando",
+            sets: "3",
+            reps: "10–12 por pierna",
+            tempo: "2-0-2-0",
+            rest: "90s",
+          },
+          {
+            name: "Curl femoral",
+            sets: "3",
+            reps: "10–12",
+            tempo: "2-1-2-1",
+            rest: "120s",
+          },
+          {
+            name: "Gemelos (de pie o sentado)",
+            sets: "3",
+            reps: "12–15",
+            tempo: "2-2-2-0",
+            rest: "75s",
+          },
+        ],
+        5: [],
+        6: [],
+        7: [],
+      };
+
+      const daySelect = document.getElementById("daySelect");
+      const exerciseList = document.getElementById("exerciseList");
+
+      function getSetsCount(setsText) {
+        if (!setsText) return 3;
+        const m = String(setsText).match(/\d+/);
+        return m ? parseInt(m[0], 10) : 3;
+      }
+      function parseRestSeconds(restText) {
+        if (!restText) return 60;
+        const m = String(restText).match(/\d+/);
+        return m ? parseInt(m[0], 10) : 60;
+      }
+
+      function loadDayExercises(day) {
+        exerciseList.innerHTML = "";
+        const exercises = routineByDay[day] || [];
+        if (!exercises.length) {
+          const p = document.createElement("p");
+          p.className = "small";
+          if (day === 5) {
+            p.innerHTML =
+              "Día extra: utiliza <strong>Cardio</strong> e <strong>Hipo</strong> según te sientas. También puedes hacer movilidad ligera.";
+          } else if (day === 7) {
+            p.innerHTML =
+              "Descanso activo: caminata suave 30–40 min + hipopresivos en ayuno si te sientan bien.";
+          } else {
+            p.textContent = "Día libre / movilidad / recuperación.";
+          }
+          exerciseList.appendChild(p);
+          return;
+        }
+
+        const savedKey = `day_${day}_log`;
+        const savedData = JSON.parse(localStorage.getItem(savedKey) || "{}");
+
+        exercises.forEach((ex, index) => {
+          const card = document.createElement("div");
+          card.className = "exercise-card";
+
+          const header = document.createElement("div");
+          header.className = "exercise-header";
+
+          const left = document.createElement("div");
+          left.className = "exercise-header-left";
+          left.innerHTML = `<span><strong>${ex.name}</strong></span>
+            <span class="exercise-meta">${ex.sets} x ${
+            ex.reps
+          } · Tempo ${ex.tempo} · Descanso ${ex.rest}</span>`;
+
+          header.appendChild(left);
+          card.appendChild(header);
+
+          const inputsWrap = document.createElement("div");
+          inputsWrap.className = "exercise-inputs";
+          const setsRow = document.createElement("div");
+          setsRow.className = "sets-row";
+
+          const setsCount = getSetsCount(ex.sets);
+          const savedEntry = savedData[index] || {};
+          const savedWeights = savedEntry.weights || [];
+          const restSeconds = parseRestSeconds(ex.rest);
+
+          for (let s = 0; s < setsCount; s++) {
+            const setInput = document.createElement("input");
+            setInput.type = "number";
+            setInput.min = "0";
+            setInput.step = "0.5";
+            setInput.placeholder = `S${s + 1} kg`;
+            setInput.className = "set-weight";
+            setInput.value =
+              savedWeights[s] !== undefined ? savedWeights[s] : 0;
+            setInput.addEventListener("change", () => {
+              saveExerciseLog(day);
+              const weights = Array.from(
+                card.querySelectorAll(".set-weight")
+              ).map((i) => parseFloat(i.value || "0"));
+              updateStrengthHistory(day, ex.name, weights);
+              if (restSeconds > 0) startTimer(restSeconds);
+            });
+            setsRow.appendChild(setInput);
+          }
+
+          const notes = document.createElement("input");
+          notes.placeholder = "Notas (RPE, fallo, técnica)";
+          notes.value = savedEntry.notes || "";
+          notes.addEventListener("change", () => {
+            saveExerciseLog(day);
+          });
+
+          inputsWrap.appendChild(setsRow);
+          inputsWrap.appendChild(notes);
+          card.appendChild(inputsWrap);
+          exerciseList.appendChild(card);
+        });
+      }
+
+      function saveExerciseLog(day) {
+        const cards = exerciseList.querySelectorAll(".exercise-card");
+        const data = [];
+        cards.forEach((card) => {
+          const setInputs = card.querySelectorAll(".set-weight");
+          const notes = card.querySelector(
+            'input[placeholder^="Notas (RPE"]'
+          );
+          const weights = Array.from(setInputs).map((i) => i.value);
+          data.push({ weights, notes: notes ? notes.value : "" });
+        });
+        localStorage.setItem(`day_${day}_log`, JSON.stringify(data));
+      }
+
+      daySelect.addEventListener("change", (e) => {
+        loadDayExercises(parseInt(e.target.value, 10));
+      });
+      loadDayExercises(parseInt(daySelect.value, 10));
+
+      /* =============== HISTORIAL DE FUERZA =============== */
+      const STRENGTH_PREFIX = "strength_history_";
+      const strengthHistoryEl = document.getElementById("strengthHistory");
+
+      function updateStrengthHistory(day, exerciseName, weights) {
+        const today = todayKey();
+        const key = STRENGTH_PREFIX + today;
+        const data = JSON.parse(localStorage.getItem(key) || "[]");
+        const numeric = weights.filter((w) => !isNaN(w) && w > 0);
+        const maxWeight = numeric.length ? Math.max(...numeric) : 0;
+
+        let idx = data.findIndex(
+          (d) => d.day === day && d.name === exerciseName
+        );
+        if (maxWeight <= 0) {
+          if (idx >= 0) {
+            data.splice(idx, 1);
+            localStorage.setItem(key, JSON.stringify(data));
+          }
+          return;
+        }
+        const entry = {
+          day,
+          name: exerciseName,
+          maxWeight,
+        };
+        if (idx >= 0) data[idx] = entry;
+        else data.push(entry);
+        localStorage.setItem(key, JSON.stringify(data));
+        renderStrengthHistory();
+      }
+
+      function renderStrengthHistory() {
+        if (!strengthHistoryEl) return;
+        const dates = getLastNDates(21);
+        const rows = [];
+        dates.forEach((date) => {
+          const arr = JSON.parse(
+            localStorage.getItem(STRENGTH_PREFIX + date) || "[]"
+          );
+          arr.forEach((e) => {
+            rows.push({
+              date,
+              day: e.day,
+              name: e.name,
+              maxWeight: e.maxWeight,
+            });
+          });
+        });
+        if (!rows.length) {
+          strengthHistoryEl.innerHTML =
+            "<p class='small'>Sin registros aún. Cuando pongas pesos se irán guardando aquí.</p>";
+          return;
+        }
+        rows.sort((a, b) => a.date.localeCompare(b.date));
+        let html =
+          "<table class='history-table'><thead><tr><th>#</th><th>Fecha</th><th>Día</th><th>Ejercicio</th><th>Mejor kg</th></tr></thead><tbody>";
+        rows.forEach((r, i) => {
+          html += `<tr>
+            <td>${i + 1}</td>
+            <td>${r.date}</td>
+            <td>${r.day}</td>
+            <td>${r.name}</td>
+            <td>${r.maxWeight}</td>
+          </tr>`;
+        });
+        html += "</tbody></table>";
+        strengthHistoryEl.innerHTML = html;
+      }
+
+      /* =============== TIMER PESAS (persistente) =============== */
+      let timerInterval = null,
+        remainingSeconds = 0;
+      const timerDisplay = document.getElementById("timerDisplay");
+      const TIMER_STORAGE_KEY = "rest_timer_v1";
+      let audioCtx = null;
+
+      function initAudio() {
+        if (audioCtx) return;
+        const AC = window.AudioContext || window.webkitAudioContext || null;
+        if (!AC) return;
+        audioCtx = new AC();
+      }
+      function playBeep() {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = 880;
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.3, now + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      }
+      function updateTimerDisplay() {
+        const m = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
+        const s = String(remainingSeconds % 60).padStart(2, "0");
+        timerDisplay.textContent = `${m}:${s}`;
+      }
+      function tickTimer() {
+        const raw = localStorage.getItem(TIMER_STORAGE_KEY);
+        if (!raw) {
+          remainingSeconds = 0;
+          updateTimerDisplay();
+          clearInterval(timerInterval);
+          return;
+        }
+        const data = JSON.parse(raw);
+        if (!data.active || !data.endTime) {
+          localStorage.removeItem(TIMER_STORAGE_KEY);
+          remainingSeconds = 0;
+          updateTimerDisplay();
+          clearInterval(timerInterval);
+          return;
+        }
+        const diff = Math.round((data.endTime - Date.now()) / 1000);
+        if (diff <= 0) {
+          remainingSeconds = 0;
+          updateTimerDisplay();
+          localStorage.removeItem(TIMER_STORAGE_KEY);
+          clearInterval(timerInterval);
+          if (navigator.vibrate) navigator.vibrate(200);
+          playBeep();
+        } else {
+          remainingSeconds = diff;
+          updateTimerDisplay();
+        }
+      }
+      function startTimer(seconds) {
+        initAudio();
+        const endTime = Date.now() + seconds * 1000;
+        localStorage.setItem(
+          TIMER_STORAGE_KEY,
+          JSON.stringify({ active: true, endTime })
+        );
+        clearInterval(timerInterval);
+        tickTimer();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+      function stopTimer() {
+        localStorage.removeItem(TIMER_STORAGE_KEY);
+        clearInterval(timerInterval);
+        remainingSeconds = 0;
+        updateTimerDisplay();
+      }
+
+      document
+        .querySelectorAll(".timer-controls button[data-time]")
+        .forEach((btn) => {
+          btn.addEventListener("click", () => {
+            startTimer(parseInt(btn.dataset.time, 10));
+          });
+        });
+      document.getElementById("stopTimer").addEventListener("click", stopTimer);
+
+      (function restoreTimer() {
+        const raw = localStorage.getItem(TIMER_STORAGE_KEY);
+        if (!raw) {
+          remainingSeconds = 0;
+          updateTimerDisplay();
+          return;
+        }
+        const data = JSON.parse(raw);
+        if (!data.active || !data.endTime || data.endTime <= Date.now()) {
+          localStorage.removeItem(TIMER_STORAGE_KEY);
+          remainingSeconds = 0;
+          updateTimerDisplay();
+          return;
+        }
+        tickTimer();
+        clearInterval(timerInterval);
+        timerInterval = setInterval(tickTimer, 1000);
+      })();
+
+      /* =============== HIPO – Rutina guiada =============== */
+      const hypoTimerEl = document.getElementById("hypoTimer");
+      const startHypo = document.getElementById("startHypo");
+      const stopHypo = document.getElementById("stopHypo");
+      const hypoStatus = document.getElementById("hypoStatus");
+
+      let hypoInt = null,
+        hypoRemaining = 0,
+        hypoIndex = 0,
+        hypoActive = false;
+      const HYPO_WORK = 40,
+        HYPO_REST = 20;
+      const hypoSequence = [
+        { name: "Standing – Basic" },
+        { name: "Seated – Open elbows" },
+        { name: "Quadruped – Neutral spine" },
+      ];
+      let fullProgram = [];
+
+      function buildHypoProgram() {
+        fullProgram = [];
+        for (let round = 1; round <= 3; round++) {
+          for (let i = 0; i < hypoSequence.length; i++) {
+            fullProgram.push({
+              type: "work",
+              seconds: HYPO_WORK,
+              label: `${hypoSequence[i].name} · Ronda ${round}/3`,
+            });
+            if (!(round === 3 && i === hypoSequence.length - 1)) {
+              fullProgram.push({
+                type: "rest",
+                seconds: HYPO_REST,
+                label: "Transición / recuperación",
+              });
             }
-            const data = JSON.parse(raw);
-            if (!data.active || !data.endTime || data.endTime <= Date.now()) {
-                localStorage.removeItem(TIMER_STORAGE_KEY);
-                remainingSeconds = 0;
-                updateTimerDisplay();
-                return;
-            }
-            tickTimer();
-            clearInterval(timerInterval);
-            timerInterval = setInterval(tickTimer, 1000);
-        })(); /* =============== HIPO – Rutina guiada =============== */
-        const hypoTimerEl = document.getElementById("hypoTimer");
-        const startHypo = document.getElementById("startHypo");
-        const stopHypo = document.getElementById("stopHypo");
-        const hypoStatus = document.getElementById("hypoStatus");
-        let hypoInt = null,
-            hypoRemaining = 0,
-            hypoIndex = 0,
+          }
+        }
+      }
+      function formatTime(s) {
+        const m = String(Math.floor(s / 60)).padStart(2, "0");
+        const ss = String(s % 60).padStart(2, "0");
+        return `${m}:${ss}`;
+      }
+      function renderHypo() {
+        hypoTimerEl.textContent = formatTime(hypoRemaining);
+        const step = fullProgram[hypoIndex];
+        if (step) {
+          hypoStatus.textContent = `${
+            step.type === "work" ? "Trabajo: " : "Descanso: "
+          }${step.label}`;
+        }
+      }
+      function tickHypo() {
+        hypoRemaining--;
+        if (hypoRemaining <= 0) {
+          if (navigator.vibrate) navigator.vibrate(150);
+          playBeep();
+          hypoIndex++;
+          if (hypoIndex >= fullProgram.length) {
+            clearInterval(hypoInt);
             hypoActive = false;
-        const HYPO_WORK = 40,
-            HYPO_REST = 20;
-        const hypoSequence = [{
-            name: "Standing – Basic"
-        }, {
-            name: "Seated – Open elbows"
-        }, {
-            name: "Quadruped – Neutral spine"
-        }, ];
-        let fullProgram = [];
+            hypoStatus.textContent = "Rutina finalizada ✅";
+            return;
+          }
+          const next = fullProgram[hypoIndex];
+          hypoRemaining = next.seconds;
+          renderHypo();
+        } else {
+          renderHypo();
+        }
+      }
+      startHypo.addEventListener("click", () => {
+        if (hypoActive) return;
+        initAudio();
+        buildHypoProgram();
+        hypoIndex = 0;
+        hypoRemaining = fullProgram[0].seconds;
+        renderHypo();
+        hypoActive = true;
+        clearInterval(hypoInt);
+        hypoInt = setInterval(tickHypo, 1000);
+      });
+      stopHypo.addEventListener("click", () => {
+        clearInterval(hypoInt);
+        hypoActive = false;
+        hypoStatus.textContent = "Rutina detenida.";
+      });
 
-        function buildHypoProgram() {
-            fullProgram = [];
-            for (let round = 1; round <= 3; round++) {
-                for (let i = 0; i < hypoSequence.length; i++) {
-                    fullProgram.push({
-                        type: "work",
-                        seconds: HYPO_WORK,
-                        label: $ {
-                            hypoSequence[i].name
-                        }·
-                        Ronda $ {
-                            round
-                        }
-                        /3, }); if (!(round === 3 && i === hypoSequence.length - 1)) { fullProgram.push({ type: "rest", seconds: HYPO_REST, label: "Transición /
-                        recuperación ", }); } } } } function formatTime(s) { const m = String(Math.floor(s / 60)).padStart(2, "
-                        0 "); const ss = String(s % 60).padStart(2, "
-                        0 "); return ${m}:${ss}; } function renderHypo() { hypoTimerEl.textContent = formatTime(hypoRemaining); const step = fullProgram[hypoIndex]; if (step) { hypoStatus.textContent = ${ step.type === "
-                        work " ? "
-                        Trabajo: " : "
-                        Descanso: " }${step.label}; } } function tickHypo() { hypoRemaining--; if (hypoRemaining <= 0) { if (navigator.vibrate) navigator.vibrate(150); playBeep(); hypoIndex++; if (hypoIndex >= fullProgram.length) { clearInterval(hypoInt); hypoActive = false; hypoStatus.textContent = "
-                        Rutina finalizada✅ "; return; } const next = fullProgram[hypoIndex]; hypoRemaining = next.seconds; renderHypo(); } else { renderHypo(); } } startHypo.addEventListener("
-                        click ", () => { if (hypoActive) return; initAudio(); buildHypoProgram(); hypoIndex = 0; hypoRemaining = fullProgram[0].seconds; renderHypo(); hypoActive = true; clearInterval(hypoInt); hypoInt = setInterval(tickHypo, 1000); }); stopHypo.addEventListener("
-                        click ", () => { clearInterval(hypoInt); hypoActive = false; hypoStatus.textContent = "
-                        Rutina detenida.
-                        "; }); /* =============== CARDIO =============== */ const fatZoneInfo = document.getElementById("
-                        fatZoneInfo "); if (fatZoneInfo) fatZoneInfo.textContent = Zona de oxidación estimada: ${HR_FAT_LOW}-${HR_FAT_HIGH} bpm (60–75% FC máx).; const cardioType = document.getElementById("
-                        cardioType "); const cardioTime = document.getElementById("
-                        cardioTime "); const cardioHR = document.getElementById("
-                        cardioHR "); const stepsInput = document.getElementById("
-                        stepsInput "); const saveCardioBtn = document.getElementById("
-                        saveCardio "); const cardioStatus = document.getElementById("
-                        cardioStatus "); const cardioSessionsList = document.getElementById("
-                        cardioSessionsList "); saveCardioBtn.addEventListener("
-                        click ", () => { const key = todayKey(); const existing = JSON.parse( localStorage.getItem(cardio_${key}) || " {}
-                        " ); const newTime = parseFloat(cardioTime.value || "
-                        0 "); const newHR = parseFloat(cardioHR.value || "
-                        0 "); const newSteps = parseInt(stepsInput.value || "
-                        0 ", 10); const newType = cardioType.value || Sesión ${(existing.sessions || []).length + 1}; const totalBefore = existing.time || 0; const totalAfter = totalBefore + newTime; let hrAvg = existing.hr || 0; if (totalAfter > 0) { hrAvg = ((existing.hr || 0) * totalBefore + (newHR || 0) * newTime) / totalAfter; } const inZone = isInFatZone(newHR) ? newTime : 0; const sessions = existing.sessions || []; sessions.push({ type: newType, time: newTime, hr: newHR, steps: newSteps, timeInFatZone: inZone, }); const payload = { type: newType, time: totalAfter, hr: hrAvg, steps: (existing.steps || 0) + (newSteps || 0), timeInFatZone: (existing.timeInFatZone || 0) + inZone, sessions, }; localStorage.setItem(cardio_${key}, JSON.stringify(payload)); cardioStatus.textContent = "
-                        Cardio acumulado✅ "; setTimeout(() => (cardioStatus.textContent = "
-                        "), 2000); cardioType.value = "
-                        "; cardioTime.value = "
-                        "; cardioHR.value = "
-                        "; stepsInput.value = "
-                        "; renderCardioSessionsToday(); updateDashboard(); }); function renderCardioSessionsToday() { const key = todayKey(); const data = JSON.parse(localStorage.getItem(cardio_${key}) || " {}
-                        "); const sessions = data.sessions || []; if (!sessions.length) { cardioSessionsList.innerHTML = " < p class = 'small' > Sin sesiones registradas hoy. < /p>"; return; } let html = "<table class='history-table'><thead><tr><th>#</th > < th > Tipo < /th><th>Min</th > < th > FC < /th><th>Pasos</th > < th > Zona ox.(min) < /th></tr > < /thead><tbody>"; sessions.forEach((s, i) => { const z = typeof s.timeInFatZone === "number" ? s.timeInFatZone : isInFatZone(s.hr) ? s.time : 0; html += <tr> <td>${i + 1}</td > < td > $ {
-                            s.type || ""
-                        } < /td> <td>${s.time || 0}</td > < td > $ {
-                            s.hr || 0
-                        } < /td> <td>${s.steps || 0}</td > < td > $ {
-                            z || 0
-                        } < /td> </tr > ;
-                    });
-                    html += "</tbody></table>";
-                    cardioSessionsList.innerHTML = html;
-                }
-                renderCardioSessionsToday(); /* =============== COMIDAS: PRODUCTOS + REGISTRO =============== */
-                const foodProducts = {
-                    "Claras líquidas": {
-                        kcalPer100: 50
-                    },
-                    "Huevo entero": {
-                        kcalPer100: 143
-                    },
-                    "Pechuga de pollo": {
-                        kcalPer100: 165
-                    },
-                    "Atún en agua (lata escurrida)": {
-                        kcalPer100: 120
-                    },
-                    "Arroz cocido": {
-                        kcalPer100: 130
-                    },
-                    "Papas cocidas / airfryer": {
-                        kcalPer100: 80
-                    },
-                    "Tostadas horneadas": {
-                        kcalPer100: 400
-                    },
-                    "Yogurt griego natural": {
-                        kcalPer100: 65
-                    },
-                    "Granola simple": {
-                        kcalPer100: 400
-                    },
-                    "Fruta (promedio)": {
-                        kcalPer100: 60
-                    },
-                    "Verduras mixtas": {
-                        kcalPer100: 30
-                    },
-                    "Aguacate": {
-                        kcalPer100: 160
-                    },
-                    "Aceite de oliva": {
-                        kcalPer100: 900
-                    },
-                    "Almendras / nueces": {
-                        kcalPer100: 600
-                    },
-                };
-                const productSelect = document.getElementById("productSelect");
-                const productGrams = document.getElementById("productGrams");
-                const addProductToMealBtn = document.getElementById("addProductToMeal");
-                const productCalcInfo = document.getElementById("productCalcInfo");
-                Object.keys(foodProducts).forEach((name) => {
-                    const option = document.createElement("option");
-                    option.value = name;
-                    option.textContent = name;
-                    productSelect.appendChild(option);
-                });
-                const mealNameInput = document.getElementById("mealNameInput");
-                const kcalInput = document.getElementById("kcalInput");
-                const weightInput = document.getElementById("weightInput");
-                const waistInput = document.getElementById("waistInput");
-                const saveDailyBtn = document.getElementById("saveDaily");
-                const dailyStatus = document.getElementById("dailyStatus");
-                const mealsList = document.getElementById("mealsList");
-                addProductToMealBtn.addEventListener("click", () => {
-                    const name = productSelect.value;
-                    const grams = parseFloat(productGrams.value || "0");
-                    if (!name || !grams || grams <= 0) {
-                        productCalcInfo.textContent = "Selecciona un producto y pon gramos válidos.";
-                        return;
-                    }
-                    const prod = foodProducts[name];
-                    const kcal = (grams * prod.kcalPer100) / 100;
-                    const prev = parseFloat(kcalInput.value || "0");
-                    const newTotal = Math.round(prev + kcal);
-                    kcalInput.value = newTotal;
-                    productCalcInfo.textContent = +$ {
-                        Math.round(kcal)
-                    }
-                    kcal de $ {
-                        name
-                    }($ {
-                            grams
-                        }
-                        g).Total comida: $ {
-                        newTotal
-                    }
-                    kcal.;
-                    productGrams.value = "";
-                });
+      /* =============== CARDIO =============== */
+      const fatZoneInfo = document.getElementById("fatZoneInfo");
+      if (fatZoneInfo)
+        fatZoneInfo.textContent = `Zona de oxidación estimada: ${HR_FAT_LOW}-${HR_FAT_HIGH} bpm (60–75% FC máx).`;
 
-                function renderMealsToday() {
-                    const key = todayKey();
-                    const meals = JSON.parse(localStorage.getItem(meals_$ {
-                        key
-                    }) || "[]");
-                    if (!meals.length) {
-                        mealsList.innerHTML = "<p class='small'>Sin comidas registradas todavía.</p>";
-                        return;
-                    }
-                    let html = "<table class='history-table'><thead><tr><th>#</th><th>Comida</th><th>Kcal</th></tr></thead><tbody>";
-                    meals.forEach((m, i) => {
-                        html += < tr > < td > $ {
-                            i + 1
-                        } < /td> <td>${m.name || Comida ${i + 1}}</td > < td > $ {
-                            m.kcal || 0
-                        } < /td> </tr > ;
-                    });
-                    html += "</tbody></table>";
-                    mealsList.innerHTML = html;
-                }
-                saveDailyBtn.addEventListener("click", () => {
-                    const key = todayKey();
-                    const existingDaily = JSON.parse(localStorage.getItem(daily_$ {
-                        key
-                    }) || "{}");
-                    const existingMeals = JSON.parse(localStorage.getItem(meals_$ {
-                        key
-                    }) || "[]");
-                    const addKcal = parseFloat(kcalInput.value || "0");
-                    const mealName = mealNameInput.value || Comida $ {
-                        existingMeals.length + 1
-                    };
-                    const newMeals = [...existingMeals, {
-                        name: mealName,
-                        kcal: addKcal
-                    }];
-                    const payloadDaily = {
-                        weight: parseFloat(weightInput.value || existingDaily.weight || "0"),
-                        waist: parseFloat(waistInput.value || existingDaily.waist || "0"),
-                        kcal: (existingDaily.kcal || 0) + (addKcal || 0),
-                    };
-                    localStorage.setItem(daily_$ {
-                        key
-                    }, JSON.stringify(payloadDaily));
-                    localStorage.setItem(meals_$ {
-                        key
-                    }, JSON.stringify(newMeals));
-                    dailyStatus.textContent = "Comida agregada / día actualizado ✅";
-                    setTimeout(() => (dailyStatus.textContent = ""), 2000);
-                    mealNameInput.value = "";
-                    kcalInput.value = "";
-                    productCalcInfo.textContent = "";
-                    renderMealsToday();
-                    updateDashboard();
-                });
-                renderMealsToday(); /* =============== LISTA DEL SÚPER =============== */
-                const superListEl = document.getElementById("superList");
-                const checkAllSuperBtn = document.getElementById("checkAllSuper");
-                const clearAllSuperBtn = document.getElementById("clearAllSuper");
-                const SUPER_STATE_KEY = "super_list_state_v1";
-                const superItems = [ // PROTEÍNAS { id: "pollo", group: "Proteínas", label: "3.5–4 kg pechuga de pollo", }, { id: "atun", group: "Proteínas", label: "10–12 latas de atún" }, { id: "huevos", group: "Proteínas", label: "30–36 huevos", }, { id: "claras", group: "Proteínas", label: "1 L claras líquidas", }, // CARBOHIDRATOS { id: "papas", group: "Carbohidratos", label: "3–4 kg papas" }, { id: "arroz", group: "Carbohidratos", label: "2 kg arroz" }, { id: "tostadas", group: "Carbohidratos", label: "1 caja tostadas horneadas", }, { id: "cereal", group: "Carbohidratos", label: "1 caja Corn Flakes/Rice Krispies (opcional)", }, { id: "frutas", group: "Carbohidratos", label: "10–12 frutas (manzana, plátano, kiwi)", }, // VERDURAS { id: "brocoli", group: "Verduras", label: "Brócoli" }, { id: "calabaza", group: "Verduras", label: "Calabaza" }, { id: "zanahoria", group: "Verduras", label: "Zanahoria" }, { id: "pepino", group: "Verduras", label: "Pepino" }, { id: "hojas", group: "Verduras", label: "Lechuga / espinaca", }, // GRASAS { id: "aguacate", group: "Grasas", label: "4–5 aguacates", }, { id: "aceite", group: "Grasas", label: "Aceite de oliva" }, { id: "almendras", group: "Grasas", label: "Almendras / nueces (bolsa chica)", }, ]; function loadSuperState() { return JSON.parse(localStorage.getItem(SUPER_STATE_KEY) || "{}"); } function saveSuperState(state) { localStorage.setItem(SUPER_STATE_KEY, JSON.stringify(state)); } function renderSuperList() { const state = loadSuperState(); superListEl.innerHTML = ""; const groups = {}; superItems.forEach((item) => { if (!groups[item.group]) groups[item.group] = []; groups[item.group].push(item); }); Object.keys(groups).forEach((groupName) => { const title = document.createElement("div"); title.className = "super-group-title"; title.textContent = groupName.toUpperCase(); superListEl.appendChild(title); groups[groupName].forEach((item) => { const row = document.createElement("div"); row.className = "super-item-row"; const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!state[item.id]; cb.addEventListener("change", () => { const st = loadSuperState(); st[item.id] = cb.checked; saveSuperState(st); }); const label = document.createElement("span"); label.textContent = item.label; row.appendChild(cb); row.appendChild(label); superListEl.appendChild(row); }); }); } checkAllSuperBtn.addEventListener("click", () => { const state = {}; superItems.forEach((i) => { state[i.id] = true; }); saveSuperState(state); renderSuperList(); }); clearAllSuperBtn.addEventListener("click", () => { saveSuperState({}); renderSuperList(); }); renderSuperList(); /* =============== DASHBOARD =============== */ const ringKcal = document.getElementById("ringKcal"); const ringCardio = document.getElementById("ringCardio"); const ringSteps = document.getElementById("ringSteps"); const ringWeight = document.getElementById("ringWeight"); const ringKcalInner = document.getElementById("ringKcalInner"); const ringCardioInner = document.getElementById("ringCardioInner"); const ringStepsInner = document.getElementById("ringStepsInner"); const ringWeightInner = document.getElementById("ringWeightInner"); const ringKcalText = document.getElementById("ringKcalText"); const ringCardioText = document.getElementById("ringCardioText"); const ringStepsText = document.getElementById("ringStepsText"); const ringWeightText = document.getElementById("ringWeightText"); const ringFatZoneText = document.getElementById("ringFatZoneText"); const historyTableBody = document.querySelector("#historyTable tbody"); const viewButtons = document.querySelectorAll(".view-toggle button"); let currentView = "day"; viewButtons.forEach((btn) => { btn.addEventListener("click", () => { viewButtons.forEach((b) => b.classList.remove("active")); btn.classList.add("active"); currentView = btn.dataset.view; updateDashboard(); }); }); function getLastNDates(n) { const dates = []; const today = new Date(); for (let i = 0; i < n; i++) { const d = new Date(today); d.setDate(today.getDate() - i); dates.push(d.toISOString().slice(0, 10)); } return dates.reverse(); } function getDataRange(view) { let days = 1; if (view === "week") days = 7; if (view === "month") days = 30; const dates = getLastNDates(days); const rows = []; dates.forEach((date) => { const daily = JSON.parse( localStorage.getItem(daily_${date}) || "{}" ); const cardio = JSON.parse( localStorage.getItem(cardio_${date}) || "{}" ); if ( daily.weight || daily.waist || daily.kcal || cardio.time || cardio.hr || cardio.steps || cardio.timeInFatZone ) { rows.push({ date, weight: daily.weight || 0, waist: daily.waist || 0, kcal: daily.kcal || 0, cardioTime: cardio.time || 0, hr: cardio.hr || 0, steps: cardio.steps || 0, fatZoneMin: cardio.timeInFatZone || 0, }); } }); return rows; } function setRing(ringEl, innerEl, textEl, value, target, color, unit) { const percent = target > 0 ? Math.min(value / target, 1) : 0; ringEl.style.setProperty("--percent", percent.toString()); ringEl.style.setProperty("--color", color); innerEl.textContent = ${Math.round(value)} ${unit}; if (unit === "kg") { textEl.textContent = "Promedio / día"; } else { textEl.textContent = ${Math.round(percent * 100)}% del objetivo; } } function updateDashboard() { const data = getDataRange(currentView); if (!data.length) { setRing( ringKcal, ringKcalInner, ringKcalText, 0, TARGET_KCAL, "#e53935", "kcal" ); setRing( ringCardio, ringCardioInner, ringCardioText, 0, TARGET_CARDIO_MIN, "#42a5f5", "min" ); ringFatZoneText.textContent = "0 min en zona ox. (0% objetivo)"; setRing( ringSteps, ringStepsInner, ringStepsText, 0, TARGET_STEPS, "#66bb6a", "pasos" ); setRing( ringWeight, ringWeightInner, ringWeightText, 0, 1, "#f5f5f5", "kg" ); historyTableBody.innerHTML = "<tr><td colspan='8'>Sin datos aún. Registra tu día en las pestañas.</td></tr>"; return; } let ref; if (currentView === "day") { ref = data[data.length - 1]; } else { const sum = data.reduce( (a, r) => ({ weight: a.weight + r.weight, waist: a.waist + r.waist, kcal: a.kcal + r.kcal, cardioTime: a.cardioTime + r.cardioTime, hr: a.hr + r.hr, steps: a.steps + r.steps, fatZoneMin: a.fatZoneMin + r.fatZoneMin, }), { weight: 0, waist: 0, kcal: 0, cardioTime: 0, hr: 0, steps: 0, fatZoneMin: 0, } ); const len = data.length || 1; ref = { date: data[0].date + " → " + data[data.length - 1].date, weight: sum.weight / len, waist: sum.waist / len, kcal: sum.kcal / len, cardioTime: sum.cardioTime / len, hr: sum.hr / len, steps: sum.steps / len, fatZoneMin: sum.fatZoneMin / len, }; } setRing( ringKcal, ringKcalInner, ringKcalText, ref.kcal || 0, TARGET_KCAL, "#e53935", "kcal" ); setRing( ringCardio, ringCardioInner, ringCardioText, ref.cardioTime || 0, TARGET_CARDIO_MIN, "#42a5f5", "min" ); const fatMin = ref.fatZoneMin || 0; const pctFat = Math.round( Math.min(fatMin / TARGET_FAT_MIN, 1) * 100 ); ringFatZoneText.textContent = ${Math.round( fatMin )} min en zona ox. (${pctFat}% objetivo); setRing( ringSteps, ringStepsInner, ringStepsText, ref.steps || 0, TARGET_STEPS, "#66bb6a", "pasos" ); setRing( ringWeight, ringWeightInner, ringWeightText, ref.weight || 0, ref.weight || 1, "#f5f5f5", "kg" ); historyTableBody.innerHTML = ""; data.forEach((row) => { const tr = document.createElement("tr"); tr.innerHTML = <td>${row.date}</td> <td>${row.weight || ""}</td> <td>${row.waist || ""}</td> <td>${row.kcal || ""}</td> <td>${row.cardioTime || ""}</td> <td>${row.hr || ""}</td> <td>${row.steps || ""}</td> <td>${row.fatZoneMin || ""}</td> ; historyTableBody.appendChild(tr); }); } updateDashboard(); renderStrengthHistory(); 
+      const cardioType = document.getElementById("cardioType");
+      const cardioTime = document.getElementById("cardioTime");
+      const cardioHR = document.getElementById("cardioHR");
+      const stepsInput = document.getElementById("stepsInput");
+      const saveCardioBtn = document.getElementById("saveCardio");
+      const cardioStatus = document.getElementById("cardioStatus");
+      const cardioSessionsList = document.getElementById("cardioSessionsList");
+
+      saveCardioBtn.addEventListener("click", () => {
+        const key = todayKey();
+        const existing = JSON.parse(
+          localStorage.getItem(`cardio_${key}`) || "{}"
+        );
+        const newTime = parseFloat(cardioTime.value || "0");
+        const newHR = parseFloat(cardioHR.value || "0");
+        const newSteps = parseInt(stepsInput.value || "0", 10);
+        const newType =
+          cardioType.value || `Sesión ${(existing.sessions || []).length + 1}`;
+
+        const totalBefore = existing.time || 0;
+        const totalAfter = totalBefore + newTime;
+
+        let hrAvg = existing.hr || 0;
+        if (totalAfter > 0) {
+          hrAvg =
+            ((existing.hr || 0) * totalBefore + (newHR || 0) * newTime) /
+            totalAfter;
+        }
+        const inZone = isInFatZone(newHR) ? newTime : 0;
+
+        const sessions = existing.sessions || [];
+        sessions.push({
+          type: newType,
+          time: newTime,
+          hr: newHR,
+          steps: newSteps,
+          timeInFatZone: inZone,
+        });
+
+        const payload = {
+          type: newType,
+          time: totalAfter,
+          hr: hrAvg,
+          steps: (existing.steps || 0) + (newSteps || 0),
+          timeInFatZone: (existing.timeInFatZone || 0) + inZone,
+          sessions,
+        };
+        localStorage.setItem(`cardio_${key}`, JSON.stringify(payload));
+        cardioStatus.textContent = "Cardio acumulado ✅";
+        setTimeout(() => (cardioStatus.textContent = ""), 2000);
+
+        cardioType.value = "";
+        cardioTime.value = "";
+        cardioHR.value = "";
+        stepsInput.value = "";
+        renderCardioSessionsToday();
+        updateDashboard();
+      });
+
+      function renderCardioSessionsToday() {
+        const key = todayKey();
+        const data = JSON.parse(localStorage.getItem(`cardio_${key}`) || "{}");
+        const sessions = data.sessions || [];
+        if (!sessions.length) {
+          cardioSessionsList.innerHTML =
+            "<p class='small'>Sin sesiones registradas hoy.</p>";
+          return;
+        }
+        let html =
+          "<table class='history-table'><thead><tr><th>#</th><th>Tipo</th><th>Min</th><th>FC</th><th>Pasos</th><th>Zona ox. (min)</th></tr></thead><tbody>";
+        sessions.forEach((s, i) => {
+          const z =
+            typeof s.timeInFatZone === "number"
+              ? s.timeInFatZone
+              : isInFatZone(s.hr)
+              ? s.time
+              : 0;
+          html += `<tr>
+            <td>${i + 1}</td>
+            <td>${s.type || ""}</td>
+            <td>${s.time || 0}</td>
+            <td>${s.hr || 0}</td>
+            <td>${s.steps || 0}</td>
+            <td>${z || 0}</td>
+          </tr>`;
+        });
+        html += "</tbody></table>";
+        cardioSessionsList.innerHTML = html;
+      }
+      renderCardioSessionsToday();
+
+      /* =============== COMIDAS: PRODUCTOS + REGISTRO =============== */
+      const foodProducts = {
+        "Claras líquidas": { kcalPer100: 50 },
+        "Huevo entero": { kcalPer100: 143 },
+        "Pechuga de pollo": { kcalPer100: 165 },
+        "Atún en agua (lata escurrida)": { kcalPer100: 120 },
+        "Arroz cocido": { kcalPer100: 130 },
+        "Papas cocidas / airfryer": { kcalPer100: 80 },
+        "Tostadas horneadas": { kcalPer100: 400 },
+        "Yogurt griego natural": { kcalPer100: 65 },
+        "Granola simple": { kcalPer100: 400 },
+        "Fruta (promedio)": { kcalPer100: 60 },
+        "Verduras mixtas": { kcalPer100: 30 },
+        "Aguacate": { kcalPer100: 160 },
+        "Aceite de oliva": { kcalPer100: 900 },
+        "Almendras / nueces": { kcalPer100: 600 },
+      };
+
+      const productSelect = document.getElementById("productSelect");
+      const productGrams = document.getElementById("productGrams");
+      const addProductToMealBtn = document.getElementById("addProductToMeal");
+      const productCalcInfo = document.getElementById("productCalcInfo");
+
+      Object.keys(foodProducts).forEach((name) => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        productSelect.appendChild(option);
+      });
+
+      const mealNameInput = document.getElementById("mealNameInput");
+      const kcalInput = document.getElementById("kcalInput");
+      const weightInput = document.getElementById("weightInput");
+      const waistInput = document.getElementById("waistInput");
+      const saveDailyBtn = document.getElementById("saveDaily");
+      const dailyStatus = document.getElementById("dailyStatus");
+      const mealsList = document.getElementById("mealsList");
+
+      addProductToMealBtn.addEventListener("click", () => {
+        const name = productSelect.value;
+        const grams = parseFloat(productGrams.value || "0");
+        if (!name || !grams || grams <= 0) {
+          productCalcInfo.textContent =
+            "Selecciona un producto y pon gramos válidos.";
+          return;
+        }
+        const prod = foodProducts[name];
+        const kcal = (grams * prod.kcalPer100) / 100;
+        const prev = parseFloat(kcalInput.value || "0");
+        const newTotal = Math.round(prev + kcal);
+        kcalInput.value = newTotal;
+        productCalcInfo.textContent = `+${Math.round(
+          kcal
+        )} kcal de ${name} (${grams} g). Total comida: ${newTotal} kcal.`;
+        productGrams.value = "";
+      });
+
+      function renderMealsToday() {
+        const key = todayKey();
+        const meals = JSON.parse(localStorage.getItem(`meals_${key}`) || "[]");
+        if (!meals.length) {
+          mealsList.innerHTML =
+            "<p class='small'>Sin comidas registradas todavía.</p>";
+          return;
+        }
+        let html =
+          "<table class='history-table'><thead><tr><th>#</th><th>Comida</th><th>Kcal</th></tr></thead><tbody>";
+        meals.forEach((m, i) => {
+          html += `<tr>
+            <td>${i + 1}</td>
+            <td>${m.name || `Comida ${i + 1}`}</td>
+            <td>${m.kcal || 0}</td>
+          </tr>`;
+        });
+        html += "</tbody></table>";
+        mealsList.innerHTML = html;
+      }
+
+      saveDailyBtn.addEventListener("click", () => {
+        const key = todayKey();
+        const existingDaily = JSON.parse(
+          localStorage.getItem(`daily_${key}`) || "{}"
+        );
+        const existingMeals = JSON.parse(
+          localStorage.getItem(`meals_${key}`) || "[]"
+        );
+
+        const addKcal = parseFloat(kcalInput.value || "0");
+        const mealName =
+          mealNameInput.value || `Comida ${existingMeals.length + 1}`;
+
+        const newMeals = [...existingMeals, { name: mealName, kcal: addKcal }];
+        const payloadDaily = {
+          weight: parseFloat(weightInput.value || existingDaily.weight || "0"),
+          waist: parseFloat(waistInput.value || existingDaily.waist || "0"),
+          kcal: (existingDaily.kcal || 0) + (addKcal || 0),
+        };
+
+        localStorage.setItem(`daily_${key}`, JSON.stringify(payloadDaily));
+        localStorage.setItem(`meals_${key}`, JSON.stringify(newMeals));
+
+        dailyStatus.textContent = "Comida agregada / día actualizado ✅";
+        setTimeout(() => (dailyStatus.textContent = ""), 2000);
+
+        mealNameInput.value = "";
+        kcalInput.value = "";
+        productCalcInfo.textContent = "";
+        renderMealsToday();
+        updateDashboard();
+      });
+
+      renderMealsToday();
+
+      /* =============== LISTA DEL SÚPER =============== */
+      const superListEl = document.getElementById("superList");
+      const checkAllSuperBtn = document.getElementById("checkAllSuper");
+      const clearAllSuperBtn = document.getElementById("clearAllSuper");
+      const SUPER_STATE_KEY = "super_list_state_v1";
+
+      const superItems = [
+        // PROTEÍNAS
+        {
+          id: "pollo",
+          group: "Proteínas",
+          label: "3.5–4 kg pechuga de pollo",
+        },
+        { id: "atun", group: "Proteínas", label: "10–12 latas de atún" },
+        {
+          id: "huevos",
+          group: "Proteínas",
+          label: "30–36 huevos",
+        },
+        {
+          id: "claras",
+          group: "Proteínas",
+          label: "1 L claras líquidas",
+        },
+        // CARBOHIDRATOS
+        { id: "papas", group: "Carbohidratos", label: "3–4 kg papas" },
+        { id: "arroz", group: "Carbohidratos", label: "2 kg arroz" },
+        {
+          id: "tostadas",
+          group: "Carbohidratos",
+          label: "1 caja tostadas horneadas",
+        },
+        {
+          id: "cereal",
+          group: "Carbohidratos",
+          label: "1 caja Corn Flakes/Rice Krispies (opcional)",
+        },
+        {
+          id: "frutas",
+          group: "Carbohidratos",
+          label: "10–12 frutas (manzana, plátano, kiwi)",
+        },
+        // VERDURAS
+        { id: "brocoli", group: "Verduras", label: "Brócoli" },
+        { id: "calabaza", group: "Verduras", label: "Calabaza" },
+        { id: "zanahoria", group: "Verduras", label: "Zanahoria" },
+        { id: "pepino", group: "Verduras", label: "Pepino" },
+        {
+          id: "hojas",
+          group: "Verduras",
+          label: "Lechuga / espinaca",
+        },
+        // GRASAS
+        {
+          id: "aguacate",
+          group: "Grasas",
+          label: "4–5 aguacates",
+        },
+        { id: "aceite", group: "Grasas", label: "Aceite de oliva" },
+        {
+          id: "almendras",
+          group: "Grasas",
+          label: "Almendras / nueces (bolsa chica)",
+        },
+      ];
+
+      function loadSuperState() {
+        return JSON.parse(localStorage.getItem(SUPER_STATE_KEY) || "{}");
+      }
+      function saveSuperState(state) {
+        localStorage.setItem(SUPER_STATE_KEY, JSON.stringify(state));
+      }
+
+      function renderSuperList() {
+        const state = loadSuperState();
+        superListEl.innerHTML = "";
+        const groups = {};
+        superItems.forEach((item) => {
+          if (!groups[item.group]) groups[item.group] = [];
+          groups[item.group].push(item);
+        });
+        Object.keys(groups).forEach((groupName) => {
+          const title = document.createElement("div");
+          title.className = "super-group-title";
+          title.textContent = groupName.toUpperCase();
+          superListEl.appendChild(title);
+
+          groups[groupName].forEach((item) => {
+            const row = document.createElement("div");
+            row.className = "super-item-row";
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.checked = !!state[item.id];
+            cb.addEventListener("change", () => {
+              const st = loadSuperState();
+              st[item.id] = cb.checked;
+              saveSuperState(st);
+            });
+            const label = document.createElement("span");
+            label.textContent = item.label;
+            row.appendChild(cb);
+            row.appendChild(label);
+            superListEl.appendChild(row);
+          });
+        });
+      }
+
+      checkAllSuperBtn.addEventListener("click", () => {
+        const state = {};
+        superItems.forEach((i) => {
+          state[i.id] = true;
+        });
+        saveSuperState(state);
+        renderSuperList();
+      });
+      clearAllSuperBtn.addEventListener("click", () => {
+        saveSuperState({});
+        renderSuperList();
+      });
+
+      renderSuperList();
+
+      /* =============== DASHBOARD =============== */
+      const ringKcal = document.getElementById("ringKcal");
+      const ringCardio = document.getElementById("ringCardio");
+      const ringSteps = document.getElementById("ringSteps");
+      const ringWeight = document.getElementById("ringWeight");
+      const ringKcalInner = document.getElementById("ringKcalInner");
+      const ringCardioInner = document.getElementById("ringCardioInner");
+      const ringStepsInner = document.getElementById("ringStepsInner");
+      const ringWeightInner = document.getElementById("ringWeightInner");
+      const ringKcalText = document.getElementById("ringKcalText");
+      const ringCardioText = document.getElementById("ringCardioText");
+      const ringStepsText = document.getElementById("ringStepsText");
+      const ringWeightText = document.getElementById("ringWeightText");
+      const ringFatZoneText = document.getElementById("ringFatZoneText");
+      const historyTableBody = document.querySelector("#historyTable tbody");
+      const viewButtons = document.querySelectorAll(".view-toggle button");
+
+      let currentView = "day";
+      viewButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          viewButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentView = btn.dataset.view;
+          updateDashboard();
+        });
+      });
+
+      function getLastNDates(n) {
+        const dates = [];
+        const today = new Date();
+        for (let i = 0; i < n; i++) {
+          const d = new Date(today);
+          d.setDate(today.getDate() - i);
+          dates.push(d.toISOString().slice(0, 10));
+        }
+        return dates.reverse();
+      }
+      function getDataRange(view) {
+        let days = 1;
+        if (view === "week") days = 7;
+        if (view === "month") days = 30;
+        const dates = getLastNDates(days);
+        const rows = [];
+        dates.forEach((date) => {
+          const daily = JSON.parse(
+            localStorage.getItem(`daily_${date}`) || "{}"
+          );
+          const cardio = JSON.parse(
+            localStorage.getItem(`cardio_${date}`) || "{}"
+          );
+          if (
+            daily.weight ||
+            daily.waist ||
+            daily.kcal ||
+            cardio.time ||
+            cardio.hr ||
+            cardio.steps ||
+            cardio.timeInFatZone
+          ) {
+            rows.push({
+              date,
+              weight: daily.weight || 0,
+              waist: daily.waist || 0,
+              kcal: daily.kcal || 0,
+              cardioTime: cardio.time || 0,
+              hr: cardio.hr || 0,
+              steps: cardio.steps || 0,
+              fatZoneMin: cardio.timeInFatZone || 0,
+            });
+          }
+        });
+        return rows;
+      }
+      function setRing(ringEl, innerEl, textEl, value, target, color, unit) {
+        const percent = target > 0 ? Math.min(value / target, 1) : 0;
+        ringEl.style.setProperty("--percent", percent.toString());
+        ringEl.style.setProperty("--color", color);
+        innerEl.textContent = `${Math.round(value)} ${unit}`;
+        if (unit === "kg") {
+          textEl.textContent = "Promedio / día";
+        } else {
+          textEl.textContent = `${Math.round(percent * 100)}% del objetivo`;
+        }
+      }
+      function updateDashboard() {
+        const data = getDataRange(currentView);
+        if (!data.length) {
+          setRing(
+            ringKcal,
+            ringKcalInner,
+            ringKcalText,
+            0,
+            TARGET_KCAL,
+            "#e53935",
+            "kcal"
+          );
+          setRing(
+            ringCardio,
+            ringCardioInner,
+            ringCardioText,
+            0,
+            TARGET_CARDIO_MIN,
+            "#42a5f5",
+            "min"
+          );
+          ringFatZoneText.textContent = "0 min en zona ox. (0% objetivo)";
+          setRing(
+            ringSteps,
+            ringStepsInner,
+            ringStepsText,
+            0,
+            TARGET_STEPS,
+            "#66bb6a",
+            "pasos"
+          );
+          setRing(
+            ringWeight,
+            ringWeightInner,
+            ringWeightText,
+            0,
+            1,
+            "#f5f5f5",
+            "kg"
+          );
+          historyTableBody.innerHTML =
+            "<tr><td colspan='8'>Sin datos aún. Registra tu día en las pestañas.</td></tr>";
+          return;
+        }
+        let ref;
+        if (currentView === "day") {
+          ref = data[data.length - 1];
+        } else {
+          const sum = data.reduce(
+            (a, r) => ({
+              weight: a.weight + r.weight,
+              waist: a.waist + r.waist,
+              kcal: a.kcal + r.kcal,
+              cardioTime: a.cardioTime + r.cardioTime,
+              hr: a.hr + r.hr,
+              steps: a.steps + r.steps,
+              fatZoneMin: a.fatZoneMin + r.fatZoneMin,
+            }),
+            {
+              weight: 0,
+              waist: 0,
+              kcal: 0,
+              cardioTime: 0,
+              hr: 0,
+              steps: 0,
+              fatZoneMin: 0,
+            }
+          );
+          const len = data.length || 1;
+          ref = {
+            date: data[0].date + " → " + data[data.length - 1].date,
+            weight: sum.weight / len,
+            waist: sum.waist / len,
+            kcal: sum.kcal / len,
+            cardioTime: sum.cardioTime / len,
+            hr: sum.hr / len,
+            steps: sum.steps / len,
+            fatZoneMin: sum.fatZoneMin / len,
+          };
+        }
+        setRing(
+          ringKcal,
+          ringKcalInner,
+          ringKcalText,
+          ref.kcal || 0,
+          TARGET_KCAL,
+          "#e53935",
+          "kcal"
+        );
+        setRing(
+          ringCardio,
+          ringCardioInner,
+          ringCardioText,
+          ref.cardioTime || 0,
+          TARGET_CARDIO_MIN,
+          "#42a5f5",
+          "min"
+        );
+        const fatMin = ref.fatZoneMin || 0;
+        const pctFat = Math.round(
+          Math.min(fatMin / TARGET_FAT_MIN, 1) * 100
+        );
+        ringFatZoneText.textContent = `${Math.round(
+          fatMin
+        )} min en zona ox. (${pctFat}% objetivo)`;
+        setRing(
+          ringSteps,
+          ringStepsInner,
+          ringStepsText,
+          ref.steps || 0,
+          TARGET_STEPS,
+          "#66bb6a",
+          "pasos"
+        );
+        setRing(
+          ringWeight,
+          ringWeightInner,
+          ringWeightText,
+          ref.weight || 0,
+          ref.weight || 1,
+          "#f5f5f5",
+          "kg"
+        );
+
+        historyTableBody.innerHTML = "";
+        data.forEach((row) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.date}</td>
+            <td>${row.weight || ""}</td>
+            <td>${row.waist || ""}</td>
+            <td>${row.kcal || ""}</td>
+            <td>${row.cardioTime || ""}</td>
+            <td>${row.hr || ""}</td>
+            <td>${row.steps || ""}</td>
+            <td>${row.fatZoneMin || ""}</td>
+          `;
+          historyTableBody.appendChild(tr);
+        });
+      }
+      updateDashboard();
+      renderStrengthHistory();
     </script>
-</body>
-
+  </body>
 </html>
